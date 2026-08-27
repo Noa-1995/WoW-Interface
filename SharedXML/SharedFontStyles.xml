@@ -1,0 +1,42 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script>
+		UNIT_NAME_FONT_KOREAN = "Fonts\\2002B.TTF";
+		UNIT_NAME_FONT_CHINESE = "Fonts\\ARKai_T.ttf";
+		UNIT_NAME_FONT_CYRILLIC = "Fonts\\FRIZQT___CYR.TTF";
+		UNIT_NAME_FONT_ROMAN = "Fonts\\FRIZQT__.TTF";
+	</Script>
+
+	<Font name="GameFontNormal10" inherits="GameFontNormal" virtual="true">
+		<FontHeight val="10"/>
+	</Font>
+	<Script file="..\FrameXML\API_\C_GlobalLocale.lua"/>
+	<Script file="..\FrameXML\API_\C_APISpecialization.lua"/>
+	<Script file="..\FrameXML\API_\C_APIBattlefieldScore.lua"/>
+	<Font name="GameFontGraySmall" inherits="GameFontNormalSmall" virtual="true">
+		<Color r="0.68" g="0.68" b="0.68"/>
+	</Font>
+	<Font name="QuestFont_Super_Huge2" inherits="QuestFont_Large" virtual="true">
+		<FontHeight>
+			<AbsValue val="26"/>
+		</FontHeight>
+		<Shadow>
+			<Offset>
+				<AbsDimension x="2" y="-2"/>
+			</Offset>
+			<Color r="0" g="0" b="0"/>
+		</Shadow>
+		<Color r="1" g="1" b="1"/>
+	</Font>
+	<Font name="QuestFont_Shadow_Small" inherits="QuestFont_Shadow_Huge" virtual="true">
+		<Shadow>
+			<Offset>
+				<AbsDimension x="1" y="-1"/>
+			</Offset>
+			<Color r="0.49" g="0.35" b="0.05"/>
+		</Shadow>
+		<FontHeight>
+			<AbsValue val="14"/>
+		</FontHeight>
+	</Font>
+</Ui>

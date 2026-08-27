@@ -1,0 +1,104 @@
+BATTLEGROUND_ARATHI_BASIN = 462
+BATTLEGROUND_WARSONG_GULCH = 444
+BATTLEGROUND_ISLE_OF_CONQUEST = 541
+BATTLEGROUND_ALTERAC_VALLEY = 402
+BATTLEGROUND_EYE_OF_THE_STORM = 483
+
+LE_ITEM_QUALITY_COMMON = 1
+LE_ITEM_QUALITY_EPIC = 4
+LE_ITEM_QUALITY_HEIRLOOM = 7
+LE_ITEM_QUALITY_LEGENDARY = 5
+LE_ITEM_QUALITY_POOR = 0
+LE_ITEM_QUALITY_RARE = 3
+LE_ITEM_QUALITY_UNCOMMON = 2
+LE_ITEM_QUALITY_WOW_TOKEN = 8
+LE_ITEM_QUALITY_ARTIFACT = 6
+
+PW_RESET_FRAME_STATE_TIME = 30
+
+NORMAL_FONT_COLOR			= CreateColorRGB(1.0, 0.82, 0.0)
+HIGHLIGHT_FONT_COLOR		= CreateColorRGB(1.0, 1.0, 1.0)
+RED_FONT_COLOR				= CreateColorRGB(1.0, 0.1, 0.1)
+DIM_RED_FONT_COLOR			= CreateColorRGB(0.8, 0.1, 0.1)
+GREEN_FONT_COLOR			= CreateColorRGB(0.1, 1.0, 0.1)
+GRAY_FONT_COLOR				= CreateColorRGB(0.5, 0.5, 0.5)
+YELLOW_FONT_COLOR			= CreateColorRGB(1.0, 1.0, 0.0)
+BLUE_FONT_COLOR				= CreateColorRGB(0, 0.749, 0.953)
+LIGHTYELLOW_FONT_COLOR		= CreateColorRGB(1.0, 1.0, 0.6)
+ORANGE_FONT_COLOR			= CreateColorRGB(1.0, 0.5, 0.25)
+PASSIVE_SPELL_FONT_COLOR	= CreateColorRGB(0.77, 0.64, 0.0)
+BATTLENET_FONT_COLOR 		= CreateColorRGB(0.510, 0.773, 1.0)
+TRANSMOGRIFY_FONT_COLOR		= CreateColorRGB(1, 0.5, 1)
+DISABLED_FONT_COLOR			= CreateColorRGB(0.498, 0.498, 0.498)
+LIGHTBLUE_FONT_COLOR		= CreateColorRGB(0.53, 0.67, 1.0)
+BLUEHELP_FONT_COLOR			= CreateColorRGB(0, 0.8, 1)
+WHITE_FONT_COLOR			= CreateColorRGB(1, 1, 1)
+
+LOOT_FONT_COLOR 	= CreateColorRGB(0, 0.666, 0)
+SYSTEM_FONT_COLOR 	= CreateColorRGB(1, 1, 0)
+
+-- faction
+PLAYER_FACTION_GROUP = { [0] = "Horde", [1] = "Alliance", Horde = 0, Alliance = 1 };
+PLAYER_FACTION_COLORS = { [0] = CreateColorRGB(0.90, 0.05, 0.07), [1] = CreateColorRGB(0.29, 0.33, 0.91) }
+
+BAG_ITEM_QUALITY_COLORS = {
+	[LE_ITEM_QUALITY_COMMON] = CreateColorRGB(0.65882, 0.65882, 0.65882),
+	[LE_ITEM_QUALITY_UNCOMMON] = CreateColorRGB(0.08235, 0.70196, 0),
+	[LE_ITEM_QUALITY_RARE] = CreateColorRGB(0, 0.56863, 0.94902),
+	[LE_ITEM_QUALITY_EPIC] = CreateColorRGB(0.78431, 0.27059, 0.98039),
+	[LE_ITEM_QUALITY_LEGENDARY] = CreateColorRGB(1, 0.50196, 0),
+	[LE_ITEM_QUALITY_ARTIFACT] = CreateColorRGB(0.90196, 0.8, 0.50196),
+	[LE_ITEM_QUALITY_HEIRLOOM] = CreateColorRGB(0.90196, 0.8, 0.50196),
+	[LE_ITEM_QUALITY_WOW_TOKEN] = CreateColorRGB(0, 0.8, 1),
+}
+
+DRESSUPMODEL_CAMERA_POSITION = {
+	["Human2"] = {0.691001, 1.018000, 0.999001},
+	["Human3"] = {0.487000, 0.985001, 0.999001},
+	["Dwarf2"] = {1.767001, 0.993001, 0.845001},
+	["Dwarf3"] = {0.794001, 0.960001, 1.050001},
+	["NightElf2"] = {0.341001, 0.996001, 0.999001},
+	["NightElf3"] = {1.255001, 0.981001, 1.000000},
+	["Gnome2"] = {0.948000, 1.000000, 0.896001},
+	["Gnome3"] = {0.794001, 0.997001, 0.894001},
+	["Draenei2"] = {1.348001, 1.000000, 1.049001},
+	["Draenei3"] = {0.743001, 0.971000, 0.999001},
+	["Orc2"] = {0.743001, 1.044001, 1.000000},
+	["Orc3"] = {0.743001, 0.988001, 1.000000},
+	["Scourge2"] = {0.896001, 1.024001, 1.000000},
+	["Scourge3"] = {1.767001, 1.019001, 1.050001},
+	["Tauren2"] = {1.665001, 0.996001, 0.948000},
+	["Tauren3"] = {0.691001, 1.031000, 0.896001},
+	["Goblin2"] = {0.691001, 1.003000, 0.794001},
+	["Goblin3"] = {0.896001, 1.000000, 0.896001},
+	["Troll2"] = {1.050001, 0.958001, 1.000000},
+	["Troll3"] = {0.794001, 0.930001, 0.999001},
+	["BloodElf2"] = {1.101001, 1.013000, 1.000000},
+	["BloodElf3"] = {0.640001, 1.101001, 0.971000},
+}
+
+TABARDMODEL_CAMERA_POSITION = {
+	["Human2"]			= {-0.310, -0.170, 0.100},
+	["Human3"]			= {-0.510, -0.200, 0.170},
+	["Dwarf2"]			= {0.770, -0.160, -0.080},
+	["Dwarf3"]			= {-0.210, -0.120, 0.110},
+	["NightElf2"]		= {-1.000, -0.140, 0.260},
+	["NightElf3"]		= {0.260, -0.430, 0.070},
+	["Gnome2"]			= {-0.100, -0.095, 0.040},
+	["Gnome3"]			= {-0.210, -0.090, -0.020},
+	["Draenei2"]		= {0.340, -0.180, 0.100},
+	["Draenei3"]		= {0.340, -0.360, 0.100},
+	["Orc2"]			= {-0.550, -0.010, 0.000},
+	["Orc3"]			= {-0.260, -0.180, 0.170},
+	["Scourge2"]		= {-0.100, -0.110, 0.150},
+	["Scourge3"]		= {0.770, -0.300, 0.070},
+	["Tauren2"]			= {0.670, -0.130, 0.080},
+	["Tauren3"]			= {-0.360, -0.180, 0.090},
+	["Troll2"]			= {0.050, -0.250, 0.150},
+	["Troll3"]			= {-0.200, -0.320, 0.230},
+	["BloodElf2"]		= {0.000, -0.290, 0.020},
+	["BloodElf3"]		= {-0.360, -0.280, 0.070},
+}
+
+-- FLYOUT_STORAGE = {}
+-- FLYOUT_STORAGE[1494] = {19878, 19879, 19880, 19882, 19883, 19884, 19885}
