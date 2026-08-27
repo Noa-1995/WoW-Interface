@@ -31,5 +31,6 @@ The project is actively being developed and will receive much more content and n
 🚧 Work in progress — much more coming soon!
 
 📸 Preview
+
 <img width="664" height="525" alt="Screenshot_1" src="https://github.com/user-attachments/assets/5ef5803a-c0e3-43db-856e-2bed3878abd1" />
 <img width="665" height="533" alt="Screenshot_2" src="https://github.com/user-attachments/assets/94ff0d39-3f70-44ed-ba41-9e203f19336b" />
