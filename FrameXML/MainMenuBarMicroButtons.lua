@@ -1,0 +1,240 @@
+function LoadMicroButtonTextures(self, name)
+	self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+	self:RegisterEvent("UPDATE_BINDINGS");
+	local prefix = "Interface\\Buttons\\UI-MicroButton-";
+	self:SetNormalTexture(prefix..name.."-Up");
+	self:SetPushedTexture(prefix..name.."-Down");
+	self:SetDisabledTexture(prefix..name.."-Disabled");
+	self:SetHighlightTexture("Interface\\Buttons\\UI-MicroButton-Hilight");
+end
+
+function MicroButtonTooltipText(text, action)
+	if ( GetBindingKey(action) ) then
+		return text.." "..NORMAL_FONT_COLOR_CODE.."("..GetBindingText(GetBindingKey(action), "KEY_")..")"..FONT_COLOR_CODE_CLOSE;
+	else
+		return text;
+	end
+end
+
+-- Función para togglear el diario de colecciones
+function ToggleCollectionsFrame()
+	if CollectionsJournal and CollectionsJournal:IsShown() then
+		HideUIPanel(CollectionsJournal);
+	else
+		ShowUIPanel(CollectionsJournal);
+	end
+	UpdateMicroButtons();
+end
+
+function UpdateMicroButtons()
+    local playerLevel = UnitLevel("player");
+    
+    -- Character (Personaje)
+    if ( CharacterFrame and CharacterFrame:IsShown() ) then
+        CharacterMicroButton:SetButtonState("PUSHED", 1);
+        CharacterMicroButton_SetPushed();
+    else
+        CharacterMicroButton:SetButtonState("NORMAL");
+        CharacterMicroButton_SetNormal();
+    end
+    
+    -- SpellbookMicroButton (ahora abre profesiones)
+    if ( ProfessionFrame and ProfessionFrame:IsShown() ) then
+        SpellbookMicroButton:SetButtonState("PUSHED", 1);
+    else
+        SpellbookMicroButton:SetButtonState("NORMAL");
+    end
+
+    -- TalentMicroButton - Se marca PUSHED si RetailTalentFrame O SpellBookFrame están abiertos
+    if ( RetailTalentFrame and RetailTalentFrame:IsShown() ) then
+        TalentMicroButton:SetButtonState("PUSHED", 1);
+    elseif ( SpellBookFrame and SpellBookFrame:IsShown() ) then
+        TalentMicroButton:SetButtonState("PUSHED", 1);
+    else
+        if ( playerLevel < TalentMicroButton.minLevel ) then
+            TalentMicroButton:Disable();
+        else
+            TalentMicroButton:Enable();
+            TalentMicroButton:SetButtonState("NORMAL");
+        end
+    end
+
+    -- QuestLogMicroButton - Usa QuestMapFrame
+    if ( QuestMapFrame and QuestMapFrame:IsShown() ) then
+        QuestLogMicroButton:SetButtonState("PUSHED", 1);
+    else
+        QuestLogMicroButton:SetButtonState("NORMAL");
+    end
+    
+    -- MainMenu (Menú principal)
+    if ( ( GameMenuFrame and GameMenuFrame:IsShown() ) 
+        or ( InterfaceOptionsFrame and InterfaceOptionsFrame:IsShown()) 
+        or ( KeyBindingFrame and KeyBindingFrame:IsShown()) 
+        or ( MacroFrame and MacroFrame:IsShown()) ) then
+        MainMenuMicroButton:SetButtonState("PUSHED", 1);
+        MainMenuMicroButton_SetPushed();
+    else
+        MainMenuMicroButton:SetButtonState("NORMAL");
+        MainMenuMicroButton_SetNormal();
+    end
+
+    local lfdParentShown = LFDParentFrame and LFDParentFrame:IsShown()
+    local pvpParentShown = PVPParentFrame and PVPParentFrame:IsShown()
+
+    if ( lfdParentShown or pvpParentShown ) then
+        LFDMicroButton:SetButtonState("PUSHED", 1);
+    else
+        if ( playerLevel < LFDMicroButton.minLevel ) then
+            LFDMicroButton:Disable();
+        else
+            LFDMicroButton:Enable();
+            LFDMicroButton:SetButtonState("NORMAL");
+        end
+    end
+
+    -- Socials (Amigos)
+    if ( FriendsFrame and FriendsFrame:IsShown() ) then
+        SocialsMicroButton:SetButtonState("PUSHED", 1);
+    else
+        SocialsMicroButton:SetButtonState("NORMAL");
+    end
+
+    -- Help (Ayuda)
+    if ( HelpFrame and HelpFrame:IsShown() ) then
+        HelpMicroButton:SetButtonState("PUSHED", 1);
+    else
+        HelpMicroButton:SetButtonState("NORMAL");
+    end
+    
+    -- Achievement (Logros)
+    if ( AchievementFrame and AchievementFrame:IsShown() ) then
+        AchievementMicroButton:SetButtonState("PUSHED", 1);
+    else
+        if ( HasCompletedAnyAchievement and HasCompletedAnyAchievement() and CanShowAchievementUI and CanShowAchievementUI() ) then
+            AchievementMicroButton:Enable();
+            AchievementMicroButton:SetButtonState("NORMAL");
+        else
+            AchievementMicroButton:Disable();
+        end
+    end
+
+    -- Transmogrification (Transfiguración)
+    if ( TransfigurationJournal and TransfigurationJournal:IsShown() ) then
+        TransmogrificationMicroButton:SetButtonState("PUSHED", 1);
+    else
+        TransmogrificationMicroButton:SetButtonState("NORMAL");
+    end
+
+    -- Collections (Colecciones)
+    if ( CollectionsJournal and CollectionsJournal:IsShown() ) then
+        CollectionsMicroButton:SetButtonState("PUSHED", 1);
+    else
+        CollectionsMicroButton:SetButtonState("NORMAL");
+    end
+    
+    -- Encounter Journal (Diario de Encuentros)
+    if ( EncounterJournal and EncounterJournal:IsShown() ) then
+        EncounterJournalMicroButton:SetButtonState("PUSHED", 1);
+    else
+        EncounterJournalMicroButton:SetButtonState("NORMAL");
+    end
+
+    if ( KeyRingButton and KeyRingButton.SetButtonState ) then
+        if ( IsBagOpen and IsBagOpen(KEYRING_CONTAINER) ) then
+            KeyRingButton:SetButtonState("PUSHED", 1);
+        else
+            KeyRingButton:SetButtonState("NORMAL");
+        end
+    end
+end
+
+function AchievementMicroButton_OnEvent(self, event, ...)
+	if ( event == "UPDATE_BINDINGS" ) then
+		AchievementMicroButton.tooltipText = MicroButtonTooltipText(ACHIEVEMENT_BUTTON, "TOGGLEACHIEVEMENT");
+	else
+		UpdateMicroButtons();
+	end
+end
+
+function CharacterMicroButton_OnLoad(self)
+	self:SetNormalTexture("Interface\\Buttons\\UI-MicroButtonCharacter-Up");
+	self:SetPushedTexture("Interface\\Buttons\\UI-MicroButtonCharacter-Down");
+	self:SetHighlightTexture("Interface\\Buttons\\UI-MicroButton-Hilight");
+	self:RegisterEvent("UNIT_PORTRAIT_UPDATE");
+	self:RegisterEvent("UPDATE_BINDINGS");
+	self:RegisterEvent("PLAYER_ENTERING_WORLD");
+	self.tooltipText = MicroButtonTooltipText(CHARACTER_BUTTON, "TOGGLECHARACTER0");
+	self.newbieText = NEWBIE_TOOLTIP_CHARACTER;
+end
+
+function CharacterMicroButton_OnEvent(self, event, ...)
+	if ( event == "UNIT_PORTRAIT_UPDATE" ) then
+		local unit = ...;
+		if ( unit == "player" ) then
+			SetPortraitTexture(MicroButtonPortrait, unit);
+		end
+		return;
+	elseif ( event == "PLAYER_ENTERING_WORLD" ) then
+		SetPortraitTexture(MicroButtonPortrait, "player");
+	elseif ( event == "UPDATE_BINDINGS" ) then
+		self.tooltipText = MicroButtonTooltipText(CHARACTER_BUTTON, "TOGGLECHARACTER0");
+	end
+end
+
+function CharacterMicroButton_SetPushed()
+	MicroButtonPortrait:SetTexCoord(0.2666, 0.8666, 0, 0.8333);
+	MicroButtonPortrait:SetAlpha(0.5);
+end
+
+function CharacterMicroButton_SetNormal()
+	MicroButtonPortrait:SetTexCoord(0.2, 0.8, 0.0666, 0.9);
+	MicroButtonPortrait:SetAlpha(1.0);
+end
+
+function MainMenuMicroButton_SetPushed()
+	MainMenuMicroButton:SetButtonState("PUSHED", 1);
+	MainMenuBarPerformanceBar:SetPoint("TOPLEFT", MainMenuMicroButton, "TOPLEFT", 9, -36);
+end
+
+function MainMenuMicroButton_SetNormal()
+	MainMenuMicroButton:SetButtonState("NORMAL");
+	MainMenuBarPerformanceBar:SetPoint("TOPLEFT", MainMenuMicroButton, "TOPLEFT", 10, -34);
+end
+
+-- Talent button specific functions
+function TalentMicroButton_OnEvent(self, event, ...)
+	if ( event == "PLAYER_LEVEL_UP" ) then
+		local level = ...;
+		UpdateMicroButtons();
+		if ( not CharacterFrame or not CharacterFrame:IsShown() and level >= SHOW_TALENT_LEVEL) then
+			SetButtonPulse(self, 60, 1);
+		end
+	elseif ( event == "UNIT_LEVEL" or event == "PLAYER_ENTERING_WORLD" ) then
+		UpdateMicroButtons();
+	elseif ( event == "UPDATE_BINDINGS" ) then
+		self.tooltipText =  MicroButtonTooltipText(TALENTS_BUTTON, "TOGGLETALENTS");
+	end
+end
+
+function ProfessionsMicroButton_OnLoad(self)
+    LoadMicroButtonTextures(self, "Spellbook");
+    self:RegisterEvent("UPDATE_BINDINGS");
+    self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
+    self.newbieText = NEWBIE_TOOLTIP_PROFESSIONS;
+end
+
+function ProfessionsMicroButton_OnClick(self)
+    ToggleProfessionFrame();
+end
+
+function ProfessionsMicroButton_OnEnter(self)
+    self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
+    GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, NEWBIE_TOOLTIP_PROFESSIONS);
+end
+
+function ProfessionsMicroButton_OnEvent(self, event, ...)
+    if event == "UPDATE_BINDINGS" then
+        self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
+    end
+    UpdateMicroButtons();
+end
