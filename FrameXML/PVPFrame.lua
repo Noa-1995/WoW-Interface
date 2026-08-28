@@ -564,18 +564,15 @@ function PVPMicroButton_SetNormal()
 end
 
 function PVPFrame_SetToOffSeason()
-	PVPTeam1:Hide();
-	PVPTeam1Standard:Hide();
-	PVPTeam2:Hide();
-	PVPTeam2Standard:Hide();
-	PVPTeam3:Hide();
-	PVPTeam3Standard:Hide();
-	
-	PVPFrameBlackFilter:Show();
-	PVPFrameOffSeason:Show();
-	
-	local previousArenaSeason = GetPreviousArenaSeason();
-	PVPFrameOffSeasonText:SetText(format(ARENA_OFF_SEASON_TEXT, previousArenaSeason, previousArenaSeason+1));
+    PVPTeam1:Hide();
+    PVPTeam1Standard:Hide();
+    PVPTeam2:Hide();
+    PVPTeam2Standard:Hide();
+    PVPTeam3:Hide();
+    PVPTeam3Standard:Hide();
+    
+    local previousArenaSeason = GetPreviousArenaSeason();
+    PVPFrameOffSeasonText:SetText(format(ARENA_OFF_SEASON_TEXT, previousArenaSeason, previousArenaSeason+1));
 end
 
 function PVPFrame_SetToInSeason()

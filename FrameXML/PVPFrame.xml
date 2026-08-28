@@ -210,21 +210,6 @@
 							<TexCoords left="0.321289063" right="0.637625000" top="0.000000000" bottom="0.550000000"/>
 						</Texture>
 					</Layer>
-					<Layer level="OVERLAY">
-						<Texture name="$parentBlackFilter" hidden="true">
-							<Size>
-								<AbsDimension x="320" y="275"/>
-							</Size>
-							<Anchors>
-								<Anchor point="TOPLEFT">
-									<Offset>
-										<AbsDimension x="22" y="-156"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-							<Color r="0" b="0" g="0" a="0.7"/>
-						</Texture>
-					</Layer>
 				</Layers>
 				<Frames>
 
