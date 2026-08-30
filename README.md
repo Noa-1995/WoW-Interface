@@ -36,7 +36,8 @@ The project is actively being developed and will receive much more content and n
 * 🏰 **Dungeon Finder:** Complete visual redesign inspired by modern expansions.
 * ⚔️ **PvP Interface:** New layout and visual presentation for battlegrounds and arenas.
 
-> 🚧 **Work in progress**
+> 🚧 **Work in progress** 
+Credits also to: Furioz and s0h2x
 
 📸 Preview
 
