@@ -20,7 +20,7 @@ El proyecto está en desarrollo y se irá ampliando con mucho más contenido y n
 
 > 🚧 **Proyecto en desarrollo**
 
-creditos tambien a: Furioz and s0h2
+Creditos Tambien a: Furioz and s0h2
 
 ---
 
