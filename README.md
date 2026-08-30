@@ -41,15 +41,19 @@ The project is actively being developed and will receive much more content and n
 📸 Preview
 
 Dungeon Finder/PvP Interface
+
 <img width="664" height="525" alt="Screenshot_1" src="https://github.com/user-attachments/assets/5ef5803a-c0e3-43db-856e-2bed3878abd1" />
 <img width="665" height="533" alt="Screenshot_2" src="https://github.com/user-attachments/assets/94ff0d39-3f70-44ed-ba41-9e203f19336b" />
 
 Backpack
+
 <img width="701" height="1009" alt="Screenshot_1" src="https://github.com/user-attachments/assets/1f3966f0-7c0f-4a4c-a1b1-fd2fd1a219a2" />
 <img width="1153" height="748" alt="Screenshot_2" src="https://github.com/user-attachments/assets/8ae68748-4190-4500-aac4-94cb96041ba2" />
 
 Quest Map
+
 <img width="1712" height="905" alt="Screenshot_3" src="https://github.com/user-attachments/assets/48a6c838-231e-451f-aa30-0cd87c807e61" />
 
 Enhanced Professions
+
 <img width="1465" height="661" alt="Screenshot_4" src="https://github.com/user-attachments/assets/85bdb449-bd92-4626-b58d-b6cc0636279d" />
