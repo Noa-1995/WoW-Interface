@@ -116,9 +116,9 @@ local CONST_ATLAS_TEXTUREPATH	= 9
 local function Method_SetAtlasTex( self, atlasName, useAtlasSize, filterMode )
 	assert(self, "SetAtlasTex: not found object")
 	assert(atlasName, "SetAtlasTex: AtlasName must be specified")
-	assert(PRETTY_ATLAS_STORAGE[atlasName], "SetAtlasTex: Atlas named "..atlasName.." does not exist")
+	assert(N_ATLAS_STORAGE[atlasName], "SetAtlasTex: Atlas named "..atlasName.." does not exist")
 
-	local atlas = PRETTY_ATLAS_STORAGE[atlasName]
+	local atlas = N_ATLAS_STORAGE[atlasName]
 
 	self:SetTexture(atlas[CONST_ATLAS_TEXTUREPATH] or "", atlas[CONST_ATLAS_TILESHORIZ], atlas[CONST_ATLAS_TILESVERT])
 
@@ -213,15 +213,19 @@ function Method_IsTruncated(fontString)
 
 -- Frame Method
 function Frame.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function Frame.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function Frame.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function Frame.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function Frame.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function Frame.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- Button Method
 function Button.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function Button.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function Button.__index:SetEnabled( ... ) Method_SetEnabled( self, ... ) end
 function Button.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function Button.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function Button.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function Button.__index:SetNormalAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlasTex( self:GetNormalTexture(), atlasName, useAtlasSize, filterMode )  end
 function Button.__index:SetPushedAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlasTex( self:GetPushedTexture(), atlasName, useAtlasSize, filterMode )  end
 function Button.__index:SetDisabledAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlasTex( self:GetDisabledTexture(), atlasName, useAtlasSize, filterMode )  end
@@ -230,52 +234,66 @@ function Button.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) 
 
 -- Slider Method
 function Slider.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function Slider.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function Slider.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function Slider.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function Slider.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function Slider.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- Texture Method
 function Texture.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function Texture.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function Texture.__index:SetSubTexCoords( left, right, top, bottom ) Method_SetSubTexCoords( self, left, right, top, bottom ) end
 function Texture.__index:SetPortrait( displayID ) Method_SetPortrait( self, displayID ) end
 function Texture.__index:SetAtlasTex( atlasName, useAtlasSize, filterMode ) Method_SetAtlasTex( self, atlasName, useAtlasSize, filterMode ) end
 function Texture.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function Texture.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function Texture.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function Texture.__index:GetEffectiveScale() return self:GetParent():GetEffectiveScale() end
 function Texture.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- StatusBar Method
 function StatusBar.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function StatusBar.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function StatusBar.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function StatusBar.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function StatusBar.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function StatusBar.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- SimpleHTML Method
 function SimpleHTML.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function SimpleHTML.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function SimpleHTML.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function SimpleHTML.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function SimpleHTML.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function SimpleHTML.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- FontString Method
 function FontString.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function FontString.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function FontString.__index:SetDesaturated( toggle, color ) Method_SetDesaturated( self, toggle, color ) end
 function FontString.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function FontString.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function FontString.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function FontString.__index:GetEffectiveScale() return self:GetParent():GetEffectiveScale() end
 function FontString.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 function FontString.__index:IsTruncated() return Method_IsTruncated(self) end
 
 -- ScrollFrame Method
 function ScrollFrame.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function ScrollFrame.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function ScrollFrame.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function ScrollFrame.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function ScrollFrame.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function ScrollFrame.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- CheckButton Method
 function CheckButton.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function CheckButton.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function CheckButton.__index:SetEnabled( ... ) Method_SetEnabled( self, ... ) end
 function CheckButton.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArrayFrame( self, arrayName, element, setInSelf ) end
 function CheckButton.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function CheckButton.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function CheckButton.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- DressUpModel
@@ -283,17 +301,21 @@ if DressUpModel then
 	DressUpModel.__index.__SetUnit = DressUpModel.__index.__SetUnit or DressUpModel.__index.SetUnit
 	function DressUpModel.__index:SetUnit( ... ) Method_SetUnit( self, ... ) end
 	function DressUpModel.__index:SetParentArrayFrame( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-	function DressUpModel.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+	function DressUpModel.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+	function DressUpModel.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 	function DressUpModel.__index:GetScaledRectVal() return Method_GetScaledRect(self) end
 end
 
 -- Model
 function Model.__index:SetFrameShown( ... ) Method_SetFrameShown( self, ... ) end
+function Model.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function Model.__index:ClearAndSetNewPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
+function Model.__index:ClearAndSetPoint( ... ) Method_ClearAndSetNewPoint( self, ... ) end
 function Model.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 
 -- EditBox
 function EditBox.__index:SetFrameShown(...) Method_SetFrameShown(self, ...) end
+function EditBox.__index:SetShown( ... ) Method_SetFrameShown( self, ... ) end
 function EditBox.__index:ClearAndSetNewPoint(...) Method_ClearAndSetNewPoint(self, ...) end
 function EditBox.__index:GetScaledRectVal() return Method_GetScaledRectVal(self) end
 

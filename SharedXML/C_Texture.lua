@@ -12,9 +12,9 @@ local CONST_ATLAS_TEXTUREPATH	= 9
 
 function C_TextureAtlas.GetAtlasTexInfo( atlas )
 	assert(atlas, "C_TextureAtlas.GetAtlasTexInfo: AtlasName must be specified")
-	assert(PRETTY_ATLAS_STORAGE[atlas], "C_TextureAtlas.GetAtlasTexInfo: Atlas named "..atlas.." does not exist")
+	assert(N_ATLAS_STORAGE[atlas], "C_TextureAtlas.GetAtlasTexInfo: Atlas named "..atlas.." does not exist")
 
-	local atlas = PRETTY_ATLAS_STORAGE[atlas]
+	local atlas = N_ATLAS_STORAGE[atlas]
 	local AtlasInfo = {}
 
 	AtlasInfo.width 			= atlas[CONST_ATLAS_WIDTH]

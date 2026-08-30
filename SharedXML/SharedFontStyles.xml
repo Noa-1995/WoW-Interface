@@ -10,9 +10,9 @@
 	<Font name="GameFontNormal10" inherits="GameFontNormal" virtual="true">
 		<FontHeight val="10"/>
 	</Font>
-	<Script file="..\FrameXML\API_\C_GlobalLocale.lua"/>
-	<Script file="..\FrameXML\API_\C_APISpecialization.lua"/>
-	<Script file="..\FrameXML\API_\C_APIBattlefieldScore.lua"/>
+	<Script file="..\FrameXML\Utils\C_GlobalLocale.lua"/>
+	<Script file="..\FrameXML\Utils\C_APISpecialization.lua"/>
+	<Script file="..\FrameXML\Utils\C_APIBattlefieldScore.lua"/>
 	<Font name="GameFontGraySmall" inherits="GameFontNormalSmall" virtual="true">
 		<Color r="0.68" g="0.68" b="0.68"/>
 	</Font>

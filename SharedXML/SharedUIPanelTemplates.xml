@@ -1822,6 +1822,32 @@
 			</Button>
 		</Frames>
 	</Frame>
+	
+	<Frame name="PortraitFrameTemplateSimple_Noa_NineSlice" inherits="PortraitFrameTemplateNoCloseButton_NineSlice" virtual="true">
+    	<Attributes>
+    	    <Attribute name="layoutType" value="PortraitFrameTemplateSimple_Noa" type="string"/>
+    	</Attributes>
+    	<Frames>
+        	<Button name="$parentCloseButton" parentKey="CloseButton" inherits="UIPanelCloseButton" toplevel="true">
+            	<Anchors>
+            	    <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="5.6" y="5"/>
+            	</Anchors>
+        	</Button>
+    	</Frames>
+	</Frame>
+	
+	<Frame name="PortraitFrameTemplateMinimal_Noa_NineSlice" inherits="PortraitFrameTemplateNoCloseButton_NineSlice" virtual="true">
+    	<Attributes>
+    	    <Attribute name="layoutType" value="PortraitFrameTemplateMinimal_Noa" type="string"/>
+    	</Attributes>
+    	<Frames>
+        	<Button name="$parentCloseButton" parentKey="CloseButton" inherits="UIPanelCloseButton" toplevel="true">
+            	<Anchors>
+            	    <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="5.6" y="5"/>
+            	</Anchors>
+        	</Button>
+    	</Frames>
+	</Frame>
 
 	<Frame name="PortraitFrameTemplateMinimizable_NineSlice" inherits="PortraitFrameTemplate_NineSlice" virtual="true">
 		<Attributes>
@@ -1829,7 +1855,7 @@
 		</Attributes>
 	</Frame>
 
-	<!-- s0h2x HiRes -->
+	<!-- HiRes -->
 	<Frame name="PortraitFrameTemplateNoCloseButtonHighResolution" virtual="true">
 		<Size x="338" y="424"/>
 		<Layers>

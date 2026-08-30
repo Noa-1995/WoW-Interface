@@ -1,4 +1,4 @@
-PRETTY_ATLAS_STORAGE = {
+N_ATLAS_STORAGE = {
 	-- ["atlasName"] = {width, height, left, right, top, bottom, tilesHoriz, tilesVert, "texturePath"},
 
 	["!UI-Frame-RightTile-HiRes"] = {17, 512, 0.015625, 0.281250, 0.000000, 1.000000, false, true, "Interface/FrameGeneral/UIFrameHiResVertical"},
@@ -275,11 +275,17 @@ PRETTY_ATLAS_STORAGE = {
 	["token-itemslot"] = {251, 56, 0.616211, 0.861328, 0.345703, 0.455078, false, false, "Interface/AuctionFrame/Token"},
 
 	["UI-Frame-PortraitMetal-CornerTopLeft-2x"] = {132, 132, 0.260742, 0.518555, 0.260742, 0.518555, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
+	["UI-Frame-PortraitMetal-CornerTopLeftSimple-2x"] = {132, 132, 0.518554688, 0.776367188, 0.000000000, 0.257812500, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
+	["UI-Frame-PortraitMetal-CornerTopLeftMinimal-2x"] = {132, 132, 0.259765625, 0.517578125, 0.520507813, 0.778320313, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
+	
 	["UI-Frame-Metal-CornerBottomLeft-2x"] = {132, 132, 0.000977, 0.258789, 0.000977, 0.258789, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
 	["UI-Frame-Metal-CornerTopLeft-2x"] = {132, 132, 0.520508, 0.778320, 0.000977, 0.258789, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
 	["UI-Frame-Metal-CornerTopRight-2x"] = {132, 132, 0.000977, 0.258789, 0.260742, 0.518555, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
 	["UI-Frame-Metal-CornerTopRightDouble-2x"] = {132, 132, 0.000977, 0.258789, 0.520508, 0.778320, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
 	["UI-Frame-Metal-CornerBottomRight-2x"] = {132, 132, 0.260742, 0.518555, 0.000977, 0.258789, false, false, "Interface/FrameGeneral/UIFrameMetal2x"},
+	
+	
+	
 	["insetshadow"] = {510, 395, 0.001953, 0.998047, 0.001953, 0.773438, false, false, "Interface/Common/InsetShadow"},
 	["_UI-Frame-Metal-EdgeTop-2x"] = {128, 132, 0.000000, 1.000000, 0.260742, 0.518555, true, false, "Interface/FrameGeneral/UIFrameMetalHorizontal2x"},
 	["_UI-Frame-Metal-EdgeBottom-2x"] = {128, 132, 0.000000, 1.000000, 0.000977, 0.258789, true, false, "Interface/FrameGeneral/UIFrameMetalHorizontal2x"},
@@ -604,4 +610,22 @@ PRETTY_ATLAS_STORAGE = {
 	["dressingroom-button-appearancelist-down"] = {27, 25, 0.9453125, 0.998046875, 0.001953125, 0.05078125, false, false, "Interface/DressUpFrame/DressingRoom"},
 	["dressingroom-itemborder-illusion"] = {20, 20, 0.78125, 0.859375, 0.166015625, 0.244140625, false, false, "Interface/DressUpFrame/DressingRoom"},
 	["dressingroom-itemborder-artifact"] = {20, 20, 0.69921875, 0.77734375, 0.001953125, 0.080078125, false, false, "Interface/DressUpFrame/DressingRoom"},
+	
+	["HelpSidebar-Background"] = { 390, 1018, 0.001953125, 0.3828125, 0.001953125, 0.99609375, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-Disabled"] = { 512, 138, 0.3857421875, 0.8857421875, 0.4150390625, 0.5498046875, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-Highlight"] = { 512, 138, 0.3857421875, 0.8857421875, 0.27734375, 0.412109375, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-Normal"] = { 512, 138, 0.3857421875, 0.8857421875, 0.001953125, 0.13671875, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-Pushed"] = { 512, 138, 0.3857421875, 0.8857421875, 0.1396484375, 0.2744140625, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-Selected"] = { 512, 138, 0.3857421875, 0.8857421875, 0.552734375, 0.6875, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Button-SelectedPushed"] = { 512, 138, 0.3857421875, 0.8857421875, 0.6904296875, 0.8251953125, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-AccountSecurity"] = { 74, 74, 0.888671875, 0.9609375, 0.001953125, 0.07421875, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-Bug"] = { 74, 74, 0.888671875, 0.9609375, 0.0771484375, 0.1494140625, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-CharacterStuck"] = { 74, 74, 0.888671875, 0.9609375, 0.15234375, 0.224609375, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-Contacts"] = { 74, 74, 0.3857421875, 0.4580078125, 0.828125, 0.900390625, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-ItemRestoration"] = { 74, 74, 0.888671875, 0.9609375, 0.2275390625, 0.2998046875, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-KnowledgeBase"] = { 74, 74, 0.888671875, 0.9609375, 0.302734375, 0.375, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-OpenTicket"] = { 74, 74, 0.4609375, 0.533203125, 0.828125, 0.900390625, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-ReportAbuse"] = { 74, 74, 0.888671875, 0.9609375, 0.3779296875, 0.4501953125, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-Suggestion"] = { 74, 74, 0.3857421875, 0.4580078125, 0.9033203125, 0.9755859375, false, false, "Interface/HelpFrame/HelpSidebar" },
+	["HelpSidebar-Icon-Support"] = { 74, 74, 0.5361328125, 0.6083984375, 0.828125, 0.900390625, false, false, "Interface/HelpFrame/HelpSidebar" },
 }

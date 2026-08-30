@@ -155,6 +155,30 @@ local layouts =
 		LeftEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeLeft-2x", x = 0, y = 0, x1 = 0, y1 = 0 },
 		RightEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeRight-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
 	},
+	
+	PortraitFrameTemplateSimple_Noa =
+	{
+    	TopLeftCorner =    { layer = "OVERLAY", atlas = "UI-Frame-PortraitMetal-CornerTopLeftSimple-2x", x = -13, y = 16, },
+    	TopRightCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerTopRight-2x", x = 4, y = 16, },
+    	BottomLeftCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerBottomLeft-2x", x = -13, y = -3, },
+    	BottomRightCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerBottomRight-2x", x = 4, y = -3, },
+    	TopEdge = { layer="OVERLAY", atlas = "_UI-Frame-Metal-EdgeTop-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+    	BottomEdge = { layer = "OVERLAY", atlas = "_UI-Frame-Metal-EdgeBottom-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+    	LeftEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeLeft-2x", x = 0, y = 0, x1 = 0, y1 = 0 },
+    	RightEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeRight-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+	},
+	
+	PortraitFrameTemplateMinimal_Noa =
+	{
+    	TopLeftCorner =    { layer = "OVERLAY", atlas = "UI-Frame-PortraitMetal-CornerTopLeftMinimal-2x", x = -29, y = 16, },
+    	TopRightCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerTopRight-2x", x = 4, y = 16, },
+    	BottomLeftCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerBottomLeft-2x", x = -13, y = -3, },
+    	BottomRightCorner =    { layer = "OVERLAY", atlas = "UI-Frame-Metal-CornerBottomRight-2x", x = 4, y = -3, },
+    	TopEdge = { layer="OVERLAY", atlas = "_UI-Frame-Metal-EdgeTop-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+    	BottomEdge = { layer = "OVERLAY", atlas = "_UI-Frame-Metal-EdgeBottom-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+    	LeftEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeLeft-2x", x = 16, y = 0, x1 = 0, y1 = 0 },
+    	RightEdge = { layer = "OVERLAY", atlas = "!UI-Frame-Metal-EdgeRight-2x", x = 0, y = 0, x1 = 0, y1 = 0, },
+	},
 
 	PortraitFrameTemplateMinimizable =
 	{
