@@ -1,0 +1,16 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+    <Script file="TradeSkillFrame.lua"/>
+
+    <Frame name="CustomTradeSkillNewFrame" inherits="PortraitFrameTemplate_NineSlice" toplevel="true" movable="false" enableMouse="true" hidden="true" parent="UIParent">
+        <Size x="700" y="510"/>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="TOPLEFT" x="0" y="-104"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad>CustomTradeSkillNew_OnLoad(self);</OnLoad>
+            <OnShow>CustomTradeSkillNew_OnShow(self);</OnShow>
+            <OnHide>CustomTradeSkillNew_OnHide(self);</OnHide>
+            <OnEvent>CustomTradeSkillNew_OnEvent(self, event, ...);</OnEvent>
+        </Scripts>
+    </Frame>
+</Ui>

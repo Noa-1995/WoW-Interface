@@ -1,0 +1,121 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+ <Script file="DressUpFrame.lua"/>
+
+ <Frame name="DressUpFrame" frameStrata="DIALOG" toplevel="true" enableMouse="true" parent="UIParent" inherits="ButtonFrameTemplate_NineSlice" hidden="true">
+ 	<Size x="450" y="545"/>
+ 	<Anchors>
+ 		<Anchor point="TOPLEFT" x="70" y="-104"/>
+ 	</Anchors>
+ 	<Layers>
+ 		<Layer level="OVERLAY">
+ 			<FontString name="$parentDescText" parentKey="DescText" inherits="GameFontNormalSmall" text="DRESSUP_FRAME_INSTRUCTIONS">
+				<Size x="260" y="32"/>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentTitleText" relativePoint="BOTTOM" x="0" y="-11" />
+				</Anchors>
+			</FontString>
+ 		</Layer>
+ 	</Layers>
+	<Frames>
+		<Frame name="$parentMaximizeMinimizeFrame" inherits="MaximizeMinimizeButtonFrameTemplate">
+			<Anchors>
+				<Anchor point="RIGHT" relativeTo="$parentCloseButton" relativePoint="LEFT" x="8" y="0"/>
+			</Anchors>
+			<Layers>
+				<Layer level="BACKGROUND">
+					<Texture parentKey="OuterBorderButton" atlas="UI-OuterBorderButtonPatch" useAtlasSize="true">
+						<Anchors>
+							<Anchor point="CENTER" relativePoint="LEFT" x="6" y="0"/>
+						</Anchors>
+					</Texture>
+				</Layer>
+			</Layers>
+			<Scripts>
+				<OnShow>
+					self.OuterBorderButton:SetAtlasTex("UI-OuterBorderButtonPatch", true)
+					function OnMaximize(frame)
+						frame:GetParent():SetSize(450, 545)
+						UpdateUIPanelPositions(frame)
+
+						frame:GetParent().DescText:SetPoint("TOP", frame:GetParent().TitleText, "BOTTOM", 0, -11)
+					end
+
+					self:SetOnMaximizedCallback(OnMaximize)
+
+					function OnMinimize(frame)
+						frame:GetParent():SetSize(334, 423)
+						UpdateUIPanelPositions(frame)
+
+						frame:GetParent().DescText:SetPoint("TOP", frame:GetParent().TitleText, "BOTTOM", 22, -11)
+					end
+
+					self:SetOnMinimizedCallback(OnMinimize)
+				</OnShow>
+			</Scripts>
+		</Frame>
+		<Button parentKey="CancelButton" name="pretty_DressUpFrameCancelButton" inherits="UIPanelButtonTemplate" text="CLOSE">
+			<Size x="80" y="22"/>
+			<Anchors>
+				<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-7" y="4"/>
+			</Anchors>
+			<Scripts>
+				<OnClick function="HideParentPanel"/>
+			</Scripts>
+		</Button>
+		<Button parentKey="ResetButton" name="pretty_DressUpFrameResetButton" inherits="UIPanelButtonTemplate" text="RESET">
+			<Size x="100" y="22"/>
+			<Anchors>
+				<Anchor point="RIGHT" relativeTo="pretty_DressUpFrameCancelButton" relativePoint="LEFT"/>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					if ( DressUpModel.isCreature ) then
+						HideUIPanel(DressUpFrame);
+						if ( DressUpModel.index ) then
+							DressUpModel.index = nil;
+						elseif ( DressUpModel.petID ) then
+							DressUpModel.petID = nil;
+						end
+					else
+						DressUpModel:Dress();
+						DressUpModel:SetUnit("player", true)
+					end
+					PlaySound("gsTitleOptionOK");
+				</OnClick>
+			</Scripts>
+		</Button>
+		<DressUpModel name="DressUpModel" toplevel="true" inherits="ModelWithControlsPlayerTemplate">
+			<Layers>
+				<Layer level="BACKGROUND">
+					<Texture parentKey="ModelBackground" atlas="dressingroom-background-warrior">
+						<Anchors>
+							<Anchor point="TOPLEFT"/>
+							<Anchor point="BOTTOMRIGHT"/>
+						</Anchors>
+					</Texture>
+				</Layer>
+			</Layers>
+			<Anchors>
+				<Anchor point="TOPLEFT" x="7" y="-63"/>
+				<Anchor point="BOTTOMRIGHT" x="-9" y="28"/>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					SharedXML_Model_OnLoad(self, 1);
+				</OnLoad>
+			</Scripts>
+		</DressUpModel>
+	</Frames>
+    <Scripts>
+        <OnLoad function="DressUpFrame_OnLoad"/>
+		<OnShow>
+			SetPortraitTexture(self.portrait, "player");
+			PlaySound("igCharacterInfoOpen");
+		</OnShow>
+		<OnHide>
+			PlaySound("igCharacterInfoClose");
+		</OnHide>
+    </Scripts>
+</Frame>
+</Ui>

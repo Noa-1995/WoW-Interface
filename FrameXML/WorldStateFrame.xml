@@ -1,0 +1,1841 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="WorldStateFrame.lua"/>
+	<Frame name="WorldStateAlwaysUpTemplate" virtual="true" hidden="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="45" y="24"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon">
+					<Size x="42" y="42"/>
+					<Anchors>
+						<Anchor point="LEFT" x="-6" y="0"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentText" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="-12" y="10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentDynamicIconButton" enableMouse="true">
+				<Size x="32" y="32"/>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentText" relativePoint="RIGHT" x="0" y="0" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentIcon">
+							<Size>
+								<AbsDimension x="32" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if ( self.tooltip ) then
+							GameTooltip:SetOwner(self, ANCHOR_BOTTOMLEFT);
+							GameTooltip:SetText(self.tooltip);
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentFlash">
+				<Size>
+					<AbsDimension x="32" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentDynamicIconButton">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentTexture" alphaMode="ADD">
+							<Size>
+								<AbsDimension x="32" y="32"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnEnter>
+				if ( self.tooltip ) then
+					GameTooltip:SetOwner(self, ANCHOR_BOTTOMLEFT);
+					GameTooltip:SetText(self.tooltip);
+				end
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Frame>
+	<Button name="WorldStateScoreColumnTemplate" enableMouse="true" hidden="false" virtual="true">
+		<Size x="75" y="30"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="$parentText" parentKey="Text" inherits="GameFontGraySmall">
+					<Size x="75" y="24"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				GameTooltip:AddLine(self.tooltip, 1.0, 1.0, 1.0, 1);
+				GameTooltip:Show();
+			</OnEnter>
+			<OnClick>
+				if ( self.sortType ) then
+					SortBattlefieldScoreData(self.sortType);
+				end
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+	<Frame name="WorldStateScoreTemplate" virtual="true" toplevel="true" hidden="false">
+		<Size x="700" y="16"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentFactionLeft" file="Interface\WorldStateFrame\WorldStateFinalScore-Highlight">
+					<Size x="256" y="16"/>
+					<Anchors>
+						<Anchor point="LEFT" x="0" y="0"/>
+					</Anchors>
+					<TexCoords left="0" right="1" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="$parentFactionRight" file="Interface\WorldStateFrame\WorldStateFinalScore-Highlight">
+					<Size x="20" y="16"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentFactionLeft" relativePoint="RIGHT" x="0" y="0"/>
+						<Anchor point="RIGHT" x="0" y="0"/>
+					</Anchors>
+					<TexCoords left="1" right="0" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentTeam" inherits="GameFontNormal" justifyH="LEFT">
+					<Size x="175" y="14"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentHonorableKills" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="LEFT" x="127" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentKillingBlows" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="LEFT" x="127" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentDeaths" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="LEFT" x="127" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentHonorGained" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" x="-7" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentTeamSkill" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" x="-7" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentDamage" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" x="-7" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentHealing" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" x="-7" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString name="$parentColumn1Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn1Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn1Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentColumn2Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn2Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn2Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</Texture>
+				<FontString name="$parentColumn3Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn3Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn3Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentColumn4Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn4Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn4Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentColumn5Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn5Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn5Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentColumn6Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn6Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn6Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentColumn7Text" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<Texture name="$parentColumn7Icon">
+					<Size x="16" y="16"/>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentColumn7Text" relativePoint="LEFT" x="0" y="-1"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentRBGRankButton" parentKey="RBGRank" enableMouse="true" hidden="false">
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="LEFT" x="1" y="0" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentRankIcon" parentKey="RankIcon" file="Interface/PVPFrame/PvPPrestigeIcons"/>
+						<Texture name="$parentFactionIcon" parentKey="FactionIcon" file="Interface\QUESTFRAME\objectivewidget">
+							<Size x="16" y="18"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if ( self.tooltip ) then
+							GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+							GameTooltip:SetText(self.tooltip);
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentClassButton" enableMouse="true">
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="LEFT" x="20" y="0"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentIcon" file="Interface\WorldStateFrame\Icons-Classes"/>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if ( self.tooltip ) then
+							GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+							GameTooltip:SetText(self.tooltip);
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentName">
+				<Size x="160" y="16"/>
+				<Anchors>
+					<Anchor point="LEFT" x="40" y="1"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentText" inherits="GameFontNormal" justifyH="LEFT">
+							<Size x="190" y="16"/>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if ( self.tooltip and self.name ) then
+							GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+							GameTooltip:SetText(self.name);
+							GameTooltip:AddLine(self.tooltip, 1.0, 1.0, 1.0, 1);
+							GameTooltip:Show();
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+					<OnMouseUp>
+						ScorePlayer_OnMouseUp(self, button);
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+		</Frames>
+	</Frame>
+	<Frame name="WorldStateCaptureBarTemplate" virtual="true" toplevel="true" parent="UIParent" hidden="false">
+		<Size>
+			<AbsDimension x="173" y="26"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPRIGHT" relativeTo="MinimapCluster" relativePoint="BOTTOMRIGHT">
+				<Offset>
+					<AbsDimension x="0" y="15"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeftBar" file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="61" y="9"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="26" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.8203125" right="1.0" top="0" bottom="0.140625"/>
+				</Texture>
+				<Texture name="$parentRightBar" file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="60" y="9"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="-26" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.8203125" right="1.0" top="0.171875" bottom="0.3125"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentMiddleBar" file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="25" y="9"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.8203125" right="1.0" top="0.34375" bottom="0.484375"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="173" y="26"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP"/>
+					</Anchors>
+					<TexCoords left="0" right="0.67578125" top="0" bottom="0.40625"/>
+				</Texture>
+				<Texture name="$parentRightLine" file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="3" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentMiddleBar" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="-1" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.74609375" right="0.7578125" top="0" bottom="0.125"/>
+				</Texture>
+				<Texture name="$parentLeftLine" file="Interface\WorldStateFrame\WorldState-CaptureBar">
+					<Size>
+						<AbsDimension x="3" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parentMiddleBar" relativePoint="LEFT">
+							<Offset>
+								<AbsDimension x="1" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.74609375" right="0.7578125" top="0" bottom="0.125"/>
+				</Texture>
+				<Texture name="$parentLeftIconHighlight" file="Interface\WorldStateFrame\WorldState-CaptureBar" hidden="true" alphaMode="ADD">
+					<Size>
+						<AbsDimension x="27" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="-1" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.10546875" top="0.4375" bottom="0.875"/>
+				</Texture>
+				<Texture name="$parentRightIconHighlight" file="Interface\WorldStateFrame\WorldState-CaptureBar" hidden="true" alphaMode="ADD">
+					<Size>
+						<AbsDimension x="27" y="28"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT">
+							<Offset>
+								<AbsDimension x="1" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" right="0.10546875" top="0.4375" bottom="0.875"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentIndicator">
+				<Size>
+					<AbsDimension x="5" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER"/>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture file="Interface\WorldStateFrame\WorldState-CaptureBar" setAllPoints="true">
+							<Size>
+								<AbsDimension x="5" y="18"/>
+							</Size>
+							<TexCoords left="0.77734375" right="0.796875" top="0" bottom="0.28125"/>
+						</Texture>
+					</Layer>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentLeft" file="Interface\WorldStateFrame\WorldState-CaptureBar" hidden="false">
+							<Size>
+								<AbsDimension x="8" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="1" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.7265625" right="0.76171875" top="0.140625" bottom="0.375"/>
+						</Texture>
+						<Texture name="$parentRight" file="Interface\WorldStateFrame\WorldState-CaptureBar" hidden="false">
+							<Size>
+								<AbsDimension x="8" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="-1" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.76171875" right="0.7265625" top="0.140625" bottom="0.375"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnShow>
+				UIParent_ManageFramePositions()
+			</OnShow>
+			<OnHide>
+				UIParent_ManageFramePositions()
+			</OnHide>
+		</Scripts>
+	</Frame>
+	<Frame name="WorldStateAlwaysUpFrame" toplevel="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="10" y="10"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset>
+					<AbsDimension x="-5" y="-15"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnLoad function="WorldStateAlwaysUpFrame_OnLoad"/>
+			<OnEvent function="WorldStateAlwaysUpFrame_OnEvent"/>
+			<OnEnter>
+				if ( self.tooltip ) then
+					GameTooltip:SetOwner(self);
+					GameTooltip:SetText(self.tooltip);
+				end
+			</OnEnter>
+			<OnLeave function="GameTooltip_Hide"/>
+		</Scripts>
+	</Frame>
+	<Frame name="WorldStateScoreStatusBarTemplate" minValue="0" maxValue="1" defaultValue="1" toplevel="true" virtual="true">
+		<Size x="186" y="16"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground" parentKey="Background">
+					<Color r="0.03" g="0.07" b="0.17" a="0.8"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+			</Layer>
+			<Layer level="ARTWORK">
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentBorder" parentKey="Border" file="Interface\PaperDollInfoFrame\UI-Character-Skills-BarBorder">
+					<Size x="194" y="34"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+				<FontString name="$parentText" parentKey="Text" inherits="ReputationDetailFont" text="WORLDSTATE_SCORE_EFFICIENCY">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<BarTexture name="$parentBar" file="Interface\TargetingFrame\UI-StatusBar" />
+		<BarColor r="0.25" g="0.40" b="0.86" />
+	</Frame>
+
+	<Button name="WorldStatePoiButtonTemplate" virtual="true" hidden="true">
+		<Size x="16" y="16"/>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="0" />
+		</Anchors>
+		<Layers>
+			<Layer level="BORDER">
+				<Texture name="$parentIcon" parentKey="Icon" file="Interface\Minimap\POIICONS">
+					<TexCoords left="0.70703125" right="0.7734375" top="0.00390625" bottom="0.0703125"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				local parent = self:GetParent():GetParent()
+
+				if not parent.POIButtons then
+					parent.POIButtons = {}
+				end
+
+				parent.POIButtons[self:GetID()] = self
+			</OnLoad>
+			<OnEnter>
+				if self.name and self.description then
+					if self:GetParent():GetParent():GetID() == 1 then
+						GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
+					else
+						GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+					end
+					GameTooltip:SetText(self.name)
+					GameTooltip:AddLine(self.description, 1, 1, 1, true)
+					GameTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave function="GameTooltip_Hide"/>
+		</Scripts>
+	</Button>
+	<Frame name="WorldStateTopCenterFrame_StatusBarTemplate" virtual="true">
+		<Size x="92" y="22"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="BG">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentBarFillTexture" parentKey="BarFillTexture" hidden="true">
+					<Size x="1" y="22"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentBorderLeft" parentKey="BorderLeft">
+					<Size x="10" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" x="-4"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentBorderRight" parentKey="BorderRight">
+					<Size x="10" y="32"/>
+					<Anchors>
+						<Anchor point="RIGHT" x="4"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="BorderCenter">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentBorderLeft" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parentBorderRight" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentSubLayer" parentKey="SubLayer" setAllPoints="true">
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Spark" alphaMode="ADD" hidden="true">
+							<Size x="16" y="39"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="0" />
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<Texture parentKey="Icon">
+							<Size x="34" y="41"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="0" />
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString parentKey="Label" inherits="GameFontHighlight">
+							<Anchors>
+								<Anchor point="CENTER" y="0"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Frame name="$parentContainer" parentKey="Container">
+				<Size x="90" y="18"/>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" x="0" y="-4" />
+				</Anchors>
+				<Frames>
+					<Button name="$parentPOIButton1" parentKey="POIButton1" inherits="WorldStatePoiButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="CENTER" x="0" y="0" />
+						</Anchors>
+					</Button>
+					<Button name="$parentPOIButton2" parentKey="POIButton2" inherits="WorldStatePoiButtonTemplate" id="2">
+						<Anchors>
+							<Anchor point="CENTER" x="0" y="0" />
+						</Anchors>
+					</Button>
+					<Button name="$parentPOIButton3" parentKey="POIButton3" inherits="WorldStatePoiButtonTemplate" id="3">
+						<Anchors>
+							<Anchor point="CENTER" x="0" y="0" />
+						</Anchors>
+					</Button>
+					<Button name="$parentPOIButton4" parentKey="POIButton4" inherits="WorldStatePoiButtonTemplate" id="4">
+						<Anchors>
+							<Anchor point="CENTER" x="0" y="0" />
+						</Anchors>
+					</Button>
+					<Button name="$parentPOIButton5" parentKey="POIButton5" inherits="WorldStatePoiButtonTemplate" id="5">
+						<Anchors>
+							<Anchor point="CENTER" x="0" y="0" />
+						</Anchors>
+					</Button>
+				</Frames>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad function="WorldStateTopCenterFrameStatusBar_OnLoad"/>
+			<OnEnter>
+				if self.tooltip then
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+				GameTooltip:SetText(self.tooltip, 1.0, 1.0, 1.0)
+				GameTooltip:Show()
+				end
+			</OnEnter>
+			<OnLeave function="GameTooltip_Hide"/>
+		</Scripts>
+	</Frame>
+
+	<Frame name="WorldStateTopCenterFrame" toplevel="true" parent="UIParent" hidden="true">
+		<Size x="232" y="55"/>
+		<Anchors>
+			<Anchor point="TOP" relativePoint="TOP" x="0" y="-40" />
+		</Anchors>
+		<Frames>
+			<Frame name="$parentLeftBar" parentKey="LeftBar" inherits="WorldStateTopCenterFrame_StatusBarTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOP" x="-7" y="-5"/>
+				</Anchors>
+			</Frame>
+			<Frame name="$parentRightBar" parentKey="RightBar" inherits="WorldStateTopCenterFrame_StatusBarTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOP" x="7" y="-5"/>
+				</Anchors>
+			</Frame>
+			<Frame name="SlaveryValleySwordFrame" hidden="true" toplevel="true" enableMouse="true">
+				<Size x="42" y="42"/>
+				<Anchors>
+					<Anchor point="TOP" x="0" y="6" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentSwordIconGlow" parentKey="SwordIconGlow" file="Interface\Timer\Countdown_Alliance">
+							<Animations>
+								<AnimationGroup parentKey="AnimIn">
+									<Alpha change="-1" duration="0" order="1"/>
+									<Alpha change="1" duration="0.55" smoothing="IN" order="2"/>
+									<Scripts>
+										<OnFinished>
+											self:GetParent().PulseAnim:Play()
+										</OnFinished>
+									</Scripts>
+								</AnimationGroup>
+								<AnimationGroup parentKey="PulseAnim" looping="BOUNCE">
+									<Alpha childKey="Flash" change="-0.7" duration=".8" smoothing="IN_OUT" order="1"/>
+								</AnimationGroup>
+								<AnimationGroup parentKey="AnimOut">
+									<Alpha startDelay="0.1" change="1" duration="0" order="1"/>
+									<Rotation startDelay="0.1" duration="0.3" degrees="-270" order="1"/>
+									<Alpha startDelay="0.1" change="-1" duration="0.3" order="1"/>
+								</AnimationGroup>
+							</Animations>
+							<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<Texture name="$parentSwordIcon" parentKey="SwordIcon" file="Interface\Timer\Countdown_Alliance">
+							<Animations>
+								<AnimationGroup parentKey="AnimIn">
+									<Alpha change="-1" duration="0" order="1"/>
+									<Alpha change="1" duration="0.55" smoothing="IN" order="2"/>
+								</AnimationGroup>
+								<AnimationGroup parentKey="AnimOut">
+									<Rotation duration="0.3" degrees="-270" order="1"/>
+									<Alpha change="-1" duration="0.3" order="1"/>
+									<Scripts>
+										<OnPlay>
+											self:GetParent():GetParent().SwordIconGlow.PulseAnim:Stop()
+											self:GetParent():GetParent().SwordIconGlow.AnimOut:Play()
+										</OnPlay>
+										<OnFinished>
+											self:GetParent():GetParent():Hide()
+										</OnFinished>
+									</Scripts>
+								</AnimationGroup>
+							</Animations>
+							<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture name="$parentSwordIconShowGlow" parentKey="SwordIconShowGlow" file="Interface\Timer\Countdown_Alliance" alpha="0">
+							<Animations>
+								<AnimationGroup parentKey="AnimIn">
+									<Scale scaleX="4" scaleY="4" duration="0.0" order="1"/>
+									<Alpha change="1" duration="0.0" order="2"/>
+									<Scale scaleX="0.25" scaleY="0.25" duration="0.4" smoothing="OUT" order="3"/>
+									<Alpha change="-1.0" duration="0.4" smoothing="IN" order="3"/>
+									<Scripts>
+										<OnPlay>
+											self:GetParent():GetParent().SwordIcon.AnimIn:Play()
+											self:GetParent():GetParent().SwordIconGlow.AnimIn:Play()
+										</OnPlay>
+									</Scripts>
+								</AnimationGroup>
+							</Animations>
+							<TexCoords left="0.25" right="0.5" top="0" bottom="0.5"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						if self.captureFaction then
+							GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT")
+							GameTooltip:SetText(WORLDSTATE_SLAVERYVALLEY_TOOLTIPHEAD, 1.0, 1.0, 1.0)
+							GameTooltip:AddLine(_G["WORLDSTATE_SLAVERYVALLEY_TOOLTIP_"..self.captureFaction], NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, 1)
+							GameTooltip:Show()
+						end
+					</OnEnter>
+					<OnLeave function="GameTooltip_Hide"/>
+				</Scripts>
+			</Frame>
+		</Frames>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="TimeLeft" inherits="GameFontNormalSmall" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP" y="6"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="BottomLabel" inherits="GameFontHighlight" hidden="true">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM" y="0"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad function="WorldStateTopCenterFrame_OnLoad" />
+			<OnHide function="WorldStateTopCenterFrame_OnHide" />
+			<OnShow function="WorldStateTopCenterFrame_OnShow" />
+		</Scripts>
+	</Frame>
+
+	<!-- Score Frame -->
+	<Frame name="WorldStateScoreFrame" toplevel="true" parent="UIParent" enableMouse="true" frameStrata="FULLSCREEN" hidden="true">
+		<Size x="760" y="490"/>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="0"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBg" file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="4" y="-4"/>
+						<Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentAlliance" parentKey="Alliance" file="Interface/PVPFrame/Scoreboard" alpha="0.5">
+					<Size x="48" y="56"/>
+					<Anchors>
+						<Anchor point="TOP" x="-146" y="-6" />
+					</Anchors>
+					<TexCoords left="0.571289" right="0.608398" top="0.197266" bottom="0.242188"/>
+				</Texture>
+				<Texture name="$parentHorde" parentKey="Horde" file="Interface/PVPFrame/Scoreboard" alpha="0.5">
+					<Size x="48" y="56"/>
+					<Anchors>
+						<Anchor point="TOP" x="146" y="-6" />
+					</Anchors>
+					<TexCoords left="0.571289" right="0.608398" top="0.150391" bottom="0.195312"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="$parentShadowTop" file="Interface\Common\ShadowOverlay-TopX3">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="4" y="-4"/>
+						<Anchor point="TOPRIGHT" x="-4" y="4"/>
+					</Anchors>
+					<Color r="1" g="0" b="0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="BattlegroundBalanceProgressBar" hidden="true">
+				<Size x="200" y="16"/>
+				<Anchors>
+					<Anchor point="TOP" x="0" y="-28" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+					</Layer>
+					<Layer level="BORDER">
+						<Texture name="$parentHorde" parentKey="Horde">
+							<Size x="196" y="16"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="0" />
+							</Anchors>
+							<Color r="0.90" g="0.05" b="0.07"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture name="$parentAlliance" parentKey="Alliance">
+							<Size x="1" y="16"/>
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="LEFT" x="2" y="0" />
+							</Anchors>
+							<Color r="0.29" g="0.33" b="0.91"/>
+						</Texture>
+					</Layer>
+					<Layer level="OVERLAY">
+						<FontString parentKey="TextLeft" inherits="GameFontNormalSmall" justifyV="MIDDLE" maxLines="1" text="0">
+							<Anchors>
+								<Anchor point="LEFT" x="16" y="0" />
+							</Anchors>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+						<FontString parentKey="TextRight" inherits="GameFontNormalSmall" justifyV="MIDDLE" maxLines="1" text="0">
+							<Anchors>
+								<Anchor point="RIGHT" x="-16" y="0" />
+							</Anchors>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+						<Texture name="$parentBorder" parentKey="Border" file="Interface\QUESTFRAME\Legionfall">
+							<Size x="207" y="32"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="0" />
+							</Anchors>
+							<TexCoords left="0.387695" right="0.62207" top="0.808594" bottom="0.838867"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="$parentSparkFrame" parentKey="SparkFrame">
+						<Size x="8" y="32"/>
+						<Anchors>
+							<Anchor point="CENTER" relativeTo="$parentAlliance" relativePoint="RIGHT" x="0" y="0" />
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentSpark" parentKey="Spark" atlas="Legionfall_BarSpark" file="Interface\QUESTFRAME\Legionfall" alphaMode="ADD">
+									<TexCoords left="0.853516" right="0.869141" top="0.046875" bottom="0.109375"/>
+								</Texture>
+							</Layer>
+							<Layer level="BORDER">
+								<Texture parentKey="SparkGlow" alpha="1" alphaMode="ADD" file="Interface/QuestFrame/ObjectiveTracker">
+									<Size x="100" y="30"/>
+									<Anchors>
+										<Anchor point="CENTER" relativeKey="$parentSpark" x="7" y="0" />
+									</Anchors>
+									<TexCoords left="0.455078" right="0.904297" top="0.476562" bottom="0.519531"/>
+								</Texture>
+							</Layer>
+						</Layers>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						self:SetFrameLevel(self:GetParent():GetFrameLevel())
+						local MAX_BAR = self:GetWidth() - 6
+						self.Alliance:SetWidth(MAX_BAR * 0.5 + 1)
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Frame name="BattlegroundBalanceProgressBarHitArea" frameStrata="TOOLTIP" toplevel="true" enableMouse="true" hidden="true">
+				<Size x="200" y="26"/>
+				<Anchors>
+					<Anchor point="TOP" x="0" y="-24" />
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+						GameTooltip:SetText(BATTLEGROUND_TEAM_BALANCE_TOOLTIP_NAME, 1, 1, 1)
+						GameTooltip:AddLine(BATTLEGROUND_TEAM_BALANCE_TOOLTIP, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave function="GameTooltip_Hide"/>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentContainer" parentKey="Container" setAllPoints="true">
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentSeparator" parentKey="Separator" file="Interface\PVPFrame\Separator">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="4" y="-36"/>
+								<Anchor point="TOPRIGHT" x="-4" y="-36"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentBg" file="Interface\FrameGeneral\UI-Background-Rock" horizTile="true" vertTile="true" parentKey="Bg">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentSeparator" x="0" y="-16"/>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parent" x="-4" y="4"/>
+							</Anchors>
+							<!-- <Color r="1" g="0" b="1"/> -->
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<Texture name="$parentAllianceGlow" parentKey="AllianceGlow" file="Interface/PVPFrame/Scoreboard" alpha="0.9">
+							<Size x="157" y="69"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="WorldStateScoreFrameAlliance" x="-34" y="-10" />
+							</Anchors>
+							<TexCoords left="0.765625" right="0.918945" top="0.150391" bottom="0.217773"/>
+						</Texture>
+						<Texture name="$parentHordeGlow" parentKey="HordeGlow" file="Interface/PVPFrame/Scoreboard" alpha="0.9">
+							<Size x="157" y="69"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="WorldStateScoreFrameHorde" x="34" y="-10" />
+							</Anchors>
+							<TexCoords left="0.610352" right="0.763672" top="0.150391" bottom="0.217773"/>
+						</Texture>
+						<Texture name="$parentFactionGlow" parentKey="FactionGlow" file="Interface/PVPFrame/Scoreboard">
+							<Size x="184" y="89"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="10" y="12" />
+							</Anchors>
+							<TexCoords left="0.830625" right="0.918945" top="0.150391" bottom="0.217773"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<FontString name="$parentAllianceScore" parentKey="AllianceScore" inherits="GameFontNormal" justifyH="RIGHT" text="1600">
+							<Size x="80" y="10"/>
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="$parentAllianceGlow" x="-24" y="5" />
+							</Anchors>
+						</FontString>
+						<FontString name="$parentHordeScore" parentKey="HordeScore" inherits="GameFontNormal" justifyH="LEFT" text="1200">
+							<Size x="80" y="10"/>
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="$parentHordeGlow" x="24" y="5" />
+							</Anchors>
+						</FontString>
+						<FontString name="$parentElapsedTimeLabel" parentKey="ElapsedTimeLabel" inherits="GameFontDisableSmall" text="TIME_ELAPSED">
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-44" y="-16" />
+							</Anchors>
+						</FontString>
+						<FontString name="$parentElapsedTime" parentKey="ElapsedTime" inherits="GameFontDisableSmall" text="24 Minutes">
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativeTo="$parentElapsedTimeLabel" relativePoint="BOTTOMRIGHT" x="0" y="-4" />
+							</Anchors>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+							<FontString name="WorldStateScoreFrameTimerLabel" inherits="GameFontHighlightSmall" text="TIME_TO_PORT">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="20" y="77"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="WorldStateScoreFrameTimer" inherits="GameFontNormalSmall">
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="WorldStateScoreFrameTimerLabel" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="2" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentYouFactionLabel" parentKey="YouFactionLabel" inherits="GameFontDisableSmall" text="YOU_PLAY_FOR">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="24" y="-16" />
+							</Anchors>
+						</FontString>
+						<FontString name="$parentYouFaction" parentKey="YouFaction" inherits="GameFontDisableSmall" text="">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentYouFactionLabel" relativePoint="BOTTOMLEFT" x="0" y="-4" />
+							</Anchors>
+							<Color r="1" g="1" b="1"/>
+						</FontString>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture name="$parentTopRightCorner" parentKey="TopRightCorner" atlas="scoreboard-frameborder-topright" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="200" y="200"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0.0136719" right="0.208984" top="0.574219" bottom="0.769531"/>
+						</Texture>
+						<Texture name="$parentTopLeftCorner" parentKey="TopLeftCorner" atlas="scoreboard-frameborder-topleft" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="201" y="200"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0.40918" right="0.605469" top="0.707031" bottom="0.902344"/>
+						</Texture>
+						<Texture parentKey="TopBorder" atlas="scoreboard-frameborder-top" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="359" y="11"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativeTo="$parentTopRightCorner" relativePoint="TOPLEFT"/>
+								<Anchor point="TOPLEFT" relativeTo="$parentTopLeftCorner" relativePoint="TOPRIGHT"/>
+							</Anchors>
+							<TexCoords left="0.408203" right="0.758789" top="0.125977" bottom="0.136719"/>
+						</Texture>
+						<Texture name="$parentBotLeftCorner" parentKey="BotLeftCorner" atlas="scoreboard-frameborder-bottomleft" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="201" y="201"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0.210938" right="0.407227" top="0.574219" bottom="0.770508"/>
+						</Texture>
+						<Texture name="$parentBotRightCorner" parentKey="BotRightCorner" atlas="scoreboard-frameborder-bottomright" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="200" y="201"/>
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0.607422" right="0.802734" top="0.707031" bottom="0.90332"/>
+						</Texture>
+						<Texture parentKey="BottomBorder" atlas="scoreboard-frameborder-bottom" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="359" y="10"/>
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parentBotRightCorner" relativePoint="BOTTOMLEFT"/>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentBotLeftCorner" relativePoint="BOTTOMRIGHT"/>
+							</Anchors>
+							<TexCoords left="0.571289" right="0.921875" top="0.138672" bottom="0.148438"/>
+						</Texture>
+						<Texture parentKey="LeftBorder" atlas="scoreboard-frameborder-left" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="11" y="148"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentBotLeftCorner" relativePoint="TOPLEFT"/>
+							</Anchors>
+							<TexCoords left="0.000976562" right="0.0117188" top="0.390625" bottom="0.535156"/>
+						</Texture>
+						<Texture parentKey="RightBorder" atlas="scoreboard-frameborder-right" file="Interface/PVPFrame/Scoreboard" useAtlasSize="true">
+							<Size x="11" y="148"/>
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativeTo="$parentTopRightCorner" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+							</Anchors>
+							<TexCoords left="0.000976562" right="0.0117188" top="0.244141" bottom="0.388672"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Frame name="$parentBattlegroundNameFrame" parentKey="BattlegroundNameFrame" frameStrata="TOOLTIP" toplevel="true">
+						<Size x="140" y="10"/>
+						<Anchors>
+							<Anchor point="TOP" x="0" y="0" />
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<FontString name="$parentBattlegroundName" parentKey="BattlegroundName" inherits="GameFontNormal" text="Silvershard Mines" justifyH="CENTER">
+									<Size x="140" y="10"/>
+									<Anchors>
+										<Anchor point="TOP" x="0" y="-11" />
+									</Anchors>
+									<Color r="1" g="1" b="1"/>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+					<Frame name="$parentInset" parentKey="Inset" inherits="StandartInsetFrameTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSeparator" x="10" y="-48" />
+							<Anchor point="BOTTOMRIGHT" relativeTo="$parentBg" x="-6" y="67" />
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<Texture name="$parentSword" parentKey="Sword" file="Interface\Timer\Countdown" alpha="0.3">
+									<Size x="256" y="256"/>
+									<Anchors>
+										<Anchor point="CENTER" x="0" y="0" />
+									</Anchors>
+									<TexCoords left="0" right="0.25" top="0" bottom="0.5"/>
+								</Texture>
+							</Layer>
+						</Layers>
+					</Frame>
+					<Button name="WorldStateScoreFrameName" inherits="WorldStateScoreColumnTemplate">
+						<Size x="175" y="16"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="39" y="-60" />
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameNameText:SetPoint("LEFT", "WorldStateScoreFrameName", "LEFT", 20, 0);
+								WorldStateScoreFrameNameText:SetJustifyH("LEFT");
+								WorldStateScoreFrameNameText:SetText(REAL_NAME);
+								self.sortType = "name";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameTeam" inherits="WorldStateScoreColumnTemplate">
+						<Size>
+							<AbsDimension x="175" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameName" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameTeamText:SetPoint("LEFT", "WorldStateScoreFrameTeam", "LEFT", 0, 0);
+								WorldStateScoreFrameTeamText:SetText(TEAM);
+								WorldStateScoreFrameTeamText:SetJustifyH("LEFT");
+								self.sortType = "team";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameKB" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameName" relativePoint="RIGHT">
+								<Offset x="4" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameKBText:SetText(SCORE_KILLING_BLOWS);
+								self.tooltip = KILLING_BLOW_TOOLTIP;
+								self.sortType = "kills";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameDeaths" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameKB" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameDeathsText:SetText(DEATHS);
+								self.tooltip = DEATHS_TOOLTIP;
+								self.sortType = "deaths";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameHK" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameDeaths" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameHKText:SetText(SCORE_HONORABLE_KILLS);
+								self.tooltip = HONORABLE_KILLS_TOOLTIP;
+								self.sortType = "hk";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameDamageDone" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameHK" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameDamageDoneText:SetText(SCORE_DAMAGE_DONE);
+								self.tooltip = DAMAGE_DONE_TOOLTIP;
+								self.sortType = "damage";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameHealingDone" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameDamageDone" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameHealingDoneText:SetText(SCORE_HEALING_DONE);
+								self.tooltip = HEALING_DONE_TOOLTIP;
+								self.sortType = "healing";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameTeamSkill" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameHealingDone" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameTeamSkillText:SetText(SCORE_TEAM_SKILL);
+								self.tooltip = TEAM_SKILL_TOOLTIP;
+								self.sortType = "team";
+							</OnLoad>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+								GameTooltip:AddLine(self.tooltip, 1.0, 1.0, 1.0, 1);
+								GameTooltip:Show();
+							</OnEnter>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreFrameHonorGained" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameHealingDone" relativePoint="RIGHT">
+								<Offset x="-5" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								WorldStateScoreFrameHonorGainedText:SetText(SCORE_HONOR_GAINED);
+								self.tooltip = HONOR_GAINED_TOOLTIP;
+								self.sortType = "cp";
+							</OnLoad>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+								GameTooltip:AddLine(self.tooltip, 1.0, 1.0, 1.0, 1);
+								GameTooltip:Show();
+							</OnEnter>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn1" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreFrameHealingDone" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat1";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn2" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn1" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat2";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn3" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn2" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat3";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn4" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn3" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat4";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn5" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn4" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat5";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn6" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn5" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat6";
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="WorldStateScoreColumn7" inherits="WorldStateScoreColumnTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="WorldStateScoreColumn6" relativePoint="RIGHT">
+								<Offset x="0" y="0"/>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.sortType = "stat7";
+								SortDefaultBattlefieldScoreData()
+							</OnLoad>
+						</Scripts>
+					</Button>
+
+					<Frame name="WorldStateScoreButton1" inherits="WorldStateScoreTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentInset" relativePoint="TOPLEFT" x="6" y="-6"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton2" inherits="WorldStateScoreTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton1" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton3" inherits="WorldStateScoreTemplate" id="3">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton2" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton4" inherits="WorldStateScoreTemplate" id="4">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton3" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton5" inherits="WorldStateScoreTemplate" id="5">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton4" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton6" inherits="WorldStateScoreTemplate" id="6">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton5" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton7" inherits="WorldStateScoreTemplate" id="7">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton6" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton8" inherits="WorldStateScoreTemplate" id="8">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton7" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton9" inherits="WorldStateScoreTemplate" id="9">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton8" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton10" inherits="WorldStateScoreTemplate" id="10">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton9" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton11" inherits="WorldStateScoreTemplate" id="11">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton10" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton12" inherits="WorldStateScoreTemplate" id="12">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton11" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton13" inherits="WorldStateScoreTemplate" id="13">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton12" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton14" inherits="WorldStateScoreTemplate" id="14">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton13" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton15" inherits="WorldStateScoreTemplate" id="15">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton14" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton16" inherits="WorldStateScoreTemplate" id="16">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton15" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton17" inherits="WorldStateScoreTemplate" id="17">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton16" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton18" inherits="WorldStateScoreTemplate" id="18">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton17" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton19" inherits="WorldStateScoreTemplate" id="19">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton18" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<Frame name="WorldStateScoreButton20" inherits="WorldStateScoreTemplate" id="20">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="WorldStateScoreButton19" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+						</Anchors>
+					</Frame>
+					<ScrollFrame name="WorldStateScoreScrollFrame" inherits="FauxScrollFrameTemplate" toplevel="true">
+						<Size x="496" y="330"/>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="$parentInset" x="-28" y="0"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentcolor" parentKey="color" alpha="0.1" hidden="true">
+									<Color r="1" g="0" b="0"/>
+								</Texture>
+								<Texture name="$parentBG" setAllPoints="true" hidden="true" parentKey="trackBG">
+									<Color r="0" g="0" b="0" a=".85"/>
+								</Texture>
+							</Layer>
+							<Layer level="BORDER">
+								<Texture name="$parentTop" parentKey="ScrollBarTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+									<Size x="27" y="48"/>
+									<Anchors>
+										<Anchor point="TOPRIGHT" x="27" y="3"/>
+									</Anchors>
+									<TexCoords left="0" right="0.484375" top="0" bottom=".20"/>
+								</Texture>
+								<Texture name="$parentBottom" parentKey="ScrollBarBottom" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+									<Size x="27" y="64"/>
+									<Anchors>
+										<Anchor point="BOTTOMRIGHT" x="27" y="-3"/>
+									</Anchors>
+									<TexCoords left="0.515625" right="1.0" top="0.1440625" bottom="0.4140625"/>
+								</Texture>
+								<Texture name="$parentMiddle" parentKey="ScrollBarMiddle" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+									<Anchors>
+										<Anchor point="TOPRIGHT" relativeTo="$parentTop" relativePoint="BOTTOMRIGHT"/>
+										<Anchor point="BOTTOMLEFT" relativeTo="$parentBottom" relativePoint="TOPLEFT"/>
+									</Anchors>
+									<TexCoords left="0" right="0.484375" top="0.1640625" bottom="1"/>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(self, offset, SKILLFRAME_SKILL_HEIGHT, WorldStateScoreFrame_Update);
+							</OnVerticalScroll>
+						</Scripts>
+					</ScrollFrame>
+				</Frames>
+			</Frame>
+			<Frame name="$parentWinner" parentKey="Winner" toplevel="true" setAllPoints="true">
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentWinnerText" parentKey="WinnerText" text="Alliance Wins" inherits="QuestFont_Super_Huge2">
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="6" />
+							</Anchors>
+						</FontString>
+					</Layer>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentFactionLogo" parentKey="FactionLogo">
+							<Size x="124" y="124"/>
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="-28" />
+							</Anchors>
+						</Texture>
+						<Texture name="$parentWreatchLeft" parentKey="WreatchLeft" file="Interface/PVPFrame/Wreatch">
+							<Size x="154" y="154"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="$parentWinnerText" relativePoint="LEFT" x="46" y="-10" />
+							</Anchors>
+						</Texture>
+						<Texture name="$parentWreatchRight" parentKey="WreatchRight" file="Interface/PVPFrame/Wreatch">
+							<Size x="154" y="154"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentWinnerText" relativePoint="RIGHT" x="-46" y="-10" />
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BORDER">
+						<Texture name="$parentGlow" parentKey="Glow" file="Interface/PVPFrame/Scoreboard">
+							<Size x="993" y="167"/>
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="-66" />
+							</Anchors>
+							<TexCoords left="0.0136719" right="0.983398" top="0.40918" bottom="0.572266"/>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture name="$parentAlphaGlow" parentKey="AlphaGlow" file="Interface/PVPFrame/Scoreboard" alpha="0" alphaMode="ADD" hidden="true">
+							<Size x="993" y="167"/>
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP" x="0" y="-66" />
+							</Anchors>
+							<TexCoords left="0.0136719" right="0.983398" top="0.40918" bottom="0.572266"/>
+							<Animations>
+								<AnimationGroup parentKey="Anim" looping="REPEAT">
+									<Alpha change="-1" duration="2" order="1"/>
+									<Alpha change="1" duration="1.5" order="2"/>
+									<Scripts>
+										<OnLoad>
+											self:Play()
+										</OnLoad>
+									</Scripts>
+								</AnimationGroup>
+							</Animations>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button name="WorldStateScoreFrameCloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-2" y="-3"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentEfficiency" parentKey="EfficiencyFrame" setAllPoints="true" hidden="true">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentHonorLabel" parentKey="HonorLabel" inherits="GameFontDisableSmall" maxLine="1" justifyH="LEFT" text="WORLDSTATE_SCORE_HONORLABEL">
+							<Size x="200" y="16"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="26" y="36" />
+							</Anchors>
+						</FontString>
+						<FontString name="$parentRatingLabel" parentKey="RatingLabel" inherits="GameFontDisableSmall" maxLine="1" justifyH="LEFT" text="WORLDSTATE_SCORE_RATINGLABEL">
+							<Size x="200" y="16"/>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" x="26" y="50" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<StatusBar name="$parentEfficiencyBar" parentKey="EfficiencyBar" inherits="WorldStateScoreStatusBarTemplate">
+						<Anchors>
+							<Anchor point="BOTTOMLEFT" x="28" y="16" />
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+								GameTooltip:SetText(WORLDSTATE_SCORE_EFFICIENCY_TOOLTIPHEADER1, 1, 1, 1)
+								GameTooltip:AddLine(WORLDSTATE_SCORE_EFFICIENCY_TOOLTIP1, nil, nil, nil, true)
+								GameTooltip:Show()
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide()
+							</OnLeave>
+						</Scripts>
+					</StatusBar>
+					<Frame name="$parentRatingHitArea" parentKey="RatingHitArea">
+						<Size x="60" y="14"/>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT" x="26" y="50" />
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+								GameTooltip:SetText(WORLDSTATE_SCORE_EFFICIENCY_TOOLTIPHEADER2, 1, 1, 1)
+								GameTooltip:AddLine(WORLDSTATE_SCORE_EFFICIENCY_TOOLTIP2, nil, nil, nil, true)
+								GameTooltip:Show()
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide()
+							</OnLeave>
+						</Scripts>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						self.elapsed = 0
+						self.Animations = false
+					</OnLoad>
+				</Scripts>
+			</Frame>
+
+			<!-- Unit drop down for the Notify AFK -->
+			<Frame name="ScorePlayerDropDown" inherits="UIDropDownMenuTemplate" clampedToScreen="true" id="1" hidden="true" />
+			<Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="ALL">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="10" y="4"/>
+                </Anchors>
+				<Scripts>
+					<OnClick function="WorldStateScoreFrameTab_OnClick"/>
+				</Scripts>
+            </Button>
+			<Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="WORLDSTATE_SCORE_TAB_ALLIANCE">
+                <Anchors>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentTab1"  x="-16" y="0"/>
+                </Anchors>
+				<Scripts>
+					<OnClick function="WorldStateScoreFrameTab_OnClick"/>
+				</Scripts>
+            </Button>
+			<Button name="$parentTab3" inherits="CharacterFrameTabButtonTemplate" id="3" text="WORLDSTATE_SCORE_TAB_HORDE">
+                <Anchors>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentTab2" x="-16" y="0"/>
+                </Anchors>
+				<Scripts>
+					<OnClick function="WorldStateScoreFrameTab_OnClick"/>
+				</Scripts>
+            </Button>
+			<Button name="WorldStateScoreFrameLeaveButton" inherits="UIPanelButtonTemplate" text="LEAVE_BATTLEGROUND">
+				<Size x="153" y="24"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="-18" y="17" />
+				</Anchors>
+				<Scripts>
+					<OnClick function="LeaveBattlefield"/>
+				</Scripts>
+			</Button>
+			<Frame name="WorldStateScoreWinnerFrame" hidden="true">
+				<Size>
+					<AbsDimension x="10" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="17" y="-20"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-141" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentLeft" file="Interface\WorldStateFrame\WorldStateFinalScore-Highlight">
+							<Size>
+								<AbsDimension x="256" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="1"/>
+						</Texture>
+						<Texture name="$parentRight" file="Interface\WorldStateFrame\WorldStateFinalScore-Highlight">
+							<Size>
+								<AbsDimension x="50" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="1" right="0" top="0" bottom="1"/>
+						</Texture>
+						<FontString name="$parentText" inherits="GameFontHighlight">
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad function="WorldStateScoreFrame_OnLoad"/>
+			<OnEvent function="WorldStateScoreFrame_OnEvent"/>
+			<OnShow function="WorldStateScoreFrame_OnShow"/>
+			<OnUpdate function="RequestBattlefieldScoreData"/>
+		</Scripts>
+	</Frame>
+
+	<Frame name="StatusBarWidget" hidden="true" toplevel="true">
+		<Size x="160" y="30"/>
+		<Anchors>
+			<Anchor point="TOP" x="0" y="-40" />
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground" parentKey="Background">
+					<Size x="156" y="28"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+					<Color r="0" g="0" b="0"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentFill" parentKey="Fill" file="Interface\UNITPOWERBARALT\Custom_Purple_Fill">
+					<Size x="2" y="34"/>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="LEFT" x="6" y="-9" />
+					</Anchors>
+					<TexCoords left="0.13671875" right="0.86328125" top="0.484375" bottom="0.859375"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="$parentOverlay" parentKey="Overlay" file="Interface\UNITPOWERBARALT\Custom_Purple_Frame">
+					<Size x="200" y="50"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentSpark" parentKey="Spark" file="Interface\UNITPOWERBARALT\NZoth_Horizontal_Spark" hidden="true" alphaMode="ADD">
+					<Size x="12" y="32"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentFill" relativePoint="RIGHT" x="-6" y="8" />
+					</Anchors>
+				</Texture>
+				<FontString name="$parentText" parentKey="Text" inherits="GameFontNormal10">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				Mixin(self, StatusBarWidgetMixin)
+				self:OnLoad()
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</Ui>

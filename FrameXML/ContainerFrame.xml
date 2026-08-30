@@ -1,0 +1,412 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Script file="ContainerFrame.lua"/>
+	
+	<!-- Template para botones de items en contenedores -->
+	<Button name="ContainerFrameItemButtonTemplate" inherits="ItemButtonTemplate" hidden="true" virtual="true">
+		<Anchors>
+			<Anchor point="BOTTOMRIGHT">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentIconQuestTexture">
+					<Size>
+						<AbsDimension x="37" y="38"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate"/>
+			<Frame name="$parentHighlightFrame" parentKey="HighlightFrame" hidden="true" setAllPoints="true">
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture parentKey="NewItemTexture" alpha="1" alphaMode="ADD" file="Interface/ContainerFrame/Bags" useAtlasSize="true" hidden="true">
+							<Size x="39" y="39"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<Animations>
+								<AnimationGroup parentKey="Anim">
+									<Alpha change="-1" duration="0.7" order="1"/>
+									<Alpha change="1" duration="0.7" order="2"/>
+									<Alpha change="-1" duration="0.7" order="3"/>
+									<Alpha change="1" duration="0.7" order="4"/>
+									<Scripts>
+										<OnFinished>
+											self:GetParent():GetParent().buffer.isFirstAnimation = true
+										</OnFinished>
+									</Scripts>
+								</AnimationGroup>
+								<AnimationGroup parentKey="AnimOut">
+									<Alpha change="-1" duration="0.7" order="1"/>
+									<Scripts>
+										<OnFinished>
+											self:GetParent():GetParent():Hide()
+										</OnFinished>
+									</Scripts>
+								</AnimationGroup>
+							</Animations>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						self.NewItemTexture:Show()
+						if not self.buffer.isFirstAnimation then
+							self.NewItemTexture.Anim:Play()
+						end
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentSearchOverlay" parentKey="searchOverlay" setAllPoints="true" toplevel="true" hidden="true">
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture>
+							<Color r="0" g="0" b="0" a="0.8"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnClick>
+				local modifiedClick = IsModifiedClick();
+				if ( button ~= "LeftButton" and modifiedClick and IsModifiedClick("AUTOLOOTTOGGLE") ) then
+					local _, _, _, _, _, lootable = GetContainerItemInfo(self:GetParent():GetID(), self:GetID());
+					if ( lootable ) then
+						modifiedClick = false;
+					end
+				end
+				if ( modifiedClick ) then
+					ContainerFrameItemButton_OnModifiedClick(self, button);
+				else
+					ContainerFrameItemButton_OnClick(self, button);
+				end
+			</OnClick>
+			<OnLoad>
+				ContainerFrameItemButton_OnLoad(self);
+			</OnLoad>
+			<OnEnter>
+				ContainerFrameItemButton_OnEnter(self, motion);
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+				ResetCursor();
+			</OnLeave>
+			<OnHide>
+				if ( self.hasStackSplit and (self.hasStackSplit == 1) ) then
+					StackSplitFrame:Hide();
+				end
+			</OnHide>
+			<OnDragStart>
+				ContainerFrameItemButton_OnDrag(self, button);
+			</OnDragStart>
+			<OnReceiveDrag>
+				ContainerFrameItemButton_OnDrag(self);
+			</OnReceiveDrag>
+		</Scripts>
+	</Button>
+	
+	<!-- Template principal para contenedores -->
+	<Frame name="ContainerFrameTemplate" inherits="PortraitFrameTemplateMinimal_Noa_NineSlice" frameStrata="HIGH" toplevel="true" movable="true" enableMouse="true" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="256" y="256"/>
+		</Size>
+		<Layers>
+
+			<Layer level="ARTWORK"/>
+		</Layers>
+		<Frames>
+			<!-- Marco fijo para la zona de monedas: nunca cambia de ancho. -->
+			<Frame name="$parentMoneyBorder" parentKey="MoneyBorder" hidden="true">
+				<Size x="230" y="26"/>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- Conserva el nombre global original ContainerFrameXMoneyFrame. -->
+			<Frame name="$parentMoneyFrame" inherits="SmallMoneyFrameTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentMoneyBorder" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-6" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			
+			<Button name="$parentSortButton" parentKey="SortButton" toplevel="true" hidden="true">
+    			<Size x="28" y="28"/>
+    			<Anchors>
+        			<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+            			<Offset>
+                			<AbsDimension x="-5" y="-35"/>
+            			</Offset>
+        			</Anchor>
+    			</Anchors>
+    			<NormalTexture file="Interface\ContainerFrame\Bags">
+        			<TexCoords left="0.160156250" right="0.277343750" top="0.578125000" bottom="0.695312500"/>
+    			</NormalTexture>
+    			<PushedTexture file="Interface\ContainerFrame\Bags">
+        			<TexCoords left="0.160156250" right="0.277343750" top="0.468750000" bottom="0.585937500"/>
+    			</PushedTexture>
+    			<HighlightTexture file="Interface\ContainerFrame\Bags" alphaMode="ADD">
+        			<TexCoords left="0.160156250" right="0.277343750" top="0.578125000" bottom="0.695312500"/>
+    			</HighlightTexture>
+    			<Scripts>
+        			<OnClick>
+            			ContainerFrame_SortButton_OnClick(self);
+        			</OnClick>
+        			<OnEnter>
+            			GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+            			GameTooltip:SetText(CONTAINER_SORT, 1.0, 1.0, 1.0);
+        			</OnEnter>
+        			<OnLeave>
+            			GameTooltip:Hide();
+        			</OnLeave>
+    			</Scripts>
+			</Button>
+
+			<EditBox name="$parentSearchBox" parentKey="SearchBox" autoFocus="false" inherits="InputBoxTemplate" toplevel="true" hidden="true">
+    			<Size x="120" y="20"/>
+    			<Anchors>
+        			<Anchor point="RIGHT" relativeTo="$parentSortButton" relativePoint="LEFT">
+            			<Offset>
+                			<AbsDimension x="-5" y="0"/>
+            			</Offset>
+        			</Anchor>
+    			</Anchors>
+    			<Layers>
+        			<Layer level="OVERLAY">
+            			<Texture name="$parentSearchIcon" parentKey="SearchIcon" file="Interface\Common\UI-Searchbox-Icon">
+                			<Size x="14" y="14"/>
+                			<Anchors>
+                    			<Anchor point="LEFT">
+                        			<Offset>
+                            			<AbsDimension x="0" y="-2"/>
+                        			</Offset>
+                    			</Anchor>
+                			</Anchors>
+                			<Color r="0.6" g="0.6" b="0.6"/>
+            			</Texture>
+        			</Layer>
+    			</Layers>
+    			<Scripts>
+        			<OnTextChanged>
+        			    ContainerSearchBox_OnTextChanged(self);
+        			</OnTextChanged>
+        			<OnEscapePressed>
+        			    ContainerSearchBox_OnEscapePressed(self);
+        			</OnEscapePressed>
+        			<OnEditFocusGained>
+        			    self:HighlightText();
+        			    self.SearchIcon:SetVertexColor(1, 1, 1);
+        			</OnEditFocusGained>
+        			<OnEditFocusLost>
+        			    self:HighlightText(0, 0);
+         			   self.SearchIcon:SetVertexColor(0.6, 0.6, 0.6);
+        			</OnEditFocusLost>
+    			</Scripts>
+			</EditBox>
+			
+			<!-- Botones de items (1-36) -->
+			<Button name="$parentItem1" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem2" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem3" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem4" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem5" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem6" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem7" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem8" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem9" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem10" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem11" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem12" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem13" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem14" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem15" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem16" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem17" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem18" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem19" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem20" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem21" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem22" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem23" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem24" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem25" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem26" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem27" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem28" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem29" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem30" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem31" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem32" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem33" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem34" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem35" inherits="ContainerFrameItemButtonTemplate"/>
+			<Button name="$parentItem36" inherits="ContainerFrameItemButtonTemplate"/>
+
+			<Button name="$parentPortraitButton">
+				<Size>
+					<AbsDimension x="40" y="40"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+						if ( self:GetID() == 0 ) then
+							GameTooltip:SetText(BACKPACK_TOOLTIP, 1.0, 1.0, 1.0);
+							if (GetBindingKey("TOGGLEBACKPACK")) then
+								GameTooltip:AppendText(" "..NORMAL_FONT_COLOR_CODE.."("..GetBindingKey("TOGGLEBACKPACK")..")"..FONT_COLOR_CODE_CLOSE)
+							end
+						elseif ( self:GetID() == KEYRING_CONTAINER ) then
+							GameTooltip:SetText(KEYRING, 1.0, 1.0, 1.0);
+							if (GetBindingKey("TOGGLEKEYRING")) then
+								GameTooltip:AppendText(" "..NORMAL_FONT_COLOR_CODE.."("..GetBindingKey("TOGGLEKEYRING")..")"..FONT_COLOR_CODE_CLOSE)
+							end
+						elseif ( GameTooltip:SetInventoryItem("player", ContainerIDToInventoryID(self:GetID())) ) then
+							local binding = GetBindingKey("TOGGLEBAG"..(4 - self:GetID() + 1));
+							if ( binding ) then
+								GameTooltip:AppendText(" "..NORMAL_FONT_COLOR_CODE.."("..binding..")"..FONT_COLOR_CODE_CLOSE);
+							end
+						end
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Button>
+
+			
+			<Button name="$parentExpandButton" parentKey="ExpandButton" hidden="false">
+    			<Size>
+    			    <AbsDimension x="32" y="32"/>
+    			</Size>
+    			<Anchors>
+    			    <Anchor point="TOPRIGHT" relativeTo="$parentCloseButton" relativePoint="TOPLEFT">
+    			        <Offset>
+    			            <AbsDimension x="10" y="0"/>
+    			        </Offset>
+    			    </Anchor>
+    			</Anchors>
+    			<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
+    			<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
+    			<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+    			<DisabledCheckedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Disabled"/>
+    			<Scripts>
+    			    <OnLoad>
+    			        self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+    			    </OnLoad>
+    			    <OnClick>
+    			        ToggleExpandedBackpack(self:GetParent());
+    			    </OnClick>
+    			    <OnEnter>
+    			        GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+    			        if isExpandedBackpack then
+    			            GameTooltip:SetText(CONTAINER_EXPAND_DISABLE, 1.0, 1.0, 1.0);
+    			        else
+    			            GameTooltip:SetText(CONTAINER_EXPAND_ENABLE, 1.0, 1.0, 1.0);
+    			        end
+    			    </OnEnter>
+    			    <OnLeave>
+    			        GameTooltip:Hide();
+    			    </OnLeave>
+    			</Scripts>
+			</Button>
+			
+		</Frames>
+		<Scripts>
+			<OnEvent>
+				ContainerFrame_OnEvent(self, event, ...);
+			</OnEvent>
+			<OnLoad>
+				ContainerFrame_OnLoad(self);
+			</OnLoad>
+			<OnHide>
+				ContainerFrame_OnHide(self);
+			</OnHide>
+			<OnShow>
+				ContainerFrame_OnShow(self);
+			</OnShow>
+		</Scripts>
+	</Frame>
+	
+	<!-- Marcos de contenedores (1-13) -->
+	<Frame name="ContainerFrame1" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame2" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame3" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame4" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame5" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame6" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame7" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame8" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame9" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame10" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame11" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame12" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	<Frame name="ContainerFrame13" inherits="ContainerFrameTemplate" parent="UIParent" id="100" hidden="true"/>
+	
+	<!-- Gestor de contenedores -->
+	<Frame name="ContainerFrameManager" hidden="true">
+		<Scripts>
+			<OnLoad function="ContainerFrameManager_OnLoad"/>
+			<OnEvent function="ContainerFrameManager_OnEvent"/>
+		</Scripts>
+	</Frame>
+	
+	<!-- Template para mochila expandida -->
+	<Frame name="ExpandedBackpackTemplate" inherits="PortraitFrameTemplateMinimal_Noa_NineSlice" virtual="true">
+		<Size x="435" y="780"/>
+
+	
+		<Frames>
+			<Button name="$parentToggleButton" parentKey="toggleButton">
+				<Size x="32" y="32"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-18" y="4"/>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\UI-Panel-SmallerButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-SmallerButton-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						ToggleExpandedBackpack(self:GetParent());
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+						GameTooltip:SetText(CONTAINER_EXPAND_ENABLE, 1.0, 1.0, 1.0);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

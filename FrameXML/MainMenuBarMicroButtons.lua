@@ -16,136 +16,117 @@ function MicroButtonTooltipText(text, action)
 	end
 end
 
--- Función para togglear el diario de colecciones
-function ToggleCollectionsFrame()
-	if CollectionsJournal and CollectionsJournal:IsShown() then
-		HideUIPanel(CollectionsJournal);
-	else
-		ShowUIPanel(CollectionsJournal);
-	end
-	UpdateMicroButtons();
-end
-
 function UpdateMicroButtons()
-    local playerLevel = UnitLevel("player");
-    
-    -- Character (Personaje)
-    if ( CharacterFrame and CharacterFrame:IsShown() ) then
-        CharacterMicroButton:SetButtonState("PUSHED", 1);
-        CharacterMicroButton_SetPushed();
-    else
-        CharacterMicroButton:SetButtonState("NORMAL");
-        CharacterMicroButton_SetNormal();
-    end
-    
-    -- SpellbookMicroButton (ahora abre profesiones)
-    if ( ProfessionFrame and ProfessionFrame:IsShown() ) then
-        SpellbookMicroButton:SetButtonState("PUSHED", 1);
-    else
-        SpellbookMicroButton:SetButtonState("NORMAL");
-    end
+	local playerLevel = UnitLevel("player");
+	
+	-- Character (Personaje)
+	if ( CharacterFrame:IsShown() ) then
+		CharacterMicroButton:SetButtonState("PUSHED", 1);
+		CharacterMicroButton_SetPushed();
+	else
+		CharacterMicroButton:SetButtonState("NORMAL");
+		CharacterMicroButton_SetNormal();
+	end
+	
+	-- Spellbook (Hechizos)
+	if ( SpellBookFrame:IsShown() ) then
+		SpellbookMicroButton:SetButtonState("PUSHED", 1);
+	else
+		SpellbookMicroButton:SetButtonState("NORMAL");
+	end
 
-    -- TalentMicroButton - Se marca PUSHED si RetailTalentFrame O SpellBookFrame están abiertos
-    if ( RetailTalentFrame and RetailTalentFrame:IsShown() ) then
-        TalentMicroButton:SetButtonState("PUSHED", 1);
-    elseif ( SpellBookFrame and SpellBookFrame:IsShown() ) then
-        TalentMicroButton:SetButtonState("PUSHED", 1);
-    else
-        if ( playerLevel < TalentMicroButton.minLevel ) then
-            TalentMicroButton:Disable();
-        else
-            TalentMicroButton:Enable();
-            TalentMicroButton:SetButtonState("NORMAL");
-        end
-    end
+	-- Talent (Talentos)
+	if ( PlayerTalentFrame and PlayerTalentFrame:IsShown() ) then
+		TalentMicroButton:SetButtonState("PUSHED", 1);
+	else
+		if ( playerLevel < TalentMicroButton.minLevel ) then
+			TalentMicroButton:Disable();
+		else
+			TalentMicroButton:Enable();
+			TalentMicroButton:SetButtonState("NORMAL");
+		end
+	end
 
-    -- QuestLogMicroButton - Usa QuestMapFrame
-    if ( QuestMapFrame and QuestMapFrame:IsShown() ) then
-        QuestLogMicroButton:SetButtonState("PUSHED", 1);
-    else
-        QuestLogMicroButton:SetButtonState("NORMAL");
-    end
-    
-    -- MainMenu (Menú principal)
-    if ( ( GameMenuFrame and GameMenuFrame:IsShown() ) 
-        or ( InterfaceOptionsFrame and InterfaceOptionsFrame:IsShown()) 
-        or ( KeyBindingFrame and KeyBindingFrame:IsShown()) 
-        or ( MacroFrame and MacroFrame:IsShown()) ) then
-        MainMenuMicroButton:SetButtonState("PUSHED", 1);
-        MainMenuMicroButton_SetPushed();
-    else
-        MainMenuMicroButton:SetButtonState("NORMAL");
-        MainMenuMicroButton_SetNormal();
-    end
+	-- Quest Log (Misiones) - Usamos QuestMapFrame en retail
+	if ( QuestMapFrame and QuestMapFrame:IsShown() ) then
+		QuestLogMicroButton:SetButtonState("PUSHED", 1);
+	else
+		QuestLogMicroButton:SetButtonState("NORMAL");
+	end
+	
+	-- Main Menu (Menú principal)
+	if ( ( GameMenuFrame:IsShown() ) 
+		or ( InterfaceOptionsFrame:IsShown()) 
+		or ( KeyBindingFrame and KeyBindingFrame:IsShown()) 
+		or ( MacroFrame and MacroFrame:IsShown()) ) then
+		MainMenuMicroButton:SetButtonState("PUSHED", 1);
+		MainMenuMicroButton_SetPushed();
+	else
+		MainMenuMicroButton:SetButtonState("NORMAL");
+		MainMenuMicroButton_SetNormal();
+	end
 
-    local lfdParentShown = LFDParentFrame and LFDParentFrame:IsShown()
-    local pvpParentShown = PVPParentFrame and PVPParentFrame:IsShown()
+	-- PvP (Oculto - solo para mantener el estado)
+	if ( PVPParentFrame:IsShown() and (not PVPFrame_IsJustBG())) then
+		PVPMicroButton:SetButtonState("PUSHED", 1);
+		PVPMicroButton_SetPushed();
+	else
+		if ( playerLevel < PVPMicroButton.minLevel ) then
+			PVPMicroButton:Disable();
+		else
+			PVPMicroButton:Enable();
+			PVPMicroButton:SetButtonState("NORMAL");
+			PVPMicroButton_SetNormal();
+		end
+	end
+	
+	-- Social (Amigos)
+	if ( FriendsFrame:IsShown() ) then
+		SocialsMicroButton:SetButtonState("PUSHED", 1);
+	else
+		SocialsMicroButton:SetButtonState("NORMAL");
+	end
 
-    if ( lfdParentShown or pvpParentShown ) then
-        LFDMicroButton:SetButtonState("PUSHED", 1);
-    else
-        if ( playerLevel < LFDMicroButton.minLevel ) then
-            LFDMicroButton:Disable();
-        else
-            LFDMicroButton:Enable();
-            LFDMicroButton:SetButtonState("NORMAL");
-        end
-    end
+	-- LFD / PvP UNIFICADO - Mantiene el estado PUSHED si CUALQUIERA está visible
+	local lfdShown = LFDParentFrame and LFDParentFrame:IsShown()
+	local pvpShown = PVPParentFrame and PVPParentFrame:IsShown()
+	
+	if ( lfdShown or pvpShown ) then
+		LFDMicroButton:SetButtonState("PUSHED", 1);
+	else
+		if ( playerLevel < LFDMicroButton.minLevel ) then
+			LFDMicroButton:Disable();
+		else
+			LFDMicroButton:Enable();
+			LFDMicroButton:SetButtonState("NORMAL");
+		end
+	end
 
-    -- Socials (Amigos)
-    if ( FriendsFrame and FriendsFrame:IsShown() ) then
-        SocialsMicroButton:SetButtonState("PUSHED", 1);
-    else
-        SocialsMicroButton:SetButtonState("NORMAL");
-    end
+	-- Help (Ayuda)
+	if ( HelpFrame:IsShown() ) then
+		HelpMicroButton:SetButtonState("PUSHED", 1);
+	else
+		HelpMicroButton:SetButtonState("NORMAL");
+	end
+	
+	-- Achievement (Logros)
+	if ( AchievementFrame and AchievementFrame:IsShown() ) then
+		AchievementMicroButton:SetButtonState("PUSHED", 1);
+	else
+		if ( HasCompletedAnyAchievement() and CanShowAchievementUI() ) then
+			AchievementMicroButton:Enable();
+			AchievementMicroButton:SetButtonState("NORMAL");
+		else
+			AchievementMicroButton:Disable();
+		end
+	end
 
-    -- Help (Ayuda)
-    if ( HelpFrame and HelpFrame:IsShown() ) then
-        HelpMicroButton:SetButtonState("PUSHED", 1);
-    else
-        HelpMicroButton:SetButtonState("NORMAL");
-    end
-    
-    -- Achievement (Logros)
-    if ( AchievementFrame and AchievementFrame:IsShown() ) then
-        AchievementMicroButton:SetButtonState("PUSHED", 1);
-    else
-        if ( HasCompletedAnyAchievement and HasCompletedAnyAchievement() and CanShowAchievementUI and CanShowAchievementUI() ) then
-            AchievementMicroButton:Enable();
-            AchievementMicroButton:SetButtonState("NORMAL");
-        else
-            AchievementMicroButton:Disable();
-        end
-    end
-
-    -- Transmogrification (Transfiguración)
-    if ( TransfigurationJournal and TransfigurationJournal:IsShown() ) then
-        TransmogrificationMicroButton:SetButtonState("PUSHED", 1);
-    else
-        TransmogrificationMicroButton:SetButtonState("NORMAL");
-    end
-
-    -- Collections (Colecciones)
-    if ( CollectionsJournal and CollectionsJournal:IsShown() ) then
-        CollectionsMicroButton:SetButtonState("PUSHED", 1);
-    else
-        CollectionsMicroButton:SetButtonState("NORMAL");
-    end
-    
-    -- Encounter Journal (Diario de Encuentros)
-    if ( EncounterJournal and EncounterJournal:IsShown() ) then
-        EncounterJournalMicroButton:SetButtonState("PUSHED", 1);
-    else
-        EncounterJournalMicroButton:SetButtonState("NORMAL");
-    end
-
-    if ( KeyRingButton and KeyRingButton.SetButtonState ) then
-        if ( IsBagOpen and IsBagOpen(KEYRING_CONTAINER) ) then
-            KeyRingButton:SetButtonState("PUSHED", 1);
-        else
-            KeyRingButton:SetButtonState("NORMAL");
-        end
-    end
+	-- Keyring microbutton
+	if ( IsBagOpen(KEYRING_CONTAINER) ) then
+		KeyRingButton:SetButtonState("PUSHED", 1);
+	else
+		KeyRingButton:SetButtonState("NORMAL");
+	end
 end
 
 function AchievementMicroButton_OnEvent(self, event, ...)
@@ -201,12 +182,12 @@ function MainMenuMicroButton_SetNormal()
 	MainMenuBarPerformanceBar:SetPoint("TOPLEFT", MainMenuMicroButton, "TOPLEFT", 10, -34);
 end
 
--- Talent button specific functions
+--Talent button specific functions
 function TalentMicroButton_OnEvent(self, event, ...)
 	if ( event == "PLAYER_LEVEL_UP" ) then
 		local level = ...;
 		UpdateMicroButtons();
-		if ( not CharacterFrame or not CharacterFrame:IsShown() and level >= SHOW_TALENT_LEVEL) then
+		if ( not CharacterFrame:IsShown() and level >= SHOW_TALENT_LEVEL) then
 			SetButtonPulse(self, 60, 1);
 		end
 	elseif ( event == "UNIT_LEVEL" or event == "PLAYER_ENTERING_WORLD" ) then
@@ -214,27 +195,4 @@ function TalentMicroButton_OnEvent(self, event, ...)
 	elseif ( event == "UPDATE_BINDINGS" ) then
 		self.tooltipText =  MicroButtonTooltipText(TALENTS_BUTTON, "TOGGLETALENTS");
 	end
-end
-
-function ProfessionsMicroButton_OnLoad(self)
-    LoadMicroButtonTextures(self, "Spellbook");
-    self:RegisterEvent("UPDATE_BINDINGS");
-    self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
-    self.newbieText = NEWBIE_TOOLTIP_PROFESSIONS;
-end
-
-function ProfessionsMicroButton_OnClick(self)
-    ToggleProfessionFrame();
-end
-
-function ProfessionsMicroButton_OnEnter(self)
-    self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
-    GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, NEWBIE_TOOLTIP_PROFESSIONS);
-end
-
-function ProfessionsMicroButton_OnEvent(self, event, ...)
-    if event == "UPDATE_BINDINGS" then
-        self.tooltipText = MicroButtonTooltipText(PROFESSIONS_BUTTON, "TOGGLEPROFESSIONS");
-    end
-    UpdateMicroButtons();
 end

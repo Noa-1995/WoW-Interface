@@ -126,7 +126,7 @@
 				self:RegisterEvent("UNIT_LEVEL");
 				self:RegisterEvent("PLAYER_ENTERING_WORLD");
 			</OnLoad>
-			<OnClick function="ToggleTalentFrame"/>
+			<OnClick function="ToggleTalentUIFrame"/>
 			<OnEvent function="TalentMicroButton_OnEvent"/>
 		</Scripts>
 	</Button>
@@ -173,7 +173,7 @@
 				self.tooltipText = MicroButtonTooltipText(QUESTLOG_BUTTON, "TOGGLEQUESTLOG");
 			</OnEvent>
 			<OnClick>
-				ToggleFrame(QuestLogFrame);
+				ToggleFrame(QuestMapFrame);
 			</OnClick>
 		</Scripts>
 	</Button>
