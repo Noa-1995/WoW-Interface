@@ -22,7 +22,7 @@ El proyecto está en desarrollo y se irá ampliando con mucho más contenido y n
 
 > 🚧 **Proyecto en desarrollo**
 
-Creditos Tambien a: Furioz and s0h2
+Creditos Tambien a: Furioz, s0h2 and opertol900
 
 ---
 
@@ -44,7 +44,7 @@ The project is actively being developed and will receive much more content and n
 
 > 🚧 **Work in progress** 
 
-Credits also to: Furioz and s0h2x
+Credits also to: Furioz, s0h2 and opertol900
 
 📸 Preview
 
