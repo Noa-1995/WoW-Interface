@@ -1,0 +1,373 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\framexml\UI.xsd">
+    <Script file="libs\DongleStub.lua"/>
+	<Script file="libs\AstrolabeMapMonitor.lua"/>
+	<Script file="libs\Astrolabe.lua"/>
+	<Script file="libs\wotlk_travel_network.lua"/>
+	
+	<Script file="QuestMap_MapPin.lua"/>
+	<Script file="QM_NavArrow.lua"/>
+	<Script file="QuestMap.lua"/>
+
+	<!-- Non-interactive section header (e.g. "Tracked Quests") -->
+	<Frame name="QuestMapSectionHdrTemplate" virtual="true">
+		<Size x="177" y="20"/>
+		<FontString name="$parentText" parentKey="text" inherits="GameFontNormal"
+					justifyH="LEFT" maxLines="1">
+			<Size x="165" y="0"/>
+			<Anchors><Anchor point="LEFT" x="6" y="0"/></Anchors>
+		</FontString>
+	</Frame>
+
+	<!-- Zone group header button (collapsible) -->
+	<Button name="QuestMapZoneHdrTemplate" virtual="true">
+		<Size x="177" y="20"/>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight"
+						 alphaMode="ADD" setAllPoints="true"/>
+		<ButtonText name="$parentText" parentKey="text"
+					inherits="GameFontNormalSmall" justifyH="LEFT" maxLines="1">
+			<Size x="150" y="0"/>
+			<Anchors><Anchor point="LEFT" x="14" y="0"/></Anchors>
+		</ButtonText>
+		<FontString name="$parentArrow" parentKey="arrow"
+					inherits="GameFontNormalSmall" justifyH="RIGHT">
+			<Size x="12" y="0"/>
+			<Anchors><Anchor point="RIGHT" x="-5" y="0"/></Anchors>
+		</FontString>
+	</Button>
+
+	<!-- Tracked/watched quest title (interactive, gold) -->
+	<Button name="QuestMapTrackedQuestTemplate" virtual="true">
+		<Size x="177" y="18"/>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight"
+						 alphaMode="ADD" setAllPoints="true"/>
+		<ButtonText name="$parentText" parentKey="text"
+					inherits="GameFontNormal" justifyH="LEFT" maxLines="1">
+			<Size x="169" y="0"/>
+			<Anchors><Anchor point="LEFT" x="6" y="0"/></Anchors>
+		</ButtonText>
+	</Button>
+
+	<!-- Objective line (non-interactive, indented) -->
+	<Frame name="QuestMapObjLineTemplate" virtual="true">
+		<Size x="177" y="13"/>
+		<FontString name="$parentText" parentKey="text"
+					inherits="GameFontNormalSmall" justifyH="LEFT" maxLines="1">
+			<Size x="153" y="0"/>
+			<Anchors><Anchor point="LEFT" x="22" y="0"/></Anchors>
+		</FontString>
+	</Frame>
+
+	<!-- Regular quest row (interactive) -->
+	<Button name="QuestMapQuestRowTemplate" virtual="true">
+		<Size x="177" y="18"/>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestLogHighlight"
+						 alphaMode="ADD" setAllPoints="true"/>
+		<ButtonText name="$parentText" parentKey="text"
+					inherits="GameFontNormalSmall" justifyH="LEFT" maxLines="1">
+			<Size x="160" y="0"/>
+			<Anchors><Anchor point="LEFT" x="14" y="0"/></Anchors>
+		</ButtonText>
+	</Button>
+
+	<Frame name="QuestMapFrame" inherits="PortraitFrameTemplate" parent="UIParent" enableMouse="true" movable="true" clampedToScreen="true" hidden="true">
+		<Size  x="960" y="500"/>
+		<Anchors>
+			<Anchor point="TOPLEFT" x="0" y="-200"/>
+		</Anchors>
+		<Layers>                                                                                                                                   
+			<!-- Frame title – matches GuiaAventurero title position -->
+            <Layer level="BACKGROUND" textureSubLevel="5">
+				<FontString name="QuestMap_Title" inherits="GameFontNormal" text="" maxLines="1" justifyH="LEFT">
+					<Size x="535" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="328" y="-7"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+
+        <Frame name="$parentIconFrame" parentKey="iconFrame">
+            <Size x="32" y="32"/>
+            <Anchors>
+                <Anchor point="TOPLEFT" x="8" y="-8"/>
+            </Anchors>
+            <Layers>
+                <Layer level="OVERLAY">
+                    <Texture name="$parentIcon" parentKey="icon" file="Interface\QuestFrame\UI-QuestLog-BookIcon">
+                        <Size x="62" y="62"/>
+                        <Anchors>
+                            <Anchor point="CENTER"/>
+                        </Anchors>
+                    </Texture>
+                </Layer>
+            </Layers>
+        </Frame>
+
+			<!-- World map area – 640px wide, preserving Blizzard's 1002:668 aspect ratio -->
+			<Frame name="$parentMapArea" parentKey="mapArea">
+				<Size x="640" y="426.67"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="2" y="-68"/>
+				</Anchors>
+			</Frame>
+
+			<!-- Quest list panel (right column) WITH InsetFrameTemplateNoBackground -->
+			<Frame name="$parentQuestListPanel" parentKey="questListPanel">
+				<Size x="260" y="435"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-35" y="-62"/>
+				</Anchors>
+				<Layers>
+					<!-- FONDO para la lista de misiones -->
+					<Layer level="BACKGROUND">
+						<Texture name="$parentBgList" parentKey="bgList" file="Interface\QuestFrame\questmaplogatlas">
+							<Size x="250" y="460"/>
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="10"/>
+								<Anchor point="BOTTOMRIGHT" x="30" y="0"/>
+							</Anchors>
+							<TexCoords left="0.000000000" right="0.140000000" top="0.000000000" bottom="0.500000000"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<!-- Inset frame for background and border -->
+					<Frame name="$parentInset" parentKey="inset" inherits="InsetFrameTemplateNoBackground">
+						<Size x="250" y="460"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="-20" y="10"/>
+							<Anchor point="BOTTOMRIGHT" x="30" y="0"/>
+						</Anchors>
+					</Frame>
+
+					<!-- Search box with placeholder hint -->
+					<EditBox name="$parentSearchBox" parentKey="searchBox"
+							 inherits="InputBoxTemplate" autoFocus="false">
+						<Size x="280" y="20"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="-5" y="0"/>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.placeholder = "Search Quest Log";
+								self:SetText(self.placeholder);
+								self:SetTextColor(0.5, 0.5, 0.5);
+							</OnLoad>
+							<OnEditFocusGained>
+								if self:GetText() == self.placeholder then
+									self:SetText("");
+									self:SetTextColor(1, 1, 1);
+								end
+							</OnEditFocusGained>
+							<OnEditFocusLost>
+								if self:GetText() == "" then
+									self:SetText(self.placeholder);
+									self:SetTextColor(0.5, 0.5, 0.5);
+								end
+							</OnEditFocusLost>
+							<OnTextChanged>
+								if self:GetText() ~= self.placeholder then
+									QuestMapFrame_UpdateQuestList();
+								end
+							</OnTextChanged>
+							<OnEscapePressed>
+								self:SetText(""); self:ClearFocus();
+							</OnEscapePressed>
+						</Scripts>
+					</EditBox>
+
+					<!-- Variable-height scroll frame (scrollbar sits just outside right edge) -->
+					<ScrollFrame name="$parentScrollFrame" parentKey="scrollFrame"
+								  inherits="UIPanelScrollFrameTemplate">
+						<Size x="270" y="405"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="-10" y="-28"/>
+						</Anchors>
+						<ScrollChild>
+							<Frame name="$parentScrollChild" parentKey="scrollChild">
+								<Size x="320" y="1"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" x="0" y="0"/>
+								</Anchors>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+
+				</Frames>
+			</Frame>
+
+			<!-- Quest details panel WITH InsetFrameTemplateNoBackground -->
+			<Frame name="$parentQuestDetailsPanel" parentKey="questDetailsPanel" hidden="true">
+				<Size x="250" y="470"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-15" y="-25"/>
+				</Anchors>
+				<Frames>
+					<!-- UN SOLO INSET que comparten descripción y recompensas -->
+					<Frame name="$parentInset" parentKey="inset" inherits="InsetFrameTemplateNoBackground">
+						<Size x="250" y="460"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="-50" y="0"/>
+							<Anchor point="BOTTOMRIGHT" x="5" y="0"/>
+						</Anchors>
+					</Frame>
+
+					<!-- Back button: returns to the quest list -->
+					<Button name="$parentBackButton" parentKey="backButton" inherits="UIPanelButtonTemplate" text="BACK">
+    					<Size x="90" y="24"/>
+    					<Anchors>
+    					    <Anchor point="TOPLEFT" x="-35" y="-4"/>
+    					</Anchors>
+    					<Scripts>
+        					<OnLoad>
+        					    self:SetFrameLevel(self:GetParent():GetFrameLevel() + 10);
+        					</OnLoad>
+        					<OnClick>
+        					    QuestMapFrame_HideQuestDetails();
+        					</OnClick>
+    					</Scripts>
+					</Button>
+
+					<!-- Objectives / description (top) - SOLO FONDO sin borde -->
+					<Frame name="$parentQuestDetailLeft" parentKey="questDetailLeft">
+						<Size x="305" y="250"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="-50" y="-34"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+    							<Texture name="$parentBgExtra" parentKey="bgExtra" file="Interface\QuestFrame\questmaplogatlas">
+        							<Size x="300" y="35"/>
+        							<Anchors>
+        							    <Anchor point="TOP" x="0" y="38"/>
+        							</Anchors>
+        							<TexCoords left="0.423828125" right="0.563476563" top="0.459960938" bottom="0.493039063"/>
+    							</Texture>
+							</Layer>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentBg" parentKey="bg" file="Interface\QuestFrame\questmaplogatlas">
+									<Size x="350" y="250"/>
+									<Anchors>
+										<Anchor point="TOPLEFT" x="0" y="0"/>
+										<Anchor point="BOTTOMRIGHT" x="0" y="-10"/>
+									</Anchors>
+									<TexCoords left="0.141113281" right="0.280761719" top="0.000000000" bottom="0.455078125"/>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Frames>
+							<ScrollFrame name="$parentScrollFrame" parentKey="scrollFrame" inherits="UIPanelScrollFrameTemplate">
+								<Size x="330" y="250"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" x="-7" y="-4"/>
+								</Anchors>
+								<ScrollChild>
+									<Frame name="$parentScrollChild" parentKey="scrollChild">
+										<Size x="315" y="600"/>
+										<Anchors><Anchor point="TOPLEFT"/></Anchors>
+									</Frame>
+								</ScrollChild>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+
+					<!-- Rewards (bottom) - SOLO FONDO sin borde -->
+					<Frame name="$parentQuestDetailRight" parentKey="questDetailRight">
+						<Size x="305" y="166"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentQuestDetailLeft" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<Texture name="$parentBg" parentKey="bg" file="Interface\QuestFrame\questmaplogatlas">
+									<Size x="350" y="166"/>
+									<Anchors>
+										<Anchor point="TOPLEFT" x="0" y="0"/>
+										<Anchor point="BOTTOMRIGHT" x="0" y="-5"/>
+									</Anchors>
+									<TexCoords left="0.423828125" right="0.563476563" top="0.489960938" bottom="0.723039063"/>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Frames>
+							<ScrollFrame name="$parentScrollFrame" parentKey="scrollFrame" inherits="UIPanelScrollFrameTemplate">
+								<Size x="330" y="150"/>
+								<Anchors>
+									<Anchor point="TOPLEFT" x="-7" y="-7"/>
+								</Anchors>
+								<ScrollChild>
+									<Frame name="$parentScrollChild" parentKey="scrollChild">
+										<Size x="315" y="150"/>
+										<Anchors><Anchor point="TOPLEFT"/></Anchors>
+									</Frame>
+								</ScrollChild>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+
+				</Frames>
+			</Frame>
+
+			<!-- Minimize: opens the stock QuestLogFrame -->
+			<Button name="QuestMapMinimizeButton" inherits="UIPanelModernMinimizeButton">
+				<Size x="25" y="25"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="27" y="50"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						QuestMapFrame:Hide();
+						ShowUIPanel(QuestLogFrame);
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- Expand arrow: opens Blizzard's full WorldMapFrame -->
+			<Button name="QuestMapMaximizeButton">
+				<Size x="32" y="32"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-16" y="4"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						QuestMap_ShowBlizzardMap();
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-BiggerButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-BiggerButton-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+
+		</Frames>
+
+		<Scripts>
+			<OnLoad>
+				QuestMapFrame_OnLoad(self);
+			</OnLoad>
+			<OnShow>
+				PlaySound("igQuestLogOpen");
+				QuestMapFrame_AttachWorldMap();
+				QuestMapFrame.questDetailsPanel:Hide();
+				QuestMapFrame.questListPanel:Show();
+				QuestMapFrame_UpdateQuestList();
+			</OnShow>
+			<OnHide>
+				PlaySound("igQuestLogClose");
+				QuestMapFrame_DetachWorldMap();
+			</OnHide>
+			<OnEvent>
+				QuestMapFrame_OnEvent(self, event, ...);
+			</OnEvent>
+			<OnMouseDown>
+				self:StartMoving();
+			</OnMouseDown>
+			<OnMouseUp>
+				self:StopMovingOrSizing();
+			</OnMouseUp>
+		</Scripts>
+
+	</Frame>
+
+</Ui>
