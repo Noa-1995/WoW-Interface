@@ -9009,6 +9009,22 @@ CONTAINER_SORT = "Organizar objetos";
 BAG_SORT_COMBAT_ERROR = "Cannot organize bags while in combat.";
 BAG_SORT_LOCKED_ERROR = "Could not organize: there is a locked item.";
 
+ADDON_LIST_TITLE = "Addons";
+ADDON_LIST_ENABLED = "Enabled";
+ADDON_LIST_DISABLED = "Disabled";
+ADDON_LIST_BANNED = "Banned";
+ADDON_LIST_UNKNOWN = "Unknown";
+ADDON_LIST_INFO = "Information";
+ADDON_LIST_STATUS = "Status";
+ADDON_LIST_AUTHOR = "Author";
+ADDON_LIST_VERSION = "Version";
+ADDON_LIST_DESCRIPTION = "Description";
+ADDON_LIST_DEPENDENCIES = "Dependencies";
+ADDON_LIST_NO_DESC = "No description available.";
+ADDON_LIST_NO_DEPS = "No dependencies.";
+ENABLE_ALL_ADDONS = "Enable All";
+DISABLE_ALL_ADDONS = "Disable All";
+RELOADUI = "Reload UI";
 
 HELP_MENU = "Attention";
 

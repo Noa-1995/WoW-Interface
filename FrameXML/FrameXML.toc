@@ -160,41 +160,11 @@ AnimationSystem.lua
 XML_TXXUI.xml
 XML_IXXUI.xml
 
-# Shared Talent UI (Retail-style)
-..\SharedXML\C_Traits.lua
-TalentUI\WotlkGlyphItems.lua
-TalentUI\TalentUI_Compat.lua
-TalentUI\TalentUI_Enums.lua
-TalentUI\TalentUI_Templates.xml
-TalentUI\blizzard_sharedtalentutil.lua
-TalentUI\blizzard_sharedtalentedgetemplates.lua
-TalentUI\blizzard_sharedtalentedgetemplates.xml
-TalentUI\blizzard_sharedtalentbuttontemplates.lua
-TalentUI\blizzard_sharedtalentbuttontemplates.xml
-TalentUI\blizzard_talentbuttonanimutil.lua
-TalentUI\blizzard_talentbuttonanim.lua
-TalentUI\blizzard_talentbuttonanim.xml
-TalentUI\blizzard_talentdisplay.lua
-TalentUI\blizzard_talentdisplay.xml
-TalentUI\blizzard_talentbuttonart.lua
-TalentUI\blizzard_talentbuttonart.xml
-TalentUI\blizzard_talentbuttonbase.lua
-TalentUI\blizzard_talentbuttonspend.lua
-TalentUI\blizzard_talentbuttonselect.lua
-TalentUI\blizzard_talentbuttonselect.xml
-TalentUI\blizzard_talentbuttonselectexpanded.lua
-TalentUI\blizzard_talentbuttonselectexpanded.xml
-TalentUI\blizzard_sharedtalentselectiontemplates.lua
-TalentUI\blizzard_sharedtalentselectiontemplates.xml
-TalentUI\blizzard_sharedtalentframetemplates.lua
-TalentUI\blizzard_sharedtalentframetemplates.xml
-TalentUI\blizzard_sharedtalentframe.lua
-TalentUI\blizzard_sharedtalentframe.xml
-TalentUI\TalentUI_PetDB.lua
-TalentUI\TalentUI_Test.xml
+# Shared Talent UI
 
 # QuestMap (Astrolabe – bundled, no TomTom dependency)
 QuestMap\QuestMap.xml
+AddonList.xml
 
 # add new modules above here
 LocalizationPost.xml
