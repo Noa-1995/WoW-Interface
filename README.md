@@ -17,6 +17,7 @@ El proyecto está en desarrollo y se irá ampliando con mucho más contenido y n
 * 📜 **Mapa de misiones:** Mapa interactivo integrado con panel lateral de misiones.
 * 🏰 **Buscador de mazmorras:** Rediseño visual completo basado en las expansiones modernas.
 * ⚔️ **Interfaz de PvP:** Nueva presentación para campos de batalla y arenas.
+* 🖼️ **HelpFrame UI:** Interfaz de ayuda completamente rediseñada con navegación lateral personalizada, carrusel de anuncios y diseño visual moderno.
 
 > 🚧 **Proyecto en desarrollo**
 
@@ -37,6 +38,7 @@ The project is actively being developed and will receive much more content and n
 * 📜 **Quest Map:** Interactive map featuring an integrated side-by-side quest log.
 * 🏰 **Dungeon Finder:** Complete visual redesign inspired by modern expansions.
 * ⚔️ **PvP Interface:** New layout and visual presentation for battlegrounds and arenas.
+* 🖼️ **HelpFrame UI:** Completely redesigned help interface with custom sidebar navigation, announcement carousel, and modern visual layout.
 
 > 🚧 **Work in progress** 
 
@@ -61,3 +63,8 @@ Quest Map
 Enhanced Professions
 
 <img width="1465" height="661" alt="Screenshot_4" src="https://github.com/user-attachments/assets/85bdb449-bd92-4626-b58d-b6cc0636279d" />
+
+Helpframe
+
+<img width="1099" height="762" alt="Screenshot_4" src="https://github.com/user-attachments/assets/ebfcceca-1507-486d-b701-ed9e57b04b21" />
+
