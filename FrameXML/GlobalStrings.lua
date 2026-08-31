@@ -1080,7 +1080,6 @@ BNET_REPORT_CONFIRM_ABUSE = "Are you sure you want to report %s for abuse?";
 BNET_REPORT_CONFIRM_NAME = "Are you sure you want to report %s for an inappropriate name?";
 BNET_REPORT_CONFIRM_SPAM = "Are you sure you want to report %s for spamming?";
 BNET_REPORT_NAME = "Inappropriate Name";
-BNET_REPORT_PLAYER = "Report Player";
 BNET_REPORT_PLAYER_TOOLTIP = "Report this player for spamming, abuse, or an inappropriate name.";
 BNET_REPORT_SENT = "Report sent.";
 BNET_REPORT_SPAM = "Spam";
@@ -4554,7 +4553,8 @@ KBASE_ERROR_LOAD_FAILURE = "The Knowledge Base is currently unavailable.  Please
 KBASE_ERROR_NO_RESULTS = "There were no articles matching your search criteria.";
 KBASE_GMTALK = "Talk to a GM";
 KBASE_HOT_ISSUE = "Hot Issue";
-KBASE_LAG = "Report Lag";
+--KBASE_LAG = "Report Lag";
+KBASE_LAG = "Report and Help";
 KBASE_RECENTLY_UPDATED = "Recently Updated";
 KBASE_REPORTISSUE = "Report Problem";
 KBASE_SEARCH_RESULTS = "Search Results";
@@ -9011,6 +9011,51 @@ BAG_SORT_LOCKED_ERROR = "Could not organize: there is a locked item.";
 
 
 HELP_MENU = "Attention";
+
+HELPFRAME_OPEN_SERVER_URL_TEXT = "Copy this link into your browser:";
+HELPFRAME_SERVERINFO_TITLE = "Server Information";
+HELPFRAME_SERVERINFO_SUB1 = "|cffffcc00Store|r";
+HELPFRAME_SERVERINFO_TEXT1 = "Purchase coins, mounts, pets and exclusive cosmetics in our online Store.";
+HELPFRAME_SERVERINFO_SUB2 = "|cffffcc00Battlepass|r";
+HELPFRAME_SERVERINFO_TEXT2 = "Unlock exclusive rewards each season by completing quests and challenges.";
+HELPFRAME_SERVERINFO_SUB3 = "|cffffcc00Events and Updates|r";
+HELPFRAME_SERVERINFO_TEXT3 = "Check the website and official Discord to stay up to date with patches, events and news.";
+HELPFRAME_INFORMATION_TITLE = "Information";
+HELPFRAME_CONTACT_TITLE = "Contact Us";
+HELPFRAME_CONTACT_TEXT1 = "If you have questions, suggestions or need help, you can contact the team through our official channels.";
+HELPFRAME_CONTACT_TEXT2 = "The Staff team responds to inquiries on Discord and on the official server website.";
+HELPFRAME_CONTACT_TEXT3 = "|cffffcc00Discord:|r Real-time support, reports and server news.";
+HELPFRAME_CONTACT_TEXT4 = "|cffffcc00Web:|r Server information, Store, Battlepass, server status and more.";
+HELPFRAME_DISCORD_BUTTON = "Official Discord";
+HELPFRAME_DISCORD_URL = "https://www.youtube.com/watch?v=irVNGjRFZGk";
+HELPFRAME_WEB_BUTTON = "Website";
+HELPFRAME_WEB_URL = "https://www.youtube.com/watch?v=irVNGjRFZGk";
+HELPFRAME_GMTALK_OPEN_LOG = "Open GM chat log";
+HELPFRAME_GMTALK_LOG_DISABLED = "This feature is not available on this server.";
+HELPFRAME_REPORTISSUE_BULLET_TITLE1 = "Before reporting, make sure that:";
+HELPFRAME_REPORTISSUE_BULLET1 = "|cffffcc00•|r The issue is not listed in the known bugs list.";
+HELPFRAME_REPORTISSUE_BULLET2 = "|cffffcc00•|r You have searched the forum to see if it was already reported.";
+HELPFRAME_REPORTISSUE_TOOLTIP = "Report the issue with as much detail as possible.";
+
+HELPFRAME_ANNOUNCEMENT_NEWS_TITLE = "News and Updates";
+HELPFRAME_ANNOUNCEMENT_NEWS_DESC = "Stay up to date with events, changes and important server announcements.";
+HELPFRAME_ANNOUNCEMENT_NEWS_ACTION = "More info";
+HELPFRAME_ANNOUNCEMENT_GMTALK_TITLE = "Talk to a GM";
+HELPFRAME_ANNOUNCEMENT_GMTALK_DESC = "Contact a GM if you need help with in-game issues.";
+HELPFRAME_ANNOUNCEMENT_STUCK_TITLE = "Character Stuck";
+HELPFRAME_ANNOUNCEMENT_STUCK_DESC = "Use the unstuck tool if your character is trapped.";
+HELPFRAME_ANNOUNCEMENT_CONTACT_TITLE = "Contact Us";
+HELPFRAME_ANNOUNCEMENT_CONTACT_DESC = "Quick access to our official links and channels.";
+HELPFRAME_ANNOUNCEMENT_HELP_TEXT = "Click on an announcement if you are looking for a reference or want \nmore information.";
+
+BNET_REPORT_PLAYER = "Report Player";
+HELPFRAME_REPORTPLAYER_TEXT1 = "World of Warcraft is intended to be a fun, fair, and safe environment. If you encounter a player breaking the rules or using offensive language, right-click their name in chat or right-click their portrait, then select Report Player.";
+HELPFRAME_NEWPLAYER_TITLE = "New Players";
+HELPFRAME_NEWPLAYER_TEXT1 = "Welcome to Azeroth! Here are the essential keyboard shortcuts to begin your journey:\n\n|cffffcc00Movement:|r |cffffffffW A S D|r - Move around the world\n|cffffcc00Jump:|r |cffffffffSpacebar|r - Leap into action\n|cffffcc00Abilities:|r |cffffffff1-9|r - Use your skills\n|cffffcc00Target:|r |cffffffffTab|r - Select enemies\n|cffffcc00Interact:|r |cffffffffRight-Click|r - Talk to NPCs and loot items\n|cffffcc00Chat:|r |cffffffffEnter|r - Talk with other heroes\n|cffffcc00Inventory:|r |cffffffffB|r - Check your bags\n|cffffcc00Character:|r |cffffffffC|r - View your stats\n|cffffcc00Quests:|r |cffffffffL|r - Track your adventures\n|cffffcc00Map:|r |cffffffffM|r - Explore the world";
+HELPFRAME_REPORT_PLAYER_CHAT_TOP_LEFT = "Right-Click \n|cffffffff[Player Name]|r";
+HELPFRAME_REPORT_PLAYER_CHAT_TOP_RIGHT = "Right-Click \n|cffffffffTarget Frame|r";
+HELPFRAME_REPORT_PLAYER_CHAT = "|cffff69b4[Player Name]:|r |cffff69b4Blah Blah|r";
+HELPFRAME_REPORT_PLAYER_NAME = "Player Name";
 
 BOOKTYPE_SPELL = "spell"
 BOOKTYPE_PET = "pet"
