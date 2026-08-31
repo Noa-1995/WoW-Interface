@@ -18,6 +18,7 @@ El proyecto está en desarrollo y se irá ampliando con mucho más contenido y n
 * 🏰 **Buscador de mazmorras:** Rediseño visual completo basado en las expansiones modernas.
 * ⚔️ **Interfaz de PvP:** Nueva presentación para campos de batalla y arenas.
 * 🖼️ **HelpFrame UI:** Interfaz de ayuda completamente rediseñada con navegación lateral personalizada, carrusel de anuncios y diseño visual moderno.
+* 📋 **Gestor de Addons:** Interfaz completa de gestión de addons con panel de información detallado.
 
 > 🚧 **Proyecto en desarrollo**
 
@@ -39,6 +40,7 @@ The project is actively being developed and will receive much more content and n
 * 🏰 **Dungeon Finder:** Complete visual redesign inspired by modern expansions.
 * ⚔️ **PvP Interface:** New layout and visual presentation for battlegrounds and arenas.
 * 🖼️ **HelpFrame UI:** Completely redesigned help interface with custom sidebar navigation, announcement carousel, and modern visual layout.
+* 📋 **Addon Manager:** Complete addon management interface with detailed information panel.
 
 > 🚧 **Work in progress** 
 
@@ -67,4 +69,9 @@ Enhanced Professions
 Helpframe
 
 <img width="1099" height="762" alt="Screenshot_4" src="https://github.com/user-attachments/assets/ebfcceca-1507-486d-b701-ed9e57b04b21" />
+
+Addons
+
+<img width="1037" height="701" alt="Screenshot_5" src="https://github.com/user-attachments/assets/6ae855bd-6619-42f8-9c77-f21b8add3126" />
+
 
