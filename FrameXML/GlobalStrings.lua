@@ -703,7 +703,6 @@ BATTLEGROUND = "Battleground";
 BATTLEGROUNDS = "Battlegrounds";
 BATTLEGROUND_COMPLETE_MESSAGE = "The battle has ended. This battleground will close in %s";
 BATTLEGROUND_HOLIDAY = "Call to Arms";
-BATTLEGROUND_HOLIDAY_EXPLANATION = "Your urgent assistance is needed to combat our foes! Completing this Battleground will earn you extra rewards.";
 BATTLEGROUND_INSTANCE = "Instance";
 BATTLEGROUND_INSTANCE_TOOLTIP = "Join the queue to enter this battleground when space becomes available. This will result in a longer wait than selecting first available.";
 BATTLEGROUND_LEADER = "Battleground Leader";
@@ -5999,7 +5998,6 @@ RAID_WARNING = "Raid Warning";
 RAID_WARNING_MESSAGE = "Raid Warning";
 RALT_KEY_TEXT = "Right ALT";
 RANDOM_BATTLEGROUND = "Random Battleground";
-RANDOM_BATTLEGROUND_EXPLANATION = "Completing Random Battlegrounds will earn you extra rewards.";
 RANDOM_DUNGEON_IS_READY = "Your Random Dungeon group is ready!";
 RANDOM_ROLL_RESULT = "%s rolls %d (%d-%d)";
 RANGED = "Ranged";
@@ -9004,7 +9002,7 @@ CONTAINER_EXPAND = "Expanded Bag";
 CONTAINER_EXPAND_ENABLE = "Open expanded bag";
 CONTAINER_EXPAND_DISABLE = "Return to normal bags";
 CONTAINER_SEARCH = "Search Item...";
-CONTAINER_SORT = "Organizar objetos";
+CONTAINER_SORT = "Sort Items";
 
 BAG_SORT_COMBAT_ERROR = "Cannot organize bags while in combat.";
 BAG_SORT_LOCKED_ERROR = "Could not organize: there is a locked item.";
@@ -9027,6 +9025,13 @@ DISABLE_ALL_ADDONS = "Disable All";
 RELOADUI = "Reload UI";
 
 HELP_MENU = "Attention";
+
+LOOKING_FOR_DUNGEON_RAID = "Dungeons and Raids";
+
+RANDOM_BATTLEGROUND_EXPLANATION = "|cffffffffCompleting Random Battlegrounds will earn you extra rewards.|r";
+BATTLEGROUND_HOLIDAY_EXPLANATION = "|cffffffffYour urgent assistance is needed to combat our foes! Completing this Battleground will earn you extra rewards.|r";
+BATTLE_HONOR_LIMIT = "Honor Limit";
+WINTERGRASP = "Wintergrasp";
 
 HELPFRAME_OPEN_SERVER_URL_TEXT = "Copy this link into your browser:";
 HELPFRAME_SERVERINFO_TITLE = "Server Information";

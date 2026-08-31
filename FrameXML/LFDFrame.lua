@@ -1,6 +1,3 @@
--- ====================================================================
--- Noa - LFDFRAME - MERGED FILE
--- ====================================================================
 EXPANSION_LEVEL = GetExpansionLevel(); --This doesn't change while logged in, so we just need to do it once.
 
 LFD_MAX_REWARDS = 2;
@@ -19,10 +16,19 @@ local NUM_STATISTIC_TYPES = 1;
 LFD_MODE = "dungeon";
 
 local SHOW_LFD_LEVEL = 15;
-local LFD_EYE_TEXTURE_PREFIX = "Interface\\LFGFrame\\LFGEYEicon\\BattlenetWorking";
-local LFD_EYE_TEXTURE_IDLE = LFD_EYE_TEXTURE_PREFIX.."0";
-local LFD_EYE_TOTAL_FRAMES = 79;
-local LFD_EYE_TIME_PER_FRAME = 0.05;
+local LFD_EYE_TEXTURE_SHEET = "Interface\\LFGFrame\\groupfinder-eye";
+local LFD_EYE_TEXTURE_FALLBACK = "Interface\\LFGFrame\\UI-LFG-PORTRAIT";
+local LFD_EYE_STATIC_COORDS = { 0.971191, 0.996582, 0.000977, 0.051758 };
+local LFD_EYE_ANIMATIONS = {
+    initial = {
+        left = 0.237793, right = 0.474121, top = 0.305664, bottom = 0.520508,
+        columns = 11, rows = 5, frames = 52, duration = 1.5, nextAnimation = "searching",
+    },
+    searching = {
+        left = 0.000488, right = 0.236816, top = 0.305664, bottom = 0.649414,
+        columns = 11, rows = 8, frames = 80, duration = 4.0, loop = true,
+    },
+};
 local LFD_SPECIFIC_LIST_BIG_WIDTH = 315;
 local LFD_SPECIFIC_LIST_NORMAL_WIDTH = 295;
 -------------------------------------
@@ -106,6 +112,74 @@ function LFDFrame_OnEvent(self, event, ...)
 	LFDQueueFrame_UpdatePortrait();
 end
 
+local LFDEyeAnimationMixin = {};
+
+function LFDEyeAnimationMixin:SetSheetFrame(animation, frameIndex)
+    local frameWidth = (animation.right - animation.left) / animation.columns;
+    local frameHeight = (animation.bottom - animation.top) / animation.rows;
+    local column = frameIndex % animation.columns;
+    local row = math.floor(frameIndex / animation.columns);
+    local left = animation.left + (column * frameWidth);
+    local top = animation.top + (row * frameHeight);
+    self.texture:SetTexCoord(left, left + frameWidth, top, top + frameHeight);
+end
+
+function LFDEyeAnimationMixin:ShowStatic()
+    self:SetScript("OnUpdate", nil);
+    self.animation = nil;
+    self.isAnimating = false;
+    local loaded = self.texture:SetTexture(LFD_EYE_TEXTURE_SHEET);
+    if ( loaded ) then
+        self.texture:SetTexCoord(unpack(LFD_EYE_STATIC_COORDS));
+    else
+        self.texture:SetTexture(LFD_EYE_TEXTURE_FALLBACK);
+        self.texture:SetTexCoord(0, 1, 0, 1);
+    end
+    self.texture:Show();
+end
+
+function LFDEyeAnimationMixin:Play(animationName)
+    local animation = LFD_EYE_ANIMATIONS[animationName];
+    if ( not animation ) then return; end
+    local loaded = self.texture:SetTexture(LFD_EYE_TEXTURE_SHEET);
+    if ( not loaded ) then
+        self:ShowStatic();
+        return;
+    end
+    self.animationName = animationName;
+    self.animation = animation;
+    self.elapsed = 0;
+    self.currentFrame = -1;
+    self.isAnimating = true;
+    self:SetSheetFrame(animation, 0);
+    self:SetScript("OnUpdate", self.OnUpdate);
+    self.texture:Show();
+end
+
+function LFDEyeAnimationMixin:OnUpdate(elapsed)
+    local animation = self.animation;
+    if ( not animation ) then return; end
+    self.elapsed = self.elapsed + elapsed;
+    local frameIndex = math.floor(self.elapsed / (animation.duration / animation.frames));
+    if ( frameIndex >= animation.frames and not animation.loop ) then
+        if ( animation.nextAnimation ) then self:Play(animation.nextAnimation); else self:ShowStatic(); end
+        return;
+    end
+    frameIndex = frameIndex % animation.frames;
+    if ( frameIndex ~= self.currentFrame ) then
+        self.currentFrame = frameIndex;
+        self:SetSheetFrame(animation, frameIndex);
+    end
+end
+
+function LFDEyeAnimationMixin:SetSearching(searching)
+    if ( searching ) then
+        if ( not self.isAnimating ) then self:Play("initial"); end
+    elseif ( self.isAnimating or self.animation ) then
+        self:ShowStatic();
+    end
+end
+
 local function EnsureLFDPortrait(self)
     if self.customPortrait then
         return;
@@ -119,20 +193,16 @@ local function EnsureLFDPortrait(self)
     end
 
     self.customPortraitFrame = CreateFrame("Frame", nil, self);
-    self.customPortraitFrame:SetSize(60, 60);
-    self.customPortraitFrame:SetPoint("TOPLEFT", -4, 8);
+    self.customPortraitFrame:SetSize(62, 62);
+    self.customPortraitFrame:SetPoint("TOPLEFT", -4.5, 8);
 
     self.customPortrait = self.customPortraitFrame:CreateTexture(nil, "OVERLAY");
     self.customPortrait:SetAllPoints();
-    self.customPortrait:SetTexture(LFD_EYE_TEXTURE_IDLE);
 
     self.portraitAnimator = CreateFrame("Frame", nil, self);
+    Mixin(self.portraitAnimator, LFDEyeAnimationMixin);
     self.portraitAnimator.texture = self.customPortrait;
-    self.portraitAnimator.currentFrame = 0;
-    self.portraitAnimator.totalFrames = LFD_EYE_TOTAL_FRAMES;
-    self.portraitAnimator.timePerFrame = LFD_EYE_TIME_PER_FRAME;
-    self.portraitAnimator.timeSinceLastFrame = 0;
-    self.portraitAnimator.isAnimating = false;
+    self.portraitAnimator:ShowStatic();
 end
 
 function LFDFrame_OnShow(self)
@@ -150,51 +220,8 @@ function LFDFrame_OnShow(self)
     LFDParentFrame_ShowTab(1);
 end
 
-local function AnimatorFrame_OnUpdate(self, elapsed)
-    if not self.isAnimating then
-        return;
-    end
-
-    self.timeSinceLastFrame = self.timeSinceLastFrame + elapsed;
-    if self.timeSinceLastFrame >= self.timePerFrame then
-        self.timeSinceLastFrame = 0;
-        self.currentFrame = self.currentFrame + 1;
-        if self.currentFrame > self.totalFrames then
-            self.currentFrame = 0;
-        end
-        self.texture:SetTexture(LFD_EYE_TEXTURE_PREFIX .. self.currentFrame);
-    end
-end
-
-local function StartEyeAnimation(animator)
-    if not animator or animator.isAnimating then
-        return;
-    end
-
-    animator.isAnimating = true;
-    animator.currentFrame = 0;
-    animator.timeSinceLastFrame = 0;
-    animator:SetScript("OnUpdate", AnimatorFrame_OnUpdate);
-end
-
-local function StopEyeAnimation(animator, texture)
-    if not animator then
-        return;
-    end
-
-    if animator.isAnimating then
-        animator.isAnimating = false;
-        animator.currentFrame = 0;
-        animator:SetScript("OnUpdate", nil);
-    end
-
-    if texture then
-        texture:SetTexture(LFD_EYE_TEXTURE_IDLE);
-    end
-end
-
 local function LFDPortrait_ShouldAnimate(mode)
-    return mode == "queued" or mode == "rolecheck";
+    return mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "listed";
 end
 
 local function LFDPortrait_Update(portrait, animator, mode, forceShow)
@@ -206,11 +233,7 @@ local function LFDPortrait_Update(portrait, animator, mode, forceShow)
         portrait:Show();
     end
 
-    if LFDPortrait_ShouldAnimate(mode or GetLFGMode()) then
-        StartEyeAnimation(animator);
-    else
-        StopEyeAnimation(animator, portrait);
-    end
+    animator:SetSearching(LFDPortrait_ShouldAnimate(mode or GetLFGMode()));
 end
 
 function LFDParentFrame_SetPortrait()
@@ -224,10 +247,20 @@ function LFDParentFrame_UpdatePortrait()
 end
 
 function LFDFrame_OnHide(self)
-	if ( self.fromGossip ) then
-		CloseGossip();
-		self.fromGossip = false;
-	end
+    if ( self.fromGossip ) then
+        CloseGossip();
+        self.fromGossip = false;
+    end
+
+    if LFDTabsFrame then
+        local pvpStatsVisible = false;
+        if PvPStatsParentFrame then
+            pvpStatsVisible = PvPStatsParentFrame:IsShown();
+        end
+        if not PVPParentFrame:IsShown() and not pvpStatsVisible then
+            LFDTabsFrame:Hide()
+        end
+    end
 end
 
 function LFDQueueFrame_UpdatePortrait()
@@ -460,12 +493,14 @@ function LFDList_SetHeaderCollapsed(headerID, isCollapsed)
 	SetLFGHeaderCollapsed(headerID, isCollapsed);
 	LFGCollapseList[headerID] = isCollapsed;
 	for _, dungeonID in pairs(LFDDungeonList) do
-		if ( LFGGetDungeonInfoByID(dungeonID)[LFG_RETURN_VALUES.groupID] == headerID ) then
+		local dungeonInfo = LFGGetDungeonInfoByID(dungeonID);
+		if ( dungeonInfo and dungeonInfo[LFG_RETURN_VALUES.groupID] == headerID ) then
 			LFGCollapseList[dungeonID] = isCollapsed;
 		end
 	end
 	for _, dungeonID in pairs(LFDHiddenByCollapseList) do
-		if ( LFGGetDungeonInfoByID(dungeonID)[LFG_RETURN_VALUES.groupID] == headerID ) then
+		local dungeonInfo = LFGGetDungeonInfoByID(dungeonID);
+		if ( dungeonInfo and dungeonInfo[LFG_RETURN_VALUES.groupID] == headerID ) then
 			LFGCollapseList[dungeonID] = isCollapsed;
 		end
 	end
@@ -1316,6 +1351,9 @@ end
 
 LFD_CURRENT_FILTER = LFDList_DefaultFilterFunction
 
+-- ================================================
+-- Sistema de botones internos
+-- ================================================
 function LFDQueueFrame_SetButtonSelected(buttonName, isSelected)
     local button = _G[buttonName];
     if button and button.selection then
@@ -1327,6 +1365,11 @@ function LFDQueueFrame_SetButtonSelected(buttonName, isSelected)
     end
 end
 
+-- ================================================
+-- Selección de botones del menú (GroupFinder / RaidFinder / Premade)
+-- Cada Select* deja su propio botón marcado/disabled y libera los demás,
+-- sin tocar nada de la lógica interna de LFR o Premade.
+-- ================================================
 local function LFDQueueFrame_SelectGroupFinderButton()
     LFDQueueFrame_SetButtonSelected("LFDQueueParentFrameGroupFinderButton", true)
     LFDQueueFrame_SetButtonSelected("LFDQueueParentFrameRaidFinderButton", false)
@@ -1375,6 +1418,12 @@ local function LFDQueueFrame_SelectPremadeButton()
     end
 end
 
+-- ================================================
+-- Despachador central: decide qué contenido se ve dentro de LFDParentFrame.
+-- Cada sección es dueña de su propio Show()/Hide() y de sus propios
+-- OnShow/OnHide/OnEvent definidos en su XML/lua original — este despachador
+-- no reimplementa esa lógica, solo la enciende y apaga.
+-- ================================================
 function LFDQueueFrame_ShowSection(section)
     if ( section == "GroupFinder" ) then
         LFDQueueFrame:Show()
@@ -1399,6 +1448,8 @@ function LFDQueueFrame_ShowSection(section)
             LFDQueueFrameBattlegroundContent:Hide()
         end
         if LFRParentFrame then
+            -- Botón 2: banda de LFR en modo "Selecciona banda" (LFRQueueFrame).
+            -- LFRFrame_SetActiveTab ya se encarga de Show/Hide de LFRQueueFrame vs LFRBrowseFrame.
             if LFRFrame_SetActiveTab then
                 LFRFrame_SetActiveTab(1)
             end
@@ -1416,6 +1467,7 @@ function LFDQueueFrame_ShowSection(section)
             LFDQueueFrameBattlegroundContent:Hide()
         end
         if LFRParentFrame then
+            -- Botón 3: mismo LFRParentFrame, pero en modo "Consultar" (LFRBrowseFrame).
             if LFRFrame_SetActiveTab then
                 LFRFrame_SetActiveTab(2)
             end
@@ -1435,11 +1487,6 @@ function LFDParentFrame_ResetButtonSelection()
     end
 end
 
-function GroupFinderTabs_OnClick(self, tabID)
-    PlaySound("igCharacterInfoTab")
-    LFDParentFrame_ShowTab(tabID)
-end
-
 function LFDParentFrame_ShowTab(tabID)
     if tabID == 1 then
         if PVPParentFrame:IsShown() then
@@ -1451,13 +1498,24 @@ function LFDParentFrame_ShowTab(tabID)
         LFDQueueFrame_ShowSection("GroupFinder")
         LFDParentFrame_UpdatePortrait()
 
+        LFDTabsFrame:ClearAllPoints()
+        LFDTabsFrame:SetPoint("BOTTOMLEFT", LFDParentFrame, "BOTTOMLEFT", 20, -27)
+        LFDTabsFrame:Show()
+        PanelTemplates_SetTab(LFDTabsFrame, 1)
+        PanelTemplates_TabResize(LFDTabsFrameTab1, 0)
+
         UpdateMicroButtons()
 
     elseif tabID == 2 then
         HideUIPanel(LFDParentFrame)
         ShowUIPanel(PVPParentFrame)
 
-        PVPFrame_SetPortrait()
+        LFDTabsFrame:ClearAllPoints()
+        LFDTabsFrame:SetPoint("BOTTOMLEFT", PVPParentFrame, "BOTTOMLEFT", 20, -27)
+        LFDTabsFrame:Show()
+        PanelTemplates_SetTab(LFDTabsFrame, 2)
+        PanelTemplates_TabResize(LFDTabsFrameTab1, 0)
+
         UpdateMicroButtons()
     end
 end

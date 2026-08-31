@@ -1,0 +1,252 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <!-- Retail talent artwork templates absent from the stock 3.3.5a FrameXML. -->
+    <Font name="TalentRetailGameFontNormal15" font="Fonts\FRIZQT__.TTF" virtual="true">
+        <FontHeight val="15"/>
+    </Font>
+
+    <Texture name="Talent-RingGlow" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="184" y="184"/><TexCoords left="0.00390625" right="0.72265625" top="0.00195313" bottom="0.36132813"/>
+    </Texture>
+    <Texture name="Talent-Ring" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="67" y="67"/><TexCoords left="0.73046875" right="0.99218750" top="0.00195313" bottom="0.13281250"/>
+    </Texture>
+    <Texture name="PetTalent-TalentIconBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="59" y="59"/><TexCoords left="0.73046875" right="0.96093750" top="0.13671875" bottom="0.25195313"/>
+    </Texture>
+    <Texture name="Talent-GoldMedal-Glow" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="54" y="54"/><TexCoords left="0.73046875" right="0.94140625" top="0.25585938" bottom="0.36132813"/>
+    </Texture>
+    <Texture name="PetTalent-TreeBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="225" y="45"/><TexCoords left="0.00390625" right="0.88281250" top="0.36523438" bottom="0.45312500"/>
+    </Texture>
+    <Texture name="PetTalent-TreeTitle-BG" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="225" y="44"/><TexCoords left="0.00390625" right="0.88281250" top="0.45703125" bottom="0.54296875"/>
+    </Texture>
+    <Texture name="TalentCover-SmallIconBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="16" y="16"/><TexCoords left="0.89062500" right="0.95312500" top="0.50976563" bottom="0.54101563"/>
+    </Texture>
+    <Texture name="Talent-PrimaryHighlight-TopLeft" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="9" y="9"/><TexCoords left="0.78515625" right="0.82031250" top="0.59179688" bottom="0.60937500"/>
+    </Texture>
+    <Texture name="Talent-PrimaryHighlight-TopRight" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="9" y="9"/><TexCoords left="0.82812500" right="0.86328125" top="0.59179688" bottom="0.60937500"/>
+    </Texture>
+    <Texture name="Talent-PrimaryHighlight-BottomLeft" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="9" y="9"/><TexCoords left="0.87109375" right="0.90625000" top="0.59179688" bottom="0.60937500"/>
+    </Texture>
+    <Texture name="Talent-PrimaryHighlight-BottomRight" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="9" y="9"/><TexCoords left="0.96093750" right="0.99609375" top="0.50976563" bottom="0.52734375"/>
+    </Texture>
+    <Texture name="Talent-PointBg-Green" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="20" y="19"/><TexCoords left="0.91796875" right="0.99609375" top="0.61523438" bottom="0.65234375"/>
+    </Texture>
+    <Texture name="PetTalent-PetIconBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="54" y="54"/><TexCoords left="0.00390625" right="0.21484375" top="0.76757813" bottom="0.87304688"/>
+    </Texture>
+    <Texture name="TalentHeader-PrimaryIconBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="44" y="44"/><TexCoords left="0.22265625" right="0.39453125" top="0.76757813" bottom="0.85351563"/>
+    </Texture>
+    <Texture name="TalentHeader-SecondaryIconBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="44" y="44"/><TexCoords left="0.00390625" right="0.17578125" top="0.87695313" bottom="0.96289063"/>
+    </Texture>
+    <Texture name="Talent-GoldMedal-Border" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="44" y="44"/><TexCoords left="0.40625000" right="0.57812500" top="0.68359375" bottom="0.76953125"/>
+    </Texture>
+    <Texture name="Talent-SingleBorder-Glow" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="44" y="44"/><TexCoords left="0.58593750" right="0.75781250" top="0.68359375" bottom="0.76953125"/>
+    </Texture>
+    <Texture name="Talent-SingleBorder-Shadow" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="37" y="36"/><TexCoords left="0.40625000" right="0.55078125" top="0.83203125" bottom="0.90234375"/>
+    </Texture>
+    <Texture name="Talent-SingleBorder" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="31" y="30"/><TexCoords left="0.40625000" right="0.52734375" top="0.90625000" bottom="0.96484375"/>
+    </Texture>
+    <Texture name="TalentHeader-PointCircle-Gold" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="23" y="23"/><TexCoords left="0.87890625" right="0.96875000" top="0.77343750" bottom="0.81835938"/>
+    </Texture>
+    <Texture name="TalentHeader-PointCircle-Silver" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="23" y="23"/><TexCoords left="0.55859375" right="0.64843750" top="0.83203125" bottom="0.87695313"/>
+    </Texture>
+    <Texture name="Talent-PointBg" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="20" y="19"/><TexCoords left="0.55859375" right="0.63671875" top="0.88085938" bottom="0.91796875"/>
+    </Texture>
+    <Texture name="GoldLockIcon" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="17" y="21"/><TexCoords left="0.92968750" right="0.99609375" top="0.68359375" bottom="0.72460938"/>
+    </Texture>
+    <Texture name="!Talent-PrimaryHighlight-Left" file="Interface\TalentFrame\TalentFrame-Vertical2" virtual="true" vertTile="true">
+        <Size x="9" y="32"/><TexCoords left="0.12109375" right="0.15625000"/>
+    </Texture>
+    <Texture name="!Talent-PrimaryHighlight-Right" file="Interface\TalentFrame\TalentFrame-Vertical2" virtual="true" vertTile="true">
+        <Size x="9" y="32"/><TexCoords left="0.16406250" right="0.19921875"/>
+    </Texture>
+    <Texture name="_Talent-PrimaryHighlight-Bottom" file="Interface\TalentFrame\TalentFrame-Horizontal2" virtual="true" horizTile="true">
+        <Size x="32" y="9"/><TexCoords top="0.16015625" bottom="0.19531250"/>
+    </Texture>
+    <Texture name="_Talent-PrimaryHighlight-Top" file="Interface\TalentFrame\TalentFrame-Horizontal2" virtual="true" horizTile="true">
+        <Size x="32" y="9"/><TexCoords top="0.20312500" bottom="0.23828125"/>
+    </Texture>
+
+    <Texture name="Talent-Inner-BotRight" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="14" y="14"/><TexCoords left="0.00390625" right="0.05859375" top="0.96679688" bottom="0.99414063"/>
+    </Texture>
+    <Texture name="Talent-Inner-TopRight" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="14" y="14"/><TexCoords left="0.06640625" right="0.12109375" top="0.96679688" bottom="0.99414063"/>
+    </Texture>
+    <Texture name="Talent-Inner-BotLeft" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="14" y="14"/><TexCoords left="0.18359375" right="0.23828125" top="0.96679688" bottom="0.99414063"/>
+    </Texture>
+    <Texture name="Talent-Inner-TopLeft" file="Interface\TalentFrame\TalentFrame-Parts" virtual="true">
+        <Size x="14" y="14"/><TexCoords left="0.24609375" right="0.30078125" top="0.96679688" bottom="0.99414063"/>
+    </Texture>
+    <Texture name="!Talent-Inner-RightTile" file="Interface\TalentFrame\TalentFrame-Vertical2" virtual="true" vertTile="true">
+        <Size x="7" y="256"/><TexCoords left="0.16406250" right="0.19921875"/>
+    </Texture>
+    <Texture name="!Talent-Inner-LeftTile" file="Interface\TalentFrame\TalentFrame-Vertical2" virtual="true" vertTile="true">
+        <Size x="7" y="256"/><TexCoords left="0.12109375" right="0.15625000"/>
+    </Texture>
+    <Texture name="_Talent-Inner-TopTile" file="Interface\TalentFrame\TalentFrame-Horizontal2" virtual="true" horizTile="true">
+        <Size x="256" y="8"/><TexCoords top="0.20312500" bottom="0.23828125"/>
+    </Texture>
+    <Texture name="_Talent-Inner-BotTile" file="Interface\TalentFrame\TalentFrame-Horizontal2" virtual="true" horizTile="true">
+        <Size x="256" y="8"/><TexCoords top="0.16015625" bottom="0.19531250"/>
+    </Texture>
+
+    <EditBox name="TalentRetailSearchBoxTemplate" inherits="InputBoxTemplate" autoFocus="false" virtual="true">
+        <Layers>
+            <Layer level="OVERLAY">
+                <Texture name="$parentSearchIcon" file="Interface\TalentRetail\TalentRetailSearchIcon" parentKey="searchIcon">
+                    <Size x="14" y="14"/>
+                    <Anchors><Anchor point="LEFT" x="0" y="-2"/></Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+    </EditBox>
+
+    <Frame name="TalentRetailInsetFrameTemplate" virtual="true">
+        <Layers>
+            <Layer level="BORDER">
+                <Texture name="$parentTopLeftCornerInset" parentKey="TopLeftCorner" inherits="Talent-Inner-TopLeft">
+                    <Anchors><Anchor point="TOPLEFT"/></Anchors>
+                </Texture>
+                <Texture name="$parentTopRightCornerInset" parentKey="TopRightCorner" inherits="Talent-Inner-TopRight">
+                    <Anchors><Anchor point="TOPRIGHT"/></Anchors>
+                </Texture>
+                <Texture name="$parentBotLeftCornerInset" parentKey="BotLeftCorner" inherits="Talent-Inner-BotLeft">
+                    <Anchors><Anchor point="BOTTOMLEFT"/></Anchors>
+                </Texture>
+                <Texture name="$parentBotRightCornerInset" parentKey="BotRightCorner" inherits="Talent-Inner-BotRight">
+                    <Anchors><Anchor point="BOTTOMRIGHT"/></Anchors>
+                </Texture>
+                <Texture parentKey="TopBorder" inherits="_Talent-Inner-TopTile">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentTopLeftCornerInset" relativePoint="TOPRIGHT"/>
+                        <Anchor point="TOPRIGHT" relativeTo="$parentTopRightCornerInset" relativePoint="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+                <Texture parentKey="BottomBorder" inherits="_Talent-Inner-BotTile">
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT" relativeTo="$parentBotLeftCornerInset" relativePoint="BOTTOMRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT" relativeTo="$parentBotRightCornerInset" relativePoint="BOTTOMLEFT"/>
+                    </Anchors>
+                </Texture>
+                <Texture parentKey="LeftBorder" inherits="!Talent-Inner-LeftTile">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parentTopLeftCornerInset" relativePoint="BOTTOMLEFT"/>
+                        <Anchor point="BOTTOMLEFT" relativeTo="$parentBotLeftCornerInset" relativePoint="TOPLEFT"/>
+                    </Anchors>
+                </Texture>
+                <Texture parentKey="RightBorder" inherits="!Talent-Inner-RightTile">
+                    <Anchors>
+                        <Anchor point="TOPRIGHT" relativeTo="$parentTopRightCornerInset" relativePoint="BOTTOMRIGHT"/>
+                        <Anchor point="BOTTOMRIGHT" relativeTo="$parentBotRightCornerInset" relativePoint="TOPRIGHT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="TalentRetailButtonFrameTemplate" virtual="true" inherits="PortraitFrameTemplate_NineSlice">
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentTitleText" parentKey="TitleText" inherits="GameFontNormal" wordwrap="false">
+                    <Anchors>
+                        <Anchor point="TOP" y="-4"/>
+                        <Anchor point="LEFT" x="60"/>
+                        <Anchor point="RIGHT" x="-60"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="$parentInset" parentKey="Inset" useParentLevel="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="4" y="-60"/>
+                    <Anchor point="BOTTOMRIGHT" x="-6" y="26"/>
+                </Anchors>
+            </Frame>
+        </Frames>
+    </Frame>
+
+    <Frame name="TalentRetailLoadingSpinnerTemplate" virtual="true">
+        <Size x="48" y="48"/>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentText" parentKey="Text" inherits="GameFontNormal" hidden="true">
+                    <Anchors><Anchor point="TOP" relativePoint="BOTTOM"/></Anchors>
+                </FontString>
+                <FontString name="$parentDots" parentKey="Dots" inherits="GameFontNormal" hidden="true">
+                    <Anchors><Anchor point="LEFT" relativeTo="$parentText" relativePoint="RIGHT"/></Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame parentKey="AnimFrame" setAllPoints="true">
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture file="Interface\Buttons\UI-RotationLeft-Button-Up" setAllPoints="true"/>
+                    </Layer>
+                </Layers>
+                <Animations>
+                    <AnimationGroup parentKey="Anim" looping="REPEAT">
+                        <Rotation order="1" duration="1" degrees="-360"/>
+                    </AnimationGroup>
+                </Animations>
+            </Frame>
+        </Frames>
+    </Frame>
+
+    <PlayerModel name="TalentRetailModelTemplate" virtual="true">
+        <Scripts>
+            <OnLoad function="Model_OnLoad"/>
+            <OnUpdate function="Model_OnUpdate"/>
+        </Scripts>
+    </PlayerModel>
+
+    <Frame name="TalentRetailShadowOverlayTemplate" virtual="true"/>
+
+    <Frame name="TalentRetailGlowBoxTemplate" virtual="true">
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+            <BackgroundInsets><AbsInset left="5" right="5" top="5" bottom="5"/></BackgroundInsets>
+            <TileSize><AbsValue val="32"/></TileSize>
+            <EdgeSize><AbsValue val="16"/></EdgeSize>
+        </Backdrop>
+        <Scripts>
+            <OnLoad>
+                self:SetBackdropBorderColor(1, 0.82, 0, 1)
+            </OnLoad>
+        </Scripts>
+    </Frame>
+
+    <Frame name="TalentRetailHorizontalBarTemplate" virtual="true">
+        <Size x="300" y="6"/>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture file="Interface\TalentRetail\TalentRetailFrameHorizontal" setAllPoints="true" horizTile="true">
+                    <TexCoords top="0.20312500" bottom="0.27343750"/>
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
+</Ui>

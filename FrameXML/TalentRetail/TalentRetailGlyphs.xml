@@ -1,0 +1,262 @@
+<!--
+
+	Filename:	Custom_GlyphUI.xml
+	Project:	Custom Game Interface
+	Author:		Nyll & Blizzard Entertainment
+
+-->
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+	<Script file="TalentRetailGlyphs.lua"/>
+
+	<Button name="GlyphTemplate" alpha="1" virtual="true">
+		<Size x="72" y="72"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground" file="Interface\Spellbook\UI-GlyphFrame">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset x="0" y="0"/>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.78125" right="0.91015625" top="0.69921875" bottom="0.828125"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="$parentGlyph" parentKey="glyph">
+					<Size x="57" y="57"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset x="0" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentHighlight" file="Interface\TalentFrame\glyph-main" alphaMode="ADD" parentKey="highlight">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+					<Animations>
+						<AnimationGroup looping="REPEAT" parentKey="glow">
+							<Alpha change="-0.5" duration="0" smoothing="IN_OUT" order="1"/>
+							<Alpha change="0.5" duration="0.8" smoothing="IN_OUT" order="2"/>
+							<Alpha change="-0.5" duration="0.8" smoothing="IN_OUT" order="3"/>
+							<Alpha change="0.5" duration="0" smoothing="IN_OUT" order="4"/>
+						</AnimationGroup>
+					</Animations>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentRing" file="Interface\TalentFrame\glyph-main" parentKey="ring">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentID" parentKey="ID" inherits="GameFontNormalHugeBlack">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				<!-- self.ID:SetText(self:GetID()) -->
+				GlyphFrameGlyph_OnLoad(self);
+			</OnLoad>
+			<OnShow>
+				GlyphFrameGlyph_UpdateSlot(self);
+			</OnShow>
+			<OnClick>
+				GlyphFrameGlyph_OnClick(self, button, down);
+			</OnClick>
+			<OnEnter>
+				GlyphFrameGlyph_OnEnter(self, motion);
+			</OnEnter>
+			<OnLeave>
+				GlyphFrameGlyph_OnLeave(self, motion);
+			</OnLeave>
+			<OnUpdate>
+				GlyphFrameGlyph_OnUpdate(self, elapsed);
+			</OnUpdate>
+		</Scripts>
+	</Button>
+	<Frame name="RequiredLevelGlyphTemplate" hidden="true" virtual="true">
+		<Size x="100" y="100"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLevelOverlay" parentKey="levelOverlay" file="Interface\TalentFrame\glyph-main" alpha="0.8">
+					<Size x="200" y="160"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+					<TexCoords left="0.00390625" right="0.53515625" top="0.00195313" bottom="0.27148438"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<FontString name="$parentLevelText" inherits="TalentRetailGameFontNormal15" justifyH="CENTER" parentKey="LevelText" text="GLYPH_SLOT_TOOLTIP1">
+					<Size x="130" y="0"/>
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+					<Color r="0.2" g="0.1" b="0.09" a="0.8"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				local parent = self:GetParent()
+
+				if not parent.requiredLevelFrames then
+					parent.requiredLevelFrames = {}
+				end
+
+				parent.requiredLevelFrames[self:GetID()] = self
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+	<Texture name="GlyphSparkleTexture" file="Interface\ItemSocketingFrame\UI-ItemSockets" alphaMode="ADD" hidden="true" virtual="true">
+		<Size x="13" y="13"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Animations>
+			<AnimationGroup name="$parentAnimGroup" parentKey="animGroup">
+				<Translation name="$parentTranslate" parentKey="translate"/>
+			</AnimationGroup>
+		</Animations>
+		<TexCoords left="0.3984375" right="0.4453125" top="0.40234375" bottom="0.44921875"/>
+	</Texture>
+
+	<Frame name="GlyphFrame" parent="PlayerTalentFrame" hidden="true">
+		<Size x="530" y="520"/>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="PlayerTalentFrameInset" x="0" y="-3" />
+		</Anchors>
+		<Layers>
+			<Layer level="BORDER">
+				<Texture name="$parentBackground" file="Interface\TalentFrame\glyph-bg" parentKey="background">
+					<Size x="528" y="520"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="1" y="0.5"/>
+					</Anchors>
+					<TexCoords left="0.00195313" right="0.85546875" top="0.00097656" bottom="0.40429688"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentGlow" parentKey="glow" file="Interface\TalentFrame\glyph-bg" alphaMode="ADD">
+					<Animations>
+						<AnimationGroup name="$parentPulse" parentKey="pulse">
+							<Alpha name="$parentIn" change="1" duration="0.1"/>
+							<Alpha name="$parentOut" change="-1" duration="1.5"/>
+						</AnimationGroup>
+					</Animations>
+					<Size x="437" y="413"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentBackground" x="-1" y="0"/>
+					</Anchors>
+					<TexCoords left="0.00195313" right="0.85546875" top="0.40625000" bottom="0.80957031"/>
+					<Color r="1.0" g="1.0" b="1.0" a="0.0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentSpecButton" parentKey="SpecButton">
+				<Size x="128" y="128"/>
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="PlayerTalentFrameInset" x="-1" y="-20"/>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture name="$parentSpecRing" file="Interface\TalentFrame\glyph-speccover" parentKey="specRing" hidden="false">
+							<Size x="128" y="128"/>
+							<Anchors>
+								<Anchor point="CENTER" x="0" y="-2"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="ARTWORK">
+						<Texture name="$parentSpecIcon" parentKey="specIcon" alpha="0.5">
+							<Size x="79" y="79"/>
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="$parentSpecRing" x="1" y="1"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Button>
+			<Button name="$parentGlyph1" inherits="GlyphTemplate" id="1">
+				<Anchors>
+					<Anchor point="CENTER" x="0" y="196"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph1" parentKey="RequiredLevelGlyph1" id="1" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph1" x="0" y="0" />
+				</Anchors>
+			</Frame>
+			<Button name="$parentGlyph4" inherits="GlyphTemplate" id="4">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="-45" y="89"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph4" parentKey="RequiredLevelGlyph4" id="4" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph4" x="0" y="0" />
+				</Anchors>
+			</Frame>
+			<Button name="$parentGlyph6" inherits="GlyphTemplate" id="6">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="45" y="89"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph6" parentKey="RequiredLevelGlyph6" id="6" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph6" x="0" y="0" />
+				</Anchors>
+			</Frame>
+			<Button name="$parentGlyph2" inherits="GlyphTemplate" id="2">
+				<Anchors>
+					<Anchor point="CENTER" x="0" y="-187.5"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph2" parentKey="RequiredLevelGlyph2" id="2" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph2" x="0" y="0" />
+				</Anchors>
+			</Frame>
+			<Button name="$parentGlyph5" inherits="GlyphTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-96" y="-168.5"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph5" parentKey="RequiredLevelGlyph5" id="5" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph5" x="0" y="0" />
+				</Anchors>
+			</Frame>
+			<Button name="$parentGlyph3" inherits="GlyphTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="96" y="-168.5"/>
+				</Anchors>
+			</Button>
+			<Frame name="$parentRequiredLevelGlyph3" parentKey="RequiredLevelGlyph3" id="3" inherits="RequiredLevelGlyphTemplate">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentGlyph3" x="0" y="0" />
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad function="GlyphFrame_OnLoad"/>
+			<OnUpdate function="GlyphFrame_OnUpdate"/>
+			<OnShow function="GlyphFrame_OnShow"/>
+			<OnEnter function="GlyphFrame_OnEnter"/>
+			<OnLeave function="GlyphFrame_OnLeave"/>
+			<OnEvent function="GlyphFrame_OnEvent"/>
+		</Scripts>
+	</Frame>
+</Ui>

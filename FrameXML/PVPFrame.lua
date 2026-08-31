@@ -9,13 +9,13 @@ NUM_DISPLAYED_BATTLEGROUNDS = 5;
 
 -- Battleground Texture List
 local PVPBATTLEGROUND_TEXTURELIST = {};
-PVPBATTLEGROUND_TEXTURELIST[1] = "Interface\\PVPFrame\\PvpBg-AlteracValley";
-PVPBATTLEGROUND_TEXTURELIST[2] = "Interface\\PVPFrame\\PvpBg-WarsongGulch";
-PVPBATTLEGROUND_TEXTURELIST[3] = "Interface\\PVPFrame\\PvpBg-ArathiBasin";
-PVPBATTLEGROUND_TEXTURELIST[7] = "Interface\\PVPFrame\\PvpBg-EyeOfTheStorm";
-PVPBATTLEGROUND_TEXTURELIST[9] = "Interface\\PVPFrame\\PvpBg-StrandOfTheAncients";
-PVPBATTLEGROUND_TEXTURELIST[30] = "Interface\\PVPFrame\\PvpBg-IsleOfConquest";
-PVPBATTLEGROUND_TEXTURELIST[32] = "Interface\\PVPFrame\\PvpRandomBg";
+PVPBATTLEGROUND_TEXTURELIST[1] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-alteracvalley-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[2] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-warsonggulch-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[3] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-arathibasin-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[7] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-eyeofthestorm-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[9] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-strandoftheancients-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[30] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-isleofconquest-toastbg";
+PVPBATTLEGROUND_TEXTURELIST[32] = "Interface\\PVPFrame\\pvpbackground\\pvpbg-twinpeaks-toastbg";
 -- ====================================================================
 -- PVPFRAME FUNCTIONS
 -- ====================================================================
@@ -546,6 +546,18 @@ function PVPHonor_Update()
 	PVPHonorLifetimeKills:SetText(hk);
 	PVPFrameHonorPoints:SetText(GetHonorCurrency());
 	PVPFrameArenaPoints:SetText(GetArenaCurrency());
+
+	-- Actualiza la barra visual de honor añadida encima de conquista.
+	if PVPFrameHonorLimitBar and PVPFrameHonorLimitBarText then
+		local currentHonor = GetHonorCurrency and GetHonorCurrency() or 0;
+		local honorCap = MAX_HONOR_POINTS or 75000;
+		if currentHonor > honorCap then
+			honorCap = currentHonor;
+		end
+		PVPFrameHonorLimitBar:SetMinMaxValues(0, honorCap);
+		PVPFrameHonorLimitBar:SetValue(currentHonor);
+		PVPFrameHonorLimitBarText:SetText(currentHonor.." / "..honorCap);
+	end
 	
 	local sessionHK, sessionHonor = GetPVPSessionStats();
 	PVPHonorTodayKills:SetText(sessionHK);
@@ -564,36 +576,40 @@ function PVPMicroButton_SetNormal()
 end
 
 function PVPFrame_SetToOffSeason()
+    PVPTeam1:Hide();
+    PVPTeam1Standard:Hide();
+    PVPTeam2:Hide();
+    PVPTeam2Standard:Hide();
+    PVPTeam3:Hide();
+    PVPTeam3Standard:Hide();
+    
+    if PVPFrameBlackFilter then
+        PVPFrameBlackFilter:Show();
+    end
+    
+    local previousArenaSeason = GetPreviousArenaSeason();
+    if PVPFrameOffSeasonText then
+        PVPFrameOffSeasonText:SetText(format(ARENA_OFF_SEASON_TEXT, previousArenaSeason, previousArenaSeason+1));
+    end
+    if PVPFrameOffSeason then
+        PVPFrameOffSeason:Show();
+    end
+end
+
+function PVPFrame_SetToInSeason()
     PVPTeam1:Show();
     PVPTeam1Standard:Show();
     PVPTeam2:Show();
     PVPTeam2Standard:Show();
     PVPTeam3:Show();
     PVPTeam3Standard:Show();
-
-    PVPTeam1:SetAlpha(0.4);
-    PVPTeam1Standard:SetAlpha(0.1);
-    PVPTeam2:SetAlpha(0.4);
-    PVPTeam2Standard:SetAlpha(0.1);
-    PVPTeam3:SetAlpha(0.4);
-    PVPTeam3Standard:SetAlpha(0.1);
     
-    local previousArenaSeason = GetPreviousArenaSeason();
-    PVPFrameOffSeasonText:SetText(format(ARENA_OFF_SEASON_TEXT, previousArenaSeason, previousArenaSeason+1));
-    PVPFrameOffSeason:Show();
-    PVPFrameBlackFilter:Show();
-end
-
-function PVPFrame_SetToInSeason()
-	PVPTeam1:Show();
-	PVPTeam1Standard:Show();
-	PVPTeam2:Show();
-	PVPTeam2Standard:Show();
-	PVPTeam3:Show();
-	PVPTeam3Standard:Show();
-	
-	PVPFrameBlackFilter:Hide();
-	PVPFrameOffSeason:Hide();
+    if PVPFrameBlackFilter then
+        PVPFrameBlackFilter:Hide();
+    end
+    if PVPFrameOffSeason then
+        PVPFrameOffSeason:Hide();
+    end
 end
 
 function TogglePVPFrame()
@@ -718,47 +734,48 @@ function PVPBattlegroundFrame_SelectBattlegroundFromDropdown(bgIndex)
 end
 
 function PVPBattleground_UpdateInfo(BGindex)
-	if not BGindex then
-		BGindex = PVPBattlegroundFrame.selectedBG;
-	end
-	
-	if not BGindex then
-		return;
-	end
-	
-	local BGname, canEnter, isHoliday, isRandom, BattleGroundID = GetBattlegroundInfo(BGindex);
-	
-	if not BGname then
-		return;
-	end
+    if not BGindex then
+        BGindex = PVPBattlegroundFrame.selectedBG;
+    end
+    
+    if not BGindex then
+        return;
+    end
+    
+    local BGname, canEnter, isHoliday, isRandom, BattleGroundID = GetBattlegroundInfo(BGindex);
+    
+    if not BGname then
+        return;
+    end
 
-	if BattleGroundID and PVPBATTLEGROUND_TEXTURELIST[BattleGroundID] then
-		PVPBattlegroundFrameBGTex:SetTexture(PVPBATTLEGROUND_TEXTURELIST[BattleGroundID]);
-	else
-		PVPBattlegroundFrameBGTex:SetTexture("Interface\\PVPFrame\\PvpRandomBg");
-	end
-	PVPBattlegroundFrameBGBorder:Show();
+    if BattleGroundID and PVPBATTLEGROUND_TEXTURELIST[BattleGroundID] then
+        PVPBattlegroundFrameBGTex:SetTexture(PVPBATTLEGROUND_TEXTURELIST[BattleGroundID]);
+    else
+        PVPBattlegroundFrameBGTex:SetTexture("Interface\\PVPFrame\\PvpRandomBg");
+    end
 
-	if (isRandom or isHoliday) then
-		if PVPQueue_UpdateRandomInfo and PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo then
-			PVPQueue_UpdateRandomInfo(PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo, function()
-				return GetBattlegroundInfo(BGindex);
-			end);
-		end
-		
-		PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo:Show();
-		PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:Hide();
-	else
-		local mapName, mapDescription, maxGroup = GetBattlefieldInfo();
-		
-		if mapDescription and mapDescription ~= PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:GetText() then
-			PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:SetText(mapDescription);
-			PVPBattlegroundFrameInfoScrollFrame:SetVerticalScroll(0);
-		end
-		
-		PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo:Hide();
-		PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:Show();
-	end
+    if (isRandom or isHoliday) then
+        if PVPQueue_UpdateRandomInfo and PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo then
+            PVPQueue_UpdateRandomInfo(PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo, function()
+                return GetBattlegroundInfo(BGindex);
+            end);
+        end
+        
+        PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo:Show();
+        PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:Hide();
+    else
+        local mapName, mapDescription, maxGroup = GetBattlefieldInfo();
+        
+        if mapDescription and mapDescription ~= PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:GetText() then
+            PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:SetText(mapDescription);
+            PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:SetTextColor(1.0, 1.0, 1.0);
+            PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:SetFont("Fonts\\FRIZQT__.TTF", 13, "OUTLINE");
+            PVPBattlegroundFrameInfoScrollFrame:SetVerticalScroll(0);
+        end
+        
+        PVPBattlegroundFrameInfoScrollFrameChildFrameRewardsInfo:Hide();
+        PVPBattlegroundFrameInfoScrollFrameChildFrameDescription:Show();
+    end
 end
 
 function PVPBattleground_GetSelectedBattlegroundInfo()
@@ -809,7 +826,73 @@ function PVPBattlegroundFrameJoinButton_OnClick(self)
 	JoinBattlefield(0, joinAsGroup);
 end
 
+local function PVPHonorLimit_CreateBar()
+	if not PVPFrameHonorLimit or PVPFrameHonorLimit.honorBar then return; end
+
+	local honorFrame = CreateFrame("Frame", nil, PVPFrameHonorLimit, "InsetFrameTemplateNoBackground");
+	honorFrame:SetPoint("TOPLEFT", 10, -24);
+	honorFrame:SetPoint("BOTTOMRIGHT", -10, 7);
+
+	local honorBar = CreateFrame("StatusBar", "PVPFrameHonorLimitBar", honorFrame);
+	honorBar:SetPoint("TOPLEFT", 20, -4);
+	honorBar:SetPoint("BOTTOMRIGHT", -20, 4);
+	local barTexture = honorBar:CreateTexture(nil, "BACKGROUND");
+	barTexture:SetAllPoints();
+	barTexture:SetTexture("Interface\\PVPFrame\\PvPQueue");
+	barTexture:SetTexCoord(0.251953125, 0.500976563, 0.000000000, 0.020000000);
+	honorBar:SetStatusBarTexture(barTexture);
+
+	local overlay = CreateFrame("Frame", nil, honorBar);
+	overlay:SetPoint("TOPLEFT", honorBar, "TOPLEFT", 0, 10);
+	overlay:SetPoint("BOTTOMRIGHT", honorBar, "BOTTOMRIGHT", 0, -10);
+
+	local left = overlay:CreateTexture(nil, "OVERLAY");
+	left:SetPoint("LEFT", overlay, "LEFT", -5, 0);
+	left:SetPoint("TOP", overlay, "TOP", 0, 0);
+	left:SetPoint("BOTTOM", overlay, "BOTTOM", 0, 0);
+	left:SetWidth(16);
+	left:SetTexture("Interface\\PVPFrame\\PvPQueue");
+	left:SetTexCoord(0.000000000, 0.030000000, 0.955078125, 0.999023438);
+
+	local center = overlay:CreateTexture(nil, "OVERLAY");
+	center:SetPoint("LEFT", left, "RIGHT", 0, 0);
+	center:SetPoint("RIGHT", overlay, "RIGHT", 0, 0);
+	center:SetPoint("TOP", overlay, "TOP", 0, 0);
+	center:SetPoint("BOTTOM", overlay, "BOTTOM", 0, 0);
+	center:SetTexture("Interface\\PVPFrame\\PvPQueue");
+	center:SetTexCoord(0.045898438, 0.295390625, 0.955078125, 0.999023438);
+	center:SetHorizTile(true);
+
+	local right = overlay:CreateTexture(nil, "OVERLAY");
+	right:SetPoint("RIGHT", overlay, "RIGHT", 5, 0);
+	right:SetPoint("TOP", overlay, "TOP", 0, 0);
+	right:SetPoint("BOTTOM", overlay, "BOTTOM", 0, 0);
+	right:SetWidth(16);
+	right:SetTexture("Interface\\PVPFrame\\PvPQueue");
+	right:SetTexCoord(0.030000000, 0.000000000, 0.955078125, 0.999023438);
+
+	local honorText = honorBar:CreateFontString("PVPFrameHonorLimitBarText", "OVERLAY", "GameFontHighlightSmall");
+	honorText:SetPoint("CENTER");
+
+	PVPFrameHonorLimit.honorFrame = honorFrame;
+	PVPFrameHonorLimit.honorBar = honorBar;
+	PVPFrameHonorLimit.honorText = honorText;
+end
+
 function PVPBattlegroundFrame_OnLoad(self)
+	if PVPFrameHonorLimit then
+		PVPFrameHonorLimit:SetParent(self);
+		PVPFrameHonorLimit:ClearAllPoints();
+		PVPFrameHonorLimit:SetPoint("TOPLEFT", PVPParentFrame, "TOPLEFT", 220, -28);
+		PVPFrameHonorLimit:SetSize(335, 55);
+		PVPHonorLimit_CreateBar();
+	end
+	if WintergraspTimer then
+		WintergraspTimer:ClearAllPoints();
+		WintergraspTimer:SetPoint("TOPLEFT", PVPParentFrame, "TOPLEFT", 220, -87);
+		WintergraspTimer:SetSize(335, 55);
+	end
+
 	self:RegisterEvent("PVPQUEUE_ANYWHERE_SHOW");
 	self:RegisterEvent("NPC_PVPQUEUE_ANYWHERE");
 	self:RegisterEvent("UPDATE_BATTLEFIELD_STATUS");
@@ -851,6 +934,7 @@ function PVPBattlegroundFrame_OnEvent(self, event, ...)
 end
 
 function PVPBattlegroundFrame_OnShow(self)
+	PVPHonor_Update();
     if IsInInstance() then
         WintergraspTimer:Hide();
     else
@@ -923,16 +1007,22 @@ function WintergraspTimer_OnLoad(self)
 	self.canQueue = false;
 	self.tooltip = PVPBATTLEGROUND_WINTERGRASPTIMER_CANNOT_QUEUE;
 	self.texture:SetTexCoord(0.0, 1.0, 0.0, 0.5);
+	if self.title then
+		self.title:SetText(WINTERGRASP);
+	end
+	if self.hover then
+		self.hover:Hide();
+	end
 end
 
 function WintergraspTimer_OnUpdate(self, elapsed)
 	local nextBattleTime = GetWintergraspWaitTime();
 	if nextBattleTime and nextBattleTime > 60 then
-		self.text:SetFormattedText(PVPBATTLEGROUND_WINTERGRASPTIMER, SecondsToTime(nextBattleTime, true));
+		self.text:SetText(SecondsToTime(nextBattleTime, true));
 	elseif nextBattleTime and nextBattleTime > 0 then
-		self.text:SetFormattedText(PVPBATTLEGROUND_WINTERGRASPTIMER, SecondsToTime(nextBattleTime, false));
+		self.text:SetText(SecondsToTime(nextBattleTime, false));
 	else
-		self.text:SetFormattedText(PVPBATTLEGROUND_WINTERGRASPTIMER, WINTERGRASP_IN_PROGRESS);
+		self.text:SetText(WINTERGRASP_IN_PROGRESS);
 	end
 
 	local canQueue = CanQueueForWintergrasp();

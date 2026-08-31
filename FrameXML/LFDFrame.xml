@@ -875,7 +875,7 @@
         		</Anchors>
         		<Layers>
             		<Layer level="OVERLAY">
-                		<FontString name="$parentTitle" inherits="GameFontNormalLarge" justifyH="CENTER" text="LOOKING_FOR_DUNGEON">
+                		<FontString name="$parentTitle" inherits="GameFontNormalLarge" justifyH="CENTER" text="LOOKING_FOR_DUNGEON_RAID">
                     		<Anchors>
                         		<Anchor point="CENTER">
                         		    <Offset x="0" y="14"/>
@@ -1042,13 +1042,13 @@
 					</Layer>
 				</Layers>
 				<Frames>
-
+				<!-- Menu de navegacion (GroupFinder / RaidFinder) -->
 							<Button name="$parentGroupFinderButton" motionScriptsWhileDisabled="true">
     							<Size x="190" y="60"/>
     							<Anchors>
-        							<Anchor point="LEFT">
+        							<Anchor point="LEFT" relativeTo="LFDParentFrame">
          							   <Offset>
-         							       <AbsDimension x="-205" y="0"/>
+         							       <AbsDimension x="15" y="60"/>
          							   </Offset>
         							</Anchor>
     							</Anchors>
@@ -1113,7 +1113,81 @@
            							 LFDQueueFrame_ShowSection("GroupFinder");
         							</OnClick>
    							 </Scripts>
-						</Button>
+							</Button>
+
+							<!-- BOTÓN 2: Buscador de Bandas -->
+							<Button name="$parentRaidFinderButton" motionScriptsWhileDisabled="true">
+    							<Size x="190" y="60"/>
+    							<Anchors>
+        							<Anchor point="TOPLEFT" relativeTo="$parentGroupFinderButton" relativePoint="BOTTOMLEFT">
+            							<Offset>
+             							   <AbsDimension x="0" y="-45"/>
+            							</Offset>
+        							</Anchor>
+    							</Anchors>
+    							<Layers>
+        							<Layer level="BACKGROUND">
+        							    <Texture file="Interface\Common\bluemenu-main" parentKey="bg">
+               							 <Size x="224" y="80"/>
+                							<TexCoords left="0.00390625" right="0.87890625" top="0.75195313" bottom="0.83007813"/>
+                							<Anchors>
+                							    <Anchor point="CENTER"/>
+                							</Anchors>
+            							</Texture>
+        							</Layer>
+       							 <Layer level="BORDER">
+            							<Texture name="$parentSelection" file="Interface\BUTTONS\ListButtons" parentKey="selection">
+                							<Size x="210" y="65"/>
+                							<Anchors>
+                							    <Anchor point="CENTER"/>
+                							</Anchors>
+                							<TexCoords left="0.000000000" right="0.826000000" top="0.191406250" bottom="0.371406250"/>
+                							<Hidden>true</Hidden>
+            							</Texture>
+        							</Layer>
+        							<Layer level="OVERLAY">
+            							<Texture name="$parentRing" file="Interface/Common/BlueMenuRing" parentKey="ring">
+                							<Size x="95" y="96"/>
+                							<Anchors>
+                							    <Anchor point="LEFT" x="-12" y="-1" />
+                							</Anchors>
+                							<TexCoords left="0.0078125" right="0.804688" top="0.0078125" bottom="0.8125"/>
+            							</Texture>
+        							</Layer>
+       							 <Layer level="ARTWORK">
+            							<Texture name="$parentIcon" parentKey="icon">
+                							<Size x="66" y="66"/>
+                							<Anchors>
+                							    <Anchor point="CENTER" relativeTo="$parentRing" x="0" y="0" />
+                							</Anchors>
+            							</Texture>
+            							<FontString name="$parentName" inherits="GameFontNormalLarge" parentKey="name" spacing="2" justifyH="LEFT">
+                							<Size x="106" y="0"/>
+                							<Anchors>
+                							    <Anchor point="LEFT" relativeTo="$parentRing" relativePoint="RIGHT" x="0" y="0" />
+                							</Anchors>
+            							</FontString>
+       							 </Layer>
+    							</Layers>
+    							<HighlightTexture file="Interface\Common\bluemenu-main" alphaMode="ADD" alpha="0.8">
+        							<Size x="224" y="80"/>
+        							<TexCoords left="0.00390625" right="0.87890625" top="0.75195313" bottom="0.83007813"/>
+        							<Anchors>
+        							    <Anchor point="CENTER"/>
+        							</Anchors>
+    							</HighlightTexture>
+    							<Scripts>
+        							<OnLoad>
+           							 self:SetFrameLevel(self:GetFrameLevel() + 1)
+            							self.name:SetText(LOOKING_FOR_RAID)
+            							SetPortraitToTexture(self.icon, "Interface\\LFGFrame\\UI-LFR-PORTRAIT")
+        							</OnLoad>
+        							<OnClick>
+        							    LFDQueueFrame_ShowSection("RaidFinder");
+        							</OnClick>
+    							</Scripts>
+							</Button>
+							
 					<Frame name="LFDQueueFrame" toplevel="true" setAllPoints="true">
 						<Layers>
 							<Layer level="BORDER">
@@ -1258,6 +1332,12 @@
 
 							<Frame name="$parentRandom" setAllPoints="true">
 								<Frames>
+       								 <Frame name="$parentRandomBorder" inherits="InsetFrameTemplateNoBackground" parentKey="randomBorder" frameLevel="100">
+            								<Anchors>
+            								    <Anchor point="TOPLEFT" x="5" y="-145"/>
+            								    <Anchor point="BOTTOMRIGHT" x="-5" y="25"/>
+            								</Anchors>
+        								</Frame>
 									<ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
 										<Size>
 											<AbsDimension x="303" y="239"/>
@@ -1478,6 +1558,12 @@
 							</Frame>
 							<Frame name="$parentSpecific" setAllPoints="true" hidden="true">
 								<Frames>
+        							<Frame name="$parentSpecificBorder" inherits="InsetFrameTemplateNoBackground" parentKey="specificBorder" frameLevel="100">
+            							<Anchors>
+                							<Anchor point="TOPLEFT" x="5" y="-145"/>
+                							<Anchor point="BOTTOMRIGHT" x="-5" y="25"/>
+            							</Anchors>
+									</Frame>
 									<Frame name="$parentListButton1" inherits="LFDFrameDungeonChoiceTemplate" id="1">
 										<Anchors>
 											<Anchor point="TOPLEFT">
@@ -1936,44 +2022,6 @@
 					</Frame>
 				</Frames>
 			</Frame>
-			<Frame name="$parentGroupFinderTabs">
-				<Size x="140" y="32"/>
-				<Anchors>
-					<Anchor point="BOTTOMLEFT" x="20" y="-27"/>
-				</Anchors>
-				<Frames>
-					<Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="LOOKING_FOR_DUNGEON">
-						<Anchors>
-							<Anchor point="BOTTOMLEFT" x="0" y="0"/>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								GroupFinderTabs_OnClick(self, 1);
-							</OnClick>
-						</Scripts>
-					</Button>
-					<Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="PVP">
-						<Anchors>
-							<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT" x="-5" y="0"/>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								GroupFinderTabs_OnClick(self, 2);
-							</OnClick>
-						</Scripts>
-					</Button>
-				</Frames>
-				<Scripts>
-					<OnLoad>
-						PanelTemplates_SetNumTabs(self, 2);
-					</OnLoad>
-					<OnShow>
-						PanelTemplates_SetTab(self, 1);
-						PanelTemplates_TabResize(_G[self:GetName().."Tab1"], 0);
-						PanelTemplates_TabResize(_G[self:GetName().."Tab2"], 0);
-					</OnShow>
-				</Scripts>
-			</Frame>
 		</Frames>
 		<Scripts>
     		<OnLoad>
@@ -1993,4 +2041,47 @@
 		</Scripts>
 	</Frame>
 
+	<Frame name="LFDTabsFrame" parent="UIParent" hidden="true">
+		<Size x="200" y="32"/>
+		<Frames>
+			<Button name="$parentTab1" inherits="CharacterFrameTabButtonTemplate" id="1" text="LOOKING_FOR_DUNGEON_RAID">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="LFDTabsFrame" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LFDParentFrame_ShowTab(1);
+					</OnClick>
+					<OnLoad>
+						PanelTemplates_TabResize(self, 0);
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parentTab2" inherits="CharacterFrameTabButtonTemplate" id="2" text="PVP">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentTab1" relativePoint="RIGHT">
+						<Offset><AbsDimension x="-15" y="0"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LFDParentFrame_ShowTab(2);
+					</OnClick>
+					<OnLoad>
+						PanelTemplates_TabResize(self, 0);
+					</OnLoad>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				PanelTemplates_SetNumTabs(self, 2);
+				PanelTemplates_SetTab(self, 1);
+			</OnLoad>
+			<OnShow>
+				PanelTemplates_TabResize(LFDTabsFrameTab1, 0);
+				PanelTemplates_TabResize(LFDTabsFrameTab2, 0);
+			</OnShow>
+		</Scripts>
+	</Frame>
 </Ui>

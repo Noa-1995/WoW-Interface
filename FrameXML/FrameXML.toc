@@ -164,6 +164,7 @@ XML_IXXUI.xml
 
 # QuestMap (Astrolabe – bundled, no TomTom dependency)
 QuestMap\QuestMap.xml
+TalentRetail\TalentRetailLoader.xml
 AddonList.xml
 
 # add new modules above here

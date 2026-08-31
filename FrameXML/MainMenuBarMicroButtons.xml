@@ -108,27 +108,27 @@
 		</Scripts>
 	</Button>
 	<Button name="TalentMicroButton" inherits="MainMenuBarMicroButton" parent="MainMenuBarArtFrame">
-		<Anchors>
-			<Anchor point="BOTTOMLEFT" relativeTo="SpellbookMicroButton" relativePoint="BOTTOMRIGHT">
-				<Offset>
-					<AbsDimension x="0" y="0"/>
-				</Offset>
-			</Anchor>
-		</Anchors>
-		<Scripts>
-			<OnLoad>
-				LoadMicroButtonTextures(self, "Talents");
-				self.tooltipText = MicroButtonTooltipText(TALENTS_BUTTON, "TOGGLETALENTS");
-				self.newbieText = NEWBIE_TOOLTIP_TALENTS;
-				self.minLevel = SHOW_TALENT_LEVEL;
-				self:RegisterEvent("PLAYER_LEVEL_UP");
-				self:RegisterEvent("UPDATE_BINDINGS");
-				self:RegisterEvent("UNIT_LEVEL");
-				self:RegisterEvent("PLAYER_ENTERING_WORLD");
-			</OnLoad>
-			<OnClick function="ToggleTalentUIFrame"/>
-			<OnEvent function="TalentMicroButton_OnEvent"/>
-		</Scripts>
+    	<Anchors>
+        	<Anchor point="BOTTOMLEFT" relativeTo="SpellbookMicroButton" relativePoint="BOTTOMRIGHT">
+            	<Offset>
+            	    <AbsDimension x="0" y="0"/>
+            	</Offset>
+        	</Anchor>
+    	</Anchors>
+    	<Scripts>
+        	<OnLoad>
+            	LoadMicroButtonTextures(self, "Talents");
+            	self.tooltipText = MicroButtonTooltipText(TALENTS_BUTTON, "TOGGLETALENTS");
+            	self.newbieText = NEWBIE_TOOLTIP_TALENTS;
+            	self.minLevel = SHOW_TALENT_LEVEL;
+            	self:RegisterEvent("PLAYER_LEVEL_UP");
+            	self:RegisterEvent("UPDATE_BINDINGS");
+            	self:RegisterEvent("UNIT_LEVEL");
+            	self:RegisterEvent("PLAYER_ENTERING_WORLD");
+        	</OnLoad>
+        	<OnClick function="ToggleTalentUIFrame"/>
+        	<OnEvent function="TalentMicroButton_OnEvent"/>
+    	</Scripts>
 	</Button>
 	<Button name="AchievementMicroButton" inherits="MainMenuBarMicroButton" parent="MainMenuBarArtFrame">
 		<Anchors>

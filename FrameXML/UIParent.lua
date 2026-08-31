@@ -380,12 +380,14 @@ function ToggleCustomTradeSkillFrame()
 end
 
 function ToggleTalentUIFrame()
-    if not WotLKTalentUIFrame then return; end
-    if WotLKTalentUIFrame:IsShown() then
-        HideUIPanel(WotLKTalentUIFrame);
+    if PlayerTalentFrame and PlayerTalentFrame:IsShown() then
+        HideUIPanel(PlayerTalentFrame)
     else
-        ShowUIPanel(WotLKTalentUIFrame);
+        CloseAllWindows()
+        ShowUIPanel(PlayerTalentFrame)
+        PlayerTalentFrame_Refresh()
     end
+    UpdateMicroButtons()
 end
 
 function ToggleGlyphFrame()
