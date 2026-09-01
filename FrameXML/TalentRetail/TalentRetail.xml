@@ -1510,54 +1510,12 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<PlayerModel name="PlayerTalentFramePetModel" inherits="TalentRetailModelTemplate">
+					<PlayerModel name="PlayerTalentFramePetModel" inherits="ModelWithControlsPlayerTemplate">
 						<Size x="369" y="314"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="18" y="-116"/>
 						</Anchors>
 						<Frames>
-							<Button name="PlayerTalentFramePetModelRotateLeftButton">
-								<Size>
-									<AbsDimension x="35" y="35"/>
-								</Size>
-								<Anchors>
-									<Anchor point="BOTTOM">
-										<Offset>
-											<AbsDimension x="-17" y="2"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:RegisterForClicks("LeftButtonDown", "LeftButtonUp");
-									</OnLoad>
-									<OnClick>
-										Model_RotateLeft(PlayerTalentFramePetModel);
-									</OnClick>
-								</Scripts>
-								<NormalTexture file="Interface\Buttons\UI-RotationLeft-Button-Up"/>
-								<PushedTexture file="Interface\Buttons\UI-RotationLeft-Button-Down"/>
-								<HighlightTexture file="Interface\Buttons\ButtonHilight-Round" alphaMode="ADD"/>
-							</Button>
-							<Button name="PlayerTalentFramePetModelRotateRightButton">
-								<Size>
-									<AbsDimension x="35" y="35"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="PlayerTalentFramePetModelRotateLeftButton" relativePoint="TOPRIGHT"/>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:RegisterForClicks("LeftButtonDown", "LeftButtonUp");
-									</OnLoad>
-									<OnClick>
-										Model_RotateRight(PlayerTalentFramePetModel);
-									</OnClick>
-								</Scripts>
-								<NormalTexture file="Interface\Buttons\UI-RotationRight-Button-Up"/>
-								<PushedTexture file="Interface\Buttons\UI-RotationRight-Button-Down"/>
-								<HighlightTexture file="Interface\Buttons\ButtonHilight-Round" alphaMode="ADD"/>
-							</Button>
 							<Frame name="PlayerTalentFramePetShadowOverlay" inherits="TalentRetailShadowOverlayTemplate" setAllPoints="true"/>
 						</Frames>
 					</PlayerModel>
