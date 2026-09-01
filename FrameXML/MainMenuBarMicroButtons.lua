@@ -48,10 +48,16 @@ function UpdateMicroButtons()
 	end
 
 	-- Quest Log (Misiones) - Usamos QuestMapFrame en retail
+	--if ( QuestMapFrame and QuestMapFrame:IsShown() ) then
+	--	QuestLogMicroButton:SetButtonState("PUSHED", 1);
+	--else
+	--	QuestLogMicroButton:SetButtonState("NORMAL");
+	--end
+	
 	if ( QuestMapFrame and QuestMapFrame:IsShown() ) then
-		QuestLogMicroButton:SetButtonState("PUSHED", 1);
+    	QuestLogMicroButton:SetButtonState("PUSHED", 1);
 	else
-		QuestLogMicroButton:SetButtonState("NORMAL");
+	    QuestLogMicroButton:SetButtonState("NORMAL");
 	end
 	
 	-- Main Menu (Menú principal)

@@ -401,6 +401,15 @@ function ToggleGlyphFrame()
 	end
 end
 
+function ToggleQuestMapFrame()
+    if QuestMapFrame:IsShown() then
+        HideUIPanel(QuestMapFrame)
+    else
+        ShowUIPanel(QuestMapFrame)
+    end
+    UpdateMicroButtons()
+end
+
 function OpenGlyphFrame()
 	if ( UnitLevel("player") < SHOW_INSCRIPTION_LEVEL ) then
 		return;
