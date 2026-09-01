@@ -234,7 +234,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-    					<Backdrop bgFile="Interface\BUTTONS\WHITE8x8" edgeFile="Interface\Tooltips\ui-tooltip-border-mawBlack" tile="true">
+    					<Backdrop bgFile="Interface\BUTTONS\WHITE8x8" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
         					<BackgroundInsets>
         					    <AbsInset left="4" right="4" top="4" bottom="4"/>
         					</BackgroundInsets>
