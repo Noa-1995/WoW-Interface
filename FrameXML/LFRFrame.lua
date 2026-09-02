@@ -1,3 +1,6 @@
+-- ============================================================
+--  LFRFrame - Noa –  WoW 3.3.5a
+-- ============================================================
 --Extra lines added because looking upward was too much work.
 
 LFR_MAX_SHOWN_LEVEL_DIFF = 15;
@@ -9,6 +12,21 @@ NUM_LFR_LIST_BUTTONS = 19;
 LFR_BROWSE_AUTO_REFRESH_TIME = 20;
 
 local heroicIcon = "|TInterface\\LFGFrame\\UI-LFG-ICON-HEROIC:16:13:-5:-3:32:32:0:16:0:20|t";
+
+function ToggleLFRParentFrame()
+	if ( LFDParentFrame:IsShown() and
+		 LFDParentFrame.activeLFGSection == "RaidFinder" ) then
+		HideUIPanel(LFDParentFrame);
+		return;
+	end
+
+	LFDParentFrame.selectedTab = 1;
+	ShowUIPanel(LFDParentFrame);
+	LFDQueueParentFrame:Show();
+	LFDQueueFrame_ShowSection("RaidFinder");
+	LFDParentFrame_UpdatePortrait();
+	UpdateMicroButtons();
+end
 
 function LFRFrame_OnLoad(self)
 	self:RegisterEvent("UPDATE_LFG_LIST");
@@ -223,8 +241,7 @@ function LFRQueueFrameSpecificListButton_SetDungeon(button, dungeonID, mode, sub
 		
 		button.isCollapsed = false;
 	end
-	
-	--Could probably use being refactored.
+
 	if ( not LFR_CanQueueForLockedInstances() and LFGLockList[dungeonID] ) then
 		button.enableButton:Hide();
 		button.lockedIndicator:Show();
@@ -317,7 +334,9 @@ function LFRQueueFrame_QueueForInstanceIfEnabled(queueID)
 	return false;
 end
 
-function LFRQueueFrame_Join()
+function LFRQueueFrame_Join()n.
+	LFDParentFrame.lfgQueueSection = "RaidFinder";
+
 	ClearAllLFGDungeons();
 	
 	if ( LFR_CanQueueForMultiple() ) then

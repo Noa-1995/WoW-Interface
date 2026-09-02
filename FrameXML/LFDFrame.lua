@@ -1,3 +1,6 @@
+-- ============================================================
+--  LFDFrame - Noa –  WoW 3.3.5a
+-- ============================================================
 EXPANSION_LEVEL = GetExpansionLevel();
 
 LFD_MAX_REWARDS = 2;
@@ -106,7 +109,6 @@ function LFDFrame_OnEvent(self, event, ...)
     LFDQueueFrame_UpdatePortrait();
 end
 
--- Animación del ojo con archivos individuales
 local LFDEyeAnimationMixin = {};
 
 function LFDEyeAnimationMixin:ShowStatic()
@@ -484,6 +486,8 @@ function LFDQueueFrame_QueueForInstanceIfEnabled(queueID)
 end
 
 function LFDQueueFrame_Join()
+	LFDParentFrame.lfgQueueSection = "GroupFinder";
+
 	if ( LFDQueueFrame.type == "specific" ) then
 		ClearAllLFGDungeons();
 		for _, queueID in pairs(LFDDungeonList) do
@@ -1386,13 +1390,9 @@ local function LFDQueueFrame_SelectPremadeButton()
     end
 end
 
--- ================================================
--- Despachador central: decide qué contenido se ve dentro de LFDParentFrame.
--- Cada sección es dueña de su propio Show()/Hide() y de sus propios
--- OnShow/OnHide/OnEvent definidos en su XML/lua original — este despachador
--- no reimplementa esa lógica, solo la enciende y apaga.
--- ================================================
 function LFDQueueFrame_ShowSection(section)
+	LFDParentFrame.activeLFGSection = section
+
     if ( section == "GroupFinder" ) then
         LFDQueueFrame:Show()
         if LFRParentFrame then
@@ -1416,8 +1416,6 @@ function LFDQueueFrame_ShowSection(section)
             LFDQueueFrameBattlegroundContent:Hide()
         end
         if LFRParentFrame then
-            -- Botón 2: banda de LFR en modo "Selecciona banda" (LFRQueueFrame).
-            -- LFRFrame_SetActiveTab ya se encarga de Show/Hide de LFRQueueFrame vs LFRBrowseFrame.
             if LFRFrame_SetActiveTab then
                 LFRFrame_SetActiveTab(1)
             end
@@ -1435,7 +1433,6 @@ function LFDQueueFrame_ShowSection(section)
             LFDQueueFrameBattlegroundContent:Hide()
         end
         if LFRParentFrame then
-            -- Botón 3: mismo LFRParentFrame, pero en modo "Consultar" (LFRBrowseFrame).
             if LFRFrame_SetActiveTab then
                 LFRFrame_SetActiveTab(2)
             end
@@ -1446,8 +1443,20 @@ function LFDQueueFrame_ShowSection(section)
     end
 end
 
+function LFDQueueFrame_GetOpenSection()
+    local mode = GetLFGMode()
+    local isSearching = mode == "queued" or mode == "rolecheck" or
+                        mode == "proposal" or mode == "listed"
+
+    if isSearching and LFDParentFrame.lfgQueueSection then
+        return LFDParentFrame.lfgQueueSection
+    end
+
+    return "GroupFinder"
+end
+
 function LFDQueueParentFrame_OnShow(self)
-    LFDQueueFrame_ShowSection("GroupFinder")
+    LFDQueueFrame_ShowSection(LFDQueueFrame_GetOpenSection())
 end
 function LFDParentFrame_ResetButtonSelection()
     if LFDParentFrame.selectedTab == 1 then
@@ -1463,7 +1472,7 @@ function LFDParentFrame_ShowTab(tabID)
         ShowUIPanel(LFDParentFrame)
 
         LFDQueueParentFrame:Show()
-        LFDQueueFrame_ShowSection("GroupFinder")
+        LFDQueueFrame_ShowSection(LFDQueueFrame_GetOpenSection())
         LFDParentFrame_UpdatePortrait()
 
         LFDTabsFrame:ClearAllPoints()

@@ -1,3 +1,6 @@
+-- ============================================================
+--  HelpFrame - Noa –  WoW 3.3.5a
+-- ============================================================
 -- global data
 HELPFRAME_BULLET_SPACING = -3;
 HELPFRAME_SECTION_SPACING = -20;

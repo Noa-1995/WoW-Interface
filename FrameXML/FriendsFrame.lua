@@ -1,3 +1,6 @@
+-- ============================================================
+--  FriendsFrame - Noa –  WoW 3.3.5a - En desarrollo
+-- ============================================================
 FRIENDS_TO_DISPLAY = 10;
 FRIENDS_FRAME_FRIEND_HEIGHT = 34;
 IGNORES_TO_DISPLAY = 19;
