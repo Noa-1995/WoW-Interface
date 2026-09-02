@@ -9024,7 +9024,11 @@ ENABLE_ALL_ADDONS = "Enable All";
 DISABLE_ALL_ADDONS = "Disable All";
 RELOADUI = "Reload UI";
 
-HELP_MENU = "Attention";
+TRACK_QUEST = "Track Quest";
+UNTRACK_QUEST = "Untrack Quest";
+ERR_QUEST_WATCH_TOO_MANY = "You have reached the maximum number of tracked quests.";
+SHOW_QUEST_LIST = "Show Quest List";
+HIDE_QUEST_LIST = "Hide Quest List";
 
 LOOKING_FOR_DUNGEON_RAID = "Dungeons and Raids";
 
@@ -9033,6 +9037,7 @@ BATTLEGROUND_HOLIDAY_EXPLANATION = "|cffffffffYour urgent assistance is needed t
 BATTLE_HONOR_LIMIT = "Honor Limit";
 WINTERGRASP = "Wintergrasp";
 
+HELP_MENU = "Attention";
 HELPFRAME_OPEN_SERVER_URL_TEXT = "Copy this link into your browser:";
 HELPFRAME_SERVERINFO_TITLE = "Server Information";
 HELPFRAME_SERVERINFO_SUB1 = "|cffffcc00Store|r";
