@@ -141,6 +141,10 @@ function PVPFrame_OnHide()
 	PVPMicroButton_SetNormal();
 	UpdateMicroButtons();
 	PlaySound("igCharacterInfoClose");
+
+	if LFDTabsFrame and not (LFDParentFrame and LFDParentFrame:IsShown()) then
+		LFDTabsFrame:Hide();
+	end
 end
 
 function PVPFrame_SetFaction()

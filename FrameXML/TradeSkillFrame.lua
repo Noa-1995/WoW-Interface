@@ -617,10 +617,21 @@ local function BuildInterface(frame)
             if skillType and skillType ~= "header" then
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
                 GameTooltip:SetTradeSkillItem(self.tradeSkillIndex)
-            end
+           end
         end
     end)
     frame.resultButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    frame.resultButton:SetScript("OnClick", function(self, button)
+        if button == "LeftButton" and IsShiftKeyDown() then
+            local index = self.tradeSkillIndex
+            if index then
+                local link = GetTradeSkillItemLink(index)
+                if link then
+                    ChatEdit_InsertLink(link)
+                end
+            end
+        end
+    end)
 
     frame.resultName = CreateText(frame.rightPanel, "GameFontNormalLarge")
     frame.resultName:SetPoint("TOPLEFT", frame.resultButton, "TOPRIGHT", 12, -2)
@@ -662,6 +673,16 @@ local function BuildInterface(frame)
         end)
         reagent:SetScript("OnLeave", function() GameTooltip:Hide() end)
         frame.reagents[i] = reagent
+        reagent:SetScript("OnClick", function(self, button)
+            if button == "LeftButton" and IsShiftKeyDown() then
+                if self.tradeSkillIndex and self.reagentIndex then
+                    local link = GetTradeSkillReagentItemLink(self.tradeSkillIndex, self.reagentIndex)
+                    if link then
+                        ChatEdit_InsertLink(link)
+                    end
+               end
+            end
+        end)
     end
 
     frame.createAllButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")

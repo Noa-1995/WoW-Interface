@@ -26,7 +26,7 @@ local function HelpPanel_CreateURLPopup()
 	end
 
 	local f = CreateFrame("Frame", "HelpPanelURLPopup", UIParent);
-	f:SetSize(460, 140);
+	f:SetSize(460, 120);
 	f:SetPoint("CENTER");
 	f:SetFrameStrata("DIALOG");
 	f:Hide();
@@ -38,7 +38,7 @@ local function HelpPanel_CreateURLPopup()
 		insets = { left = 3, right = 3, top = 3, bottom = 3 },
 	});
 	f:SetBackdropColor(0, 0, 0, 0.95);
-	
+
 	local closeButton = CreateFrame("Button", nil, f, "UIPanelCloseButton");
 	closeButton:SetPoint("TOPRIGHT", f, "TOPRIGHT", -2, -12);
 	closeButton:SetScript("OnClick", function()
@@ -97,15 +97,6 @@ local function HelpPanel_CreateURLPopup()
 
 	eb:SetScript("OnEscapePressed", function()
 		f:Hide();
-	end);
-
-	local close = CreateFrame("Button", nil, f, "GameMenuButtonTemplate");
-	close:SetSize(140, 26);
-	close:SetPoint("BOTTOM", f, "BOTTOM", 0, 18);
-	close:SetText(CALENDAR_COPY_EVENT);
-	close:SetScript("OnClick", function()
-		SelectURL();
-		DEFAULT_CHAT_FRAME:AddMessage(URL_TEXT_INF);
 	end);
 
 	f.editBox = eb;
